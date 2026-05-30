@@ -132,7 +132,7 @@ Backend:
 
 ```text
 SECRET_KEY=
-DATABASE_URL=postgresql+psycopg://USER:PASSWORD@HOST:5432/DB
+DATABASE_URL=postgresql+psycopg://USER:PASSWORD@HOST:55433/DB
 CORS_ORIGINS=https://student-domain.example
 SITE_NAME=
 SITE_URL=https://student-domain.example
