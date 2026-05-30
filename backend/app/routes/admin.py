@@ -8,6 +8,7 @@ from ..auth import require_auth
 from ..extensions import db
 from ..models import BlogPost, DesignProfile
 from ..services.ai_service import generate_blog_post
+from ..services.competitor_analyzer import analyze_competitors
 from ..services.design_service import deep_merge, profile_for_industry
 
 bp = Blueprint("admin", __name__)
@@ -160,3 +161,35 @@ def generate_design():
     profile.notes = generated["notes"]
     db.session.commit()
     return {"item": profile.to_dict()}
+
+
+@bp.post("/design/analyze-competitors")
+@require_auth(admin=True)
+def analyze_design_competitors():
+    data = request.get_json(silent=True) or {}
+    competitor_urls = data.get("competitorUrls") or []
+    if not competitor_urls:
+        return jsonify({"error": {"code": "bad_request", "message": "competitorUrls is required"}}), 400
+
+    generated = analyze_competitors(
+        data.get("industry") or current_app.config["SITE_INDUSTRY"],
+        competitor_urls,
+        observations=data.get("observations") or [],
+        notes=data.get("notes") or "",
+    )
+
+    profile = _active_design_profile()
+    if not profile:
+        profile = DesignProfile(status="active")
+        db.session.add(profile)
+
+    profile.name = generated["name"]
+    profile.source = generated["source"]
+    profile.industry = generated["industry"]
+    profile.personality = generated["personality"]
+    profile.competitor_urls = generated["competitorUrls"]
+    profile.tokens = generated["tokens"]
+    profile.voice = generated["voice"]
+    profile.notes = generated["notes"]
+    db.session.commit()
+    return {"item": profile.to_dict(), "analysis": generated["analysis"]}

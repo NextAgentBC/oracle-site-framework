@@ -23,6 +23,9 @@
       "get": { "summary": "Get active design profile" },
       "patch": { "summary": "Update active design profile tokens" }
     },
-    "/admin/design/generate": { "post": { "summary": "Generate design profile from industry and competitor URLs" } }
+    "/admin/design/generate": { "post": { "summary": "Generate design profile from industry and competitor URLs" } },
+    "/admin/design/analyze-competitors": {
+      "post": { "summary": "Analyze competitor websites and update active design profile" }
+    }
   }
 }

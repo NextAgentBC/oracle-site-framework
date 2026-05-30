@@ -2,6 +2,12 @@
 
 This README is written for a student's local Codex agent.
 
+Canonical repository:
+
+```text
+https://github.com/NextAgentBC/oracle-site-framework
+```
+
 Your human is taking a lecture where every student has:
 
 - A local computer with Codex installed.
@@ -45,6 +51,7 @@ Important backend files:
 - `backend/app/services/`: replaceable integrations such as DeepSeek and SMTP.
 - `backend/app/openapi.json`: machine-readable API map for OpenClaw/Codex.
 - `backend/app/services/design_service.py`: industry design presets and token merge logic.
+- `backend/app/services/competitor_analyzer.py`: public competitor signal extraction for UI/UX profiles.
 - `backend/migrations/`: Alembic/Flask-Migrate migrations.
 
 Important frontend files:
@@ -183,6 +190,7 @@ Admin:
 - `GET /api/admin/design`
 - `PATCH /api/admin/design`
 - `POST /api/admin/design/generate`
+- `POST /api/admin/design/analyze-competitors`
 
 Admin requests require:
 
@@ -240,6 +248,32 @@ curl -X PATCH https://api.student-domain.example/api/admin/design \
 ```
 
 When using competitor sites, never copy a competitor's exact brand identity. Use them to infer category expectations, spacing density, visual hierarchy, and content patterns, then produce a distinct profile.
+
+Analyze competitor websites:
+
+```bash
+curl -X POST https://api.student-domain.example/api/admin/design/analyze-competitors \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "industry": "retail",
+    "competitorUrls": [
+      "https://example-retailer.com",
+      "https://another-local-shop.com"
+    ],
+    "observations": [
+      {
+        "url": "https://example-retailer.com",
+        "colors": ["#a6422b", "#28666e"],
+        "fonts": ["Nunito Sans"],
+        "layoutNotes": "Warm product-forward homepage with clear sale CTAs."
+      }
+    ],
+    "notes": "Use category conventions, but create a distinct identity."
+  }'
+```
+
+OpenClaw browser workflow lives in `docs/openclaw-competitor-analyzer.md`.
 
 ## Daily Blog Automation
 

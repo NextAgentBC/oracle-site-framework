@@ -27,6 +27,7 @@ Admin endpoints require `Authorization: Bearer <token>` where the token comes fr
 | `GET` | `/api/admin/design` | Read active UI/UX design profile |
 | `PATCH` | `/api/admin/design` | Update design tokens, voice, and notes |
 | `POST` | `/api/admin/design/generate` | Generate an industry/competitor-informed design profile |
+| `POST` | `/api/admin/design/analyze-competitors` | Fetch competitor signals and update active design profile |
 
 ## Design Profile
 
@@ -75,6 +76,49 @@ The frontend must not hard-code industry styling. It reads `GET /api/design` and
       "tone": "precise, plainspoken, risk-aware"
     },
     "notes": "Design rationale and competitor observations."
+  }
+}
+```
+
+## Competitor Analyzer
+
+`POST /api/admin/design/analyze-competitors` accepts competitor URLs and optional OpenClaw visual observations. The backend fetches public HTML/CSS signals such as title, metadata, colors, font-family declarations, and basic content cues, then updates the active design profile.
+
+Request:
+
+```json
+{
+  "industry": "retail",
+  "competitorUrls": [
+    "https://example-retailer.com",
+    "https://another-local-shop.com"
+  ],
+  "observations": [
+    {
+      "url": "https://example-retailer.com",
+      "colors": ["#a6422b", "#28666e"],
+      "fonts": ["Nunito Sans"],
+      "layoutNotes": "Dense product grid, clear sale calls to action, warm editorial imagery."
+    }
+  ],
+  "notes": "Use category conventions without copying brand identity."
+}
+```
+
+Response:
+
+```json
+{
+  "item": {
+    "name": "Local Retail Signal",
+    "source": "competitor-analyzer",
+    "tokens": {}
+  },
+  "analysis": {
+    "snapshots": [],
+    "observations": [],
+    "dominantColors": [],
+    "dominantFonts": []
   }
 }
 ```
