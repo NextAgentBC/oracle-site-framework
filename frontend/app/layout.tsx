@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "./providers";
@@ -43,7 +44,33 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <div className="shell">
             <SiteNav siteName={site.name} pages={navPages} />
             {children}
-            <footer className="footer">Built for Oracle VM, Cloudflare, Flask, Next.js, and maintainable AI workflows.</footer>
+            <footer className="footer">
+              <div className="footer-grid">
+                <div className="footer-brand">
+                  <span className="footer-brand-row">
+                    <span className="mark" />
+                    <strong>{site.name}</strong>
+                  </span>
+                  <p className="muted">
+                    {site.industry} site built on the Oracle Site framework — Next.js, Flask, Cloudflare.
+                  </p>
+                </div>
+                <nav className="footer-col" aria-label="Pages">
+                  <h4>Pages</h4>
+                  {navPages.map((page) => (
+                    <Link href={`/${page.slug}`} key={page.slug}>
+                      {page.navLabel}
+                    </Link>
+                  ))}
+                </nav>
+                <nav className="footer-col" aria-label="More">
+                  <h4>More</h4>
+                  <Link href="/blog">Blog</Link>
+                  <Link href="/contact">Contact</Link>
+                </nav>
+              </div>
+              <div className="footer-bottom">© {new Date().getFullYear()} {site.name}</div>
+            </footer>
           </div>
         </AuthProvider>
       </body>

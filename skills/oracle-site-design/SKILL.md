@@ -64,10 +64,16 @@ Design has two layers, both in the active design profile, both render **instantl
 - `hero` — `split` · `centered` · `fullbleed`. content: `badge` (pill), `kicker`, `headline`, `headlineAccent` (gradient-highlighted line), `subhead`, `cta{label,href}`, `secondaryCta`.
 - `stats` — KPI bar. content: `items[]{value,label}`.
 - `logos` — trust / tech strip. content: `heading`, `items[]{label}`.
-- `features` — `cards` · `minimal`. content: `heading`, `items[]{icon,title,body}` (icons: sparkles, mail, shield, gauge, layers, zap, book, cloud).
+- `features` — `cards` · `minimal`. content: `heading`, `subhead`, `items[]{icon,title,body}` (icons: sparkles, mail, shield, gauge, layers, zap, book, cloud).
+- `problem` — pain-point cards (accent-toned). content: `heading`, `subhead`, `items[]{icon,title,body}`.
+- `comparison` — two-column "usual way vs us". content: `heading`, `left{title,items[]}`, `right{title,items[]}` (right is highlighted).
+- `testimonials` — quote cards. content: `heading`, `items[]{quote,author,role}`.
+- `pricing` — tier cards. content: `heading`, `subhead`, `items[]{name,price,period,features[],featured,cta{label,href}}`.
+- `faq` — native accordion. content: `heading`, `items[]{q,a}`.
 - `cta` — `banner`. content: `headline`, `subhead`, `cta{label,href}`.
 
-A strong landing order: **hero → stats → logos → features → cta**.
+(The footer is global, multi-column, and built from the site's pages — not a section.)
+A strong landing order: **hero → stats → logos → problem → features → comparison → testimonials → pricing → faq → cta**. Use only the modules that fit; drop the rest.
 
 ## Reference library
 

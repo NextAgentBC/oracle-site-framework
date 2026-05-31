@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowRight, Sparkles, Mail, Shield, Gauge, Layers, Zap, BookOpen, Cloud } from "lucide-react";
 import type { Section, SectionCta, Site } from "@/lib/api";
@@ -13,9 +14,9 @@ const ICONS: Record<string, typeof Sparkles> = {
   cloud: Cloud
 };
 
-function SectionIcon({ name }: { name?: string }) {
+function SectionIcon({ name, color }: { name?: string; color?: string }) {
   const Cmp = (name && ICONS[name]) || Sparkles;
-  return <Cmp size={24} strokeWidth={1.8} color="var(--color-primary)" />;
+  return <Cmp size={24} strokeWidth={1.8} color={color || "var(--color-primary)"} />;
 }
 
 function HeroActions({ cta, secondaryCta }: { cta?: SectionCta; secondaryCta?: SectionCta }) {
@@ -36,13 +37,23 @@ function HeroActions({ cta, secondaryCta }: { cta?: SectionCta; secondaryCta?: S
   );
 }
 
+function SectionHead({ heading, subhead }: { heading?: string; subhead?: string }) {
+  if (!heading && !subhead) return null;
+  return (
+    <div className="section-head">
+      {heading && <h2>{heading}</h2>}
+      {subhead && <p className="lede">{subhead}</p>}
+    </div>
+  );
+}
+
 function Hero({ section, site }: { section: Section; site: Site }) {
   const c = section.content ?? {};
   const variant = section.variant || "split";
   const headline = c.headline || site.name;
   const copy = (
     <div className="hero-copy">
-      {c.badge ? <span className="hero-badge">{c.badge}</span> : c.kicker ? <p className="kicker">{c.kicker}</p> : <p className="kicker">{site.industry}</p>}
+      {c.badge ? <span className="hero-badge">{c.badge}</span> : <p className="kicker">{c.kicker || site.industry}</p>}
       <h1>
         {headline}
         {c.headlineAccent && (
@@ -105,7 +116,7 @@ function Features({ section }: { section: Section }) {
   const minimal = section.variant === "minimal";
   return (
     <section className="section">
-      {c.heading && <h2>{c.heading}</h2>}
+      <SectionHead heading={c.heading} subhead={c.subhead} />
       <div className={minimal ? "feature-grid" : "grid"}>
         {items.map((item, index) => (
           <div className={minimal ? "feature" : "post-card"} key={index}>
@@ -113,6 +124,112 @@ function Features({ section }: { section: Section }) {
             <h3>{item.title}</h3>
             <p>{item.body}</p>
           </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Problem({ section }: { section: Section }) {
+  const c = section.content ?? {};
+  const items = c.items ?? [];
+  return (
+    <section className="section">
+      <SectionHead heading={c.heading} subhead={c.subhead} />
+      <div className="grid">
+        {items.map((item, index) => (
+          <div className="post-card problem-card" key={index}>
+            <SectionIcon name={item.icon} color="var(--color-accent)" />
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Comparison({ section }: { section: Section }) {
+  const c = section.content ?? {};
+  const left = c.left ?? {};
+  const right = c.right ?? {};
+  return (
+    <section className="section">
+      <SectionHead heading={c.heading} subhead={c.subhead} />
+      <div className="compare">
+        <div className="compare-col">
+          <h3>{left.title}</h3>
+          <ul>{(left.items ?? []).map((t, i) => <li key={i}>{t}</li>)}</ul>
+        </div>
+        <div className="compare-col featured">
+          <h3>{right.title}</h3>
+          <ul>{(right.items ?? []).map((t, i) => <li key={i}>{t}</li>)}</ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Testimonials({ section }: { section: Section }) {
+  const c = section.content ?? {};
+  const items = c.items ?? [];
+  return (
+    <section className="section">
+      <SectionHead heading={c.heading} subhead={c.subhead} />
+      <div className="grid">
+        {items.map((item, index) => (
+          <figure className="post-card quote-card" key={index}>
+            <blockquote>{item.quote}</blockquote>
+            <figcaption>
+              <strong>{item.author}</strong>
+              {item.role && <span>{item.role}</span>}
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Pricing({ section }: { section: Section }) {
+  const c = section.content ?? {};
+  const items = c.items ?? [];
+  return (
+    <section className="section">
+      <SectionHead heading={c.heading} subhead={c.subhead} />
+      <div className="grid">
+        {items.map((item, index) => (
+          <div className={`post-card price-card${item.featured ? " featured" : ""}`} key={index}>
+            <h3>{item.name}</h3>
+            <div className="price">
+              <span className="price-value">{item.price}</span>
+              {item.period && <span className="price-period">{item.period}</span>}
+            </div>
+            <ul className="price-features">{(item.features ?? []).map((f, i) => <li key={i}>{f}</li>)}</ul>
+            {item.cta?.label && (
+              <Link className={item.featured ? "button secondary" : "button ghost"} href={item.cta.href || "#"}>
+                {item.cta.label}
+              </Link>
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Faq({ section }: { section: Section }) {
+  const c = section.content ?? {};
+  const items = c.items ?? [];
+  return (
+    <section className="section">
+      <SectionHead heading={c.heading} subhead={c.subhead} />
+      <div className="faq">
+        {items.map((item, index) => (
+          <details className="faq-item" key={index}>
+            <summary>{item.q}</summary>
+            <p>{item.a}</p>
+          </details>
         ))}
       </div>
     </section>
@@ -136,16 +253,25 @@ function Cta({ section }: { section: Section }) {
   );
 }
 
+const RENDERERS: Record<string, (s: Section, site: Site) => ReactNode> = {
+  hero: (s, site) => <Hero section={s} site={site} />,
+  stats: (s) => <Stats section={s} />,
+  logos: (s) => <Logos section={s} />,
+  features: (s) => <Features section={s} />,
+  problem: (s) => <Problem section={s} />,
+  comparison: (s) => <Comparison section={s} />,
+  testimonials: (s) => <Testimonials section={s} />,
+  pricing: (s) => <Pricing section={s} />,
+  faq: (s) => <Faq section={s} />,
+  cta: (s) => <Cta section={s} />
+};
+
 export function SectionRenderer({ sections, site }: { sections: Section[]; site: Site }) {
   return (
     <>
       {sections.map((section, index) => {
-        if (section.type === "hero") return <Hero section={section} site={site} key={index} />;
-        if (section.type === "stats") return <Stats section={section} key={index} />;
-        if (section.type === "logos") return <Logos section={section} key={index} />;
-        if (section.type === "features") return <Features section={section} key={index} />;
-        if (section.type === "cta") return <Cta section={section} key={index} />;
-        return null;
+        const render = RENDERERS[section.type];
+        return render ? <div key={index}>{render(section, site)}</div> : null;
       })}
     </>
   );

@@ -51,7 +51,26 @@ export type Section = {
     cta?: SectionCta;
     secondaryCta?: SectionCta;
     heading?: string;
-    items?: { icon?: string; title?: string; body?: string; value?: string; label?: string }[];
+    left?: { title?: string; items?: string[] };
+    right?: { title?: string; items?: string[] };
+    items?: {
+      icon?: string;
+      title?: string;
+      body?: string;
+      value?: string;
+      label?: string;
+      quote?: string;
+      author?: string;
+      role?: string;
+      name?: string;
+      price?: string;
+      period?: string;
+      features?: string[];
+      featured?: boolean;
+      q?: string;
+      a?: string;
+      cta?: SectionCta;
+    }[];
   };
 };
 
