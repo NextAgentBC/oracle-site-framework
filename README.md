@@ -19,6 +19,10 @@ Your human is taking a lecture where every student has:
 
 Your job is to reproduce, deploy, and maintain this framework for that student.
 
+## Before The Lecture
+
+Each student completes [`docs/student-prep.md`](docs/student-prep.md) first — a beginner-friendly walkthrough (in Chinese) of the account, domain, Google OAuth, and credential setup the list above assumes. Steps are marked 🤖 (Codex can run/verify) or 🧑 (human, browser-only).
+
 ## Goal
 
 Build a reusable full-stack website framework:
