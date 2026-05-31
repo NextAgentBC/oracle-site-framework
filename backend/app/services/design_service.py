@@ -37,6 +37,19 @@ DEFAULT_SECTIONS = [
     DEFAULT_STATS_SECTION,
     DEFAULT_LOGOS_SECTION,
     {
+        "type": "problem",
+        "variant": "cards",
+        "content": {
+            "heading": "Sound familiar?",
+            "subhead": "The usual website setup gets in the way more than it helps.",
+            "items": [
+                {"icon": "layers", "title": "Scattered tools", "body": "Content, email, and your site live in three different places."},
+                {"icon": "gauge", "title": "Slow to update", "body": "Every small change means waiting on someone else."},
+                {"icon": "shield", "title": "Not really yours", "body": "Your audience and data sit on someone else's platform."},
+            ],
+        },
+    },
+    {
         "type": "features",
         "variant": "cards",
         "content": {
@@ -45,6 +58,48 @@ DEFAULT_SECTIONS = [
                 {"icon": "sparkles", "title": "Fresh content", "body": "A steady stream of useful, on-brand articles."},
                 {"icon": "mail", "title": "Stay in touch", "body": "Grow an audience with a simple newsletter."},
                 {"icon": "shield", "title": "Yours to own", "body": "Your domain, your data, your design."},
+            ],
+        },
+    },
+    {
+        "type": "comparison",
+        "content": {
+            "heading": "Why this framework",
+            "left": {"title": "The usual way", "items": ["Locked into a platform", "Pay per seat, forever", "Hard to customize", "Your data is theirs"]},
+            "right": {"title": "Oracle Site", "items": ["Your own server + domain", "One-time setup, no rent", "Fully yours to restyle", "You own everything"]},
+        },
+    },
+    {
+        "type": "testimonials",
+        "content": {
+            "heading": "What people say",
+            "items": [
+                {"quote": "Set up our whole site in an afternoon — and it looks the part.", "author": "A. Founder", "role": "Small studio"},
+                {"quote": "The daily posts keep coming without me lifting a finger.", "author": "M. Writer", "role": "Creator"},
+                {"quote": "Finally a site I actually own end to end.", "author": "J. Owner", "role": "Local business"},
+            ],
+        },
+    },
+    {
+        "type": "pricing",
+        "content": {
+            "heading": "Simple to run",
+            "subhead": "Example tiers — make them your own.",
+            "items": [
+                {"name": "Starter", "price": "$0", "period": "/forever", "features": ["1 site", "Daily blog", "Newsletter"], "cta": {"label": "Get started", "href": "/contact"}},
+                {"name": "Pro", "price": "$99", "period": "/one-time", "features": ["Custom design", "Unlimited pages", "Priority support"], "featured": True, "cta": {"label": "Choose Pro", "href": "/contact"}},
+                {"name": "Agency", "price": "Custom", "period": "", "features": ["Multiple sites", "White-label", "Dedicated help"], "cta": {"label": "Contact us", "href": "/contact"}},
+            ],
+        },
+    },
+    {
+        "type": "faq",
+        "content": {
+            "heading": "Questions",
+            "items": [
+                {"q": "Do I need to know how to code?", "a": "No — manage pages, blog, and design by chatting with your agent. Code is there if you want it."},
+                {"q": "Is it really mine?", "a": "Yes. It runs on your server and domain; your content and audience are yours."},
+                {"q": "Can I change the whole look?", "a": "Yes — switch a style preset or fine-tune colors, fonts, and sections anytime."},
             ],
         },
     },
