@@ -29,7 +29,7 @@ curl -s -X PATCH "$ORACLE_SITE_API/admin/design" -H "Authorization: Bearer $ORAC
 # 3) verify
 curl -s "$ORACLE_SITE_API/design" | grep -o '"paper":"#050505"' && curl -s -o /dev/null -w "site %{http_code}\n" https://oracle.nextagent.ca
 ```
-Other one-liners: `{"preset":"minimal"}` (Apple-style light) · `{"preset":"editorial"}` (warm default). All instant, no redeploy.
+Other one-liners: `{"preset":"minimal"}` (Aurora, light) · `{"preset":"editorial"}` (Atelier, warm serif) · `{"preset":"corporate"}` (Meridian, B2B navy). All instant, no redeploy.
 
 ## Run this as a conversation
 
@@ -64,13 +64,16 @@ Other one-liners: `{"preset":"minimal"}` (Apple-style light) · `{"preset":"edit
      -d '{"industry":"...","competitorUrls":["https://apple.com"],"notes":"Inspiration only — create a distinct identity."}'
    ```
 
-## Presets
+## Presets (four switchable templates)
 
-| preset | vibe | hero | mode |
-|---|---|---|---|
-| `minimal` | Apple-inspired, calm & premium | centered | light |
-| `bold-dark` | Tesla-inspired, dramatic | fullbleed | dark |
-| `editorial` | warm, friendly (default) | split | light |
+Each is a full template — palette + light/dark mode + font pairing + hero style + section composition — not just a recolor. Switch with one `generate` call; renders instantly.
+
+| preset | name | vibe | hero | mode | font |
+|---|---|---|---|---|---|
+| `minimal` | Aurora | Apple / Linear / Stripe — calm, premium, spacious | centered | light | Inter |
+| `bold-dark` | Eclipse | Tesla / Vercel — dramatic, high-contrast, electric violet | fullbleed | dark | Space Grotesk |
+| `editorial` | Atelier | warm, literary — serif display, drop-cap long-form | split | light | Spectral serif |
+| `corporate` | Meridian | trustworthy B2B — structured navy, pricing tiers | split | light | Inter |
 
 ## Modules (section types — compose a page by ordering these in `sections`)
 
@@ -91,7 +94,7 @@ A strong landing order: **hero → stats → logos → problem → features → 
 ## Reference library
 
 Mapped in `backend/app/data/style_references.json`:
-apple / notion / stripe → **minimal** · tesla / linear → **bold-dark** · airbnb → **editorial**.
+apple / notion / stripe → **minimal** · tesla / linear / vercel → **bold-dark** · airbnb → **editorial** · consultancy / agency / SaaS-B2B → **corporate**.
 
 ## Rules
 - **Inspiration only — never clone a brand's exact identity or assets.**

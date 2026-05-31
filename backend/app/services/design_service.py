@@ -2,6 +2,14 @@ from copy import deepcopy
 from typing import Optional
 
 
+# Font faces are loaded once in the frontend layout and exposed as CSS vars.
+# Templates choose a face through their typography tokens.
+SANS = "var(--font-sans), system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+SERIF = "var(--font-display), Georgia, 'Times New Roman', serif"
+GROTESK = "var(--font-grotesk), var(--font-sans), system-ui, sans-serif"
+MONO = "var(--font-mono-stack, ui-monospace), SFMono-Regular, Menlo, Monaco, Consolas, monospace"
+
+
 DEFAULT_STATS_SECTION = {
     "type": "stats",
     "content": {
@@ -27,8 +35,9 @@ DEFAULT_SECTIONS = [
         "type": "hero",
         "variant": "split",
         "content": {
-            "kicker": "",
-            "headline": "",
+            "kicker": "Your site, your rules",
+            "headline": "A website you fully own.",
+            "headlineAccent": "Publish daily. Grow steadily.",
             "subhead": "A modern site with a daily blog, newsletter, and clean pages — built to grow with you.",
             "cta": {"label": "Read the blog", "href": "/blog"},
             "secondaryCta": {"label": "Contact", "href": "/contact"},
@@ -127,28 +136,28 @@ DEFAULT_DESIGN_PROFILE = {
             "muted": "#66736f",
             "paper": "#faf8f3",
             "surface": "#ffffff",
-            "line": "#d9dfd7",
+            "line": "#e2e6dd",
             "primary": "#216e5f",
             "accent": "#b54945",
             "highlight": "#c79b3b",
             "link": "#356b9f",
         },
         "typography": {
-            "body": "var(--font-sans), system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-            "heading": "var(--font-sans), system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-            "mono": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+            "body": SANS,
+            "heading": SANS,
+            "mono": MONO,
         },
         "radius": {
-            "card": "8px",
-            "control": "8px",
+            "card": "16px",
+            "control": "11px",
             "pill": "999px",
         },
         "layout": {
             "contentMaxWidth": "1120px",
-            "heroMinHeight": "58vh",
+            "heroMinHeight": "72vh",
             "density": "comfortable",
-            "cardPadding": "20px",
-            "sectionGap": "54px",
+            "cardPadding": "24px",
+            "sectionGap": "104px",
         },
     },
     "voice": {
@@ -170,17 +179,14 @@ INDUSTRY_PRESETS = {
                 "muted": "#627084",
                 "paper": "#f7f8fb",
                 "surface": "#ffffff",
-                "line": "#d8deea",
+                "line": "#dde3ee",
                 "primary": "#22577a",
                 "accent": "#c44536",
                 "highlight": "#f3b23c",
                 "link": "#2f6fbb",
             },
-            "typography": {
-                "body": "Inter, Arial, Helvetica, sans-serif",
-                "heading": "Inter, Arial, Helvetica, sans-serif",
-            },
-            "layout": {"density": "comfortable", "heroMinHeight": "56vh"},
+            "typography": {"body": SANS, "heading": SANS},
+            "layout": {"density": "comfortable", "heroMinHeight": "70vh"},
         },
         "voice": {"tone": "clear, supportive, evidence-minded"},
     },
@@ -193,17 +199,14 @@ INDUSTRY_PRESETS = {
                 "muted": "#65706d",
                 "paper": "#f6f7f4",
                 "surface": "#ffffff",
-                "line": "#d9dfda",
+                "line": "#dde2dc",
                 "primary": "#1f5f4a",
                 "accent": "#8f3f3b",
                 "highlight": "#b88a2d",
                 "link": "#275f91",
             },
-            "typography": {
-                "body": "Source Sans 3, Arial, Helvetica, sans-serif",
-                "heading": "Source Sans 3, Arial, Helvetica, sans-serif",
-            },
-            "layout": {"density": "compact", "heroMinHeight": "50vh"},
+            "typography": {"body": SANS, "heading": SANS},
+            "layout": {"density": "compact", "heroMinHeight": "62vh"},
         },
         "voice": {"tone": "precise, plainspoken, risk-aware"},
     },
@@ -216,17 +219,14 @@ INDUSTRY_PRESETS = {
                 "muted": "#766b64",
                 "paper": "#fbf7f0",
                 "surface": "#ffffff",
-                "line": "#eadfd3",
+                "line": "#ece1d4",
                 "primary": "#a6422b",
                 "accent": "#28666e",
                 "highlight": "#d79a2b",
                 "link": "#2f6b8f",
             },
-            "typography": {
-                "body": "Nunito Sans, Arial, Helvetica, sans-serif",
-                "heading": "Nunito Sans, Arial, Helvetica, sans-serif",
-            },
-            "layout": {"density": "comfortable", "heroMinHeight": "60vh"},
+            "typography": {"body": SANS, "heading": SANS},
+            "layout": {"density": "comfortable", "heroMinHeight": "66vh"},
         },
         "voice": {"tone": "friendly, concrete, product-aware"},
     },
@@ -265,62 +265,171 @@ def normalized_profile(data: dict, industry: str = "education") -> dict:
     return profile
 
 
-# Named style families. Each = palette (+ optional radius/layout) and a section
-# composition. "Inspired-by" curated looks, not brand clones.
+# =====================================================================
+# Named style families — switchable templates. Each = a full palette
+# (+ radius / layout / typography) and a section composition. The frontend
+# derives light/dark mode from the palette and a [data-theme] hook from the
+# preset key, so each template renders with its own depth and typographic
+# character — not just a recolor. "Inspired-by" curated looks, never clones.
+# =====================================================================
 STYLE_PRESETS = {
+    # Aurora — calm, spacious, premium. Apple / Linear / Stripe energy.
     "minimal": {
-        "name": "Minimal (Apple-inspired)",
+        "name": "Aurora — Minimal",
         "personality": "calm, spacious, premium, confident",
         "tokens": {
             "colors": {
-                "ink": "#1d1d1f", "muted": "#6e6e73", "paper": "#fbfbfd", "surface": "#ffffff",
-                "line": "#e6e6eb", "primary": "#0a6cff", "accent": "#e8505b", "highlight": "#f5a623", "link": "#0a6cff",
+                "ink": "#0b1220", "muted": "#5b6573", "paper": "#fbfcfe", "surface": "#ffffff",
+                "line": "#e7e9f0", "primary": "#2563eb", "accent": "#6366f1", "highlight": "#f59e0b", "link": "#2563eb",
             },
-            "radius": {"card": "18px", "control": "12px", "pill": "999px"},
-            "layout": {"density": "spacious", "heroMinHeight": "86vh", "sectionGap": "120px"},
+            "typography": {"body": SANS, "heading": SANS},
+            "radius": {"card": "20px", "control": "13px", "pill": "999px"},
+            "layout": {"density": "spacious", "heroMinHeight": "88vh", "sectionGap": "128px", "contentMaxWidth": "1120px", "cardPadding": "28px"},
         },
         "voice": {"headlineStyle": "short, bold, benefit-led", "tone": "calm and premium"},
         "sections": [
-            {"type": "hero", "variant": "centered", "content": {"badge": "Premium by default", "headline": "Clean, fast,", "headlineAccent": "made to last.", "subhead": "A refined site that loads fast and stays out of the way.", "cta": {"label": "Get started", "href": "/contact"}, "secondaryCta": {"label": "Read the blog", "href": "/blog"}}},
-            DEFAULT_STATS_SECTION,
+            {"type": "hero", "variant": "centered", "content": {
+                "badge": "Premium by default",
+                "headline": "Clean, fast,", "headlineAccent": "made to last.",
+                "subhead": "A refined site that loads fast, reads beautifully, and stays out of the way — so your work is the thing people notice.",
+                "cta": {"label": "Get started", "href": "/contact"}, "secondaryCta": {"label": "Read the blog", "href": "/blog"}}},
+            {"type": "stats", "content": {"items": [
+                {"value": "100", "label": "Lighthouse-ready"}, {"value": "Daily", "label": "Fresh writing"},
+                {"value": "SEO", "label": "Built in"}, {"value": "0", "label": "Platform lock-in"}]}},
             DEFAULT_LOGOS_SECTION,
-            {"type": "features", "variant": "minimal", "content": {"heading": "Why us", "items": [
-                {"icon": "gauge", "title": "Fast", "body": "Built for speed and clarity."},
-                {"icon": "layers", "title": "Refined", "body": "Considered design, no clutter."},
-                {"icon": "shield", "title": "Yours", "body": "Your domain, data, and brand."},
-            ]}},
-            {"type": "cta", "variant": "banner", "content": {"headline": "Start today.", "subhead": "", "cta": {"label": "Get started", "href": "/contact"}}},
+            {"type": "features", "variant": "minimal", "content": {"heading": "Everything needed, nothing extra.", "subhead": "A calmer stack for publishing and keeping your audience close.", "items": [
+                {"icon": "gauge", "title": "Fast", "body": "Built for speed and clarity on every device."},
+                {"icon": "layers", "title": "Refined", "body": "Considered type, spacing, and color — no clutter."},
+                {"icon": "shield", "title": "Yours", "body": "Your domain, your data, your brand."}]}},
+            {"type": "comparison", "content": {"heading": "Simple beats scattered.",
+                "left": {"title": "Before", "items": ["Separate site and newsletter tools", "Monthly platform rent", "Hard-to-edit templates", "Data spread across services"]},
+                "right": {"title": "This site", "items": ["One clean publishing workflow", "Runs on your own stack", "Design updates instantly", "Content stays portable"]}}},
+            {"type": "faq", "content": {"heading": "Questions", "items": [
+                {"q": "Do I need to code?", "a": "No — manage pages, posts, and design by chatting with your agent."},
+                {"q": "Can I change the whole look?", "a": "Yes — switch a template or fine-tune colors, fonts, and sections anytime."}]}},
+            {"type": "cta", "variant": "banner", "content": {"headline": "Start today.", "subhead": "Spin up a clean site and grow from there.", "cta": {"label": "Get started", "href": "/contact"}}},
         ],
     },
+    # Eclipse — dramatic dark, high-contrast, modern. Tesla / Vercel energy.
     "bold-dark": {
-        "name": "Bold Dark (Tesla-inspired)",
+        "name": "Eclipse — Bold Dark",
         "personality": "dramatic, high-contrast, confident, modern",
         "tokens": {
             "colors": {
-                "ink": "#f4f6fb", "muted": "#9aa7b8", "paper": "#0c0f16", "surface": "#161a23",
-                "line": "#283041", "primary": "#e23b3b", "accent": "#4f8cff", "highlight": "#f2c14e", "link": "#6aa8ff",
+                "ink": "#f4f6fb", "muted": "#9aa6bd", "paper": "#0b0d14", "surface": "#14171f",
+                "line": "#272c3a", "primary": "#7c5cff", "accent": "#ff5d8f", "highlight": "#f2c14e", "link": "#a899ff",
             },
-            "radius": {"card": "14px", "control": "10px", "pill": "999px"},
-            "layout": {"density": "comfortable", "heroMinHeight": "92vh", "sectionGap": "110px"},
+            "typography": {"body": SANS, "heading": GROTESK},
+            "radius": {"card": "16px", "control": "11px", "pill": "999px"},
+            "layout": {"density": "comfortable", "heroMinHeight": "94vh", "sectionGap": "118px", "contentMaxWidth": "1140px", "cardPadding": "26px"},
         },
         "voice": {"headlineStyle": "bold, declarative", "tone": "confident and bold"},
         "sections": [
-            {"type": "hero", "variant": "fullbleed", "content": {"badge": "Bold by design", "headline": "Power. Presence.", "headlineAccent": "Performance.", "subhead": "A dramatic, high-contrast presence that commands attention.", "cta": {"label": "Explore", "href": "/blog"}, "secondaryCta": {"label": "Contact", "href": "/contact"}}},
-            DEFAULT_STATS_SECTION,
+            {"type": "hero", "variant": "fullbleed", "content": {
+                "badge": "Bold by design",
+                "headline": "Power. Presence.", "headlineAccent": "Performance.",
+                "subhead": "A dramatic, high-contrast presence that commands attention the moment it loads.",
+                "cta": {"label": "Explore", "href": "/blog"}, "secondaryCta": {"label": "Contact", "href": "/contact"}}},
+            {"type": "stats", "content": {"items": [
+                {"value": "60fps", "label": "Smooth by default"}, {"value": "Dark", "label": "Native mode"},
+                {"value": "AA", "label": "Contrast-checked"}, {"value": "1", "label": "Site you own"}]}},
             DEFAULT_LOGOS_SECTION,
-            {"type": "features", "variant": "minimal", "content": {"heading": "Built different", "items": [
-                {"icon": "zap", "title": "Bold", "body": "High-contrast, hard to ignore."},
-                {"icon": "gauge", "title": "Fast", "body": "Performance you can feel."},
-                {"icon": "sparkles", "title": "Modern", "body": "A look that feels current."},
-            ]}},
-            {"type": "cta", "variant": "banner", "content": {"headline": "Experience it.", "subhead": "", "cta": {"label": "Get in touch", "href": "/contact"}}},
+            {"type": "features", "variant": "minimal", "content": {"heading": "Built different.", "subhead": "High contrast, high clarity, hard to ignore.", "items": [
+                {"icon": "zap", "title": "Bold", "body": "Deep canvas, electric accents, real hierarchy."},
+                {"icon": "gauge", "title": "Fast", "body": "Performance you can feel on first paint."},
+                {"icon": "sparkles", "title": "Modern", "body": "A look that feels current, not templated."}]}},
+            {"type": "comparison", "content": {"heading": "Stand out, on purpose.",
+                "left": {"title": "Generic theme", "items": ["Looks like everyone else", "Flat, low contrast", "Light-only", "Slow, heavy assets"]},
+                "right": {"title": "Eclipse", "items": ["A presence of its own", "Dramatic depth & glow", "Dark-native design", "Fast, considered build"]}}},
+            {"type": "cta", "variant": "banner", "content": {"headline": "Experience it.", "subhead": "See the difference a real design makes.", "cta": {"label": "Get in touch", "href": "/contact"}}},
         ],
     },
+    # Atelier — warm, editorial, content-first. Serif display + drop-cap long-form.
     "editorial": {
-        "name": "Editorial (warm default)",
-        "personality": "clear, useful, trustworthy, modern",
-        "tokens": {},
-        "sections": DEFAULT_SECTIONS,
+        "name": "Atelier — Editorial",
+        "personality": "warm, literary, considered, trustworthy",
+        "tokens": {
+            "colors": {
+                "ink": "#241d18", "muted": "#6f655c", "paper": "#f7f2ea", "surface": "#fffdf9",
+                "line": "#e7dccc", "primary": "#a14d2a", "accent": "#3f6f63", "highlight": "#bb8a36", "link": "#9c4a22",
+            },
+            "typography": {"body": SANS, "heading": SERIF},
+            "radius": {"card": "12px", "control": "9px", "pill": "999px"},
+            "layout": {"density": "comfortable", "heroMinHeight": "72vh", "sectionGap": "108px", "contentMaxWidth": "1080px", "cardPadding": "26px"},
+        },
+        "voice": {"headlineStyle": "editorial, human, specific", "tone": "warm and considered"},
+        "sections": [
+            {"type": "hero", "variant": "split", "content": {
+                "kicker": "Words that carry",
+                "headline": "Writing worth", "headlineAccent": "returning to.",
+                "subhead": "A warm, editorial home for essays, notes, and a newsletter — designed to be read, not just scrolled past.",
+                "cta": {"label": "Read the blog", "href": "/blog"}, "secondaryCta": {"label": "Say hello", "href": "/contact"}}},
+            {"type": "stats", "content": {"items": [
+                {"value": "Daily", "label": "New writing"}, {"value": "1", "label": "Calm home"},
+                {"value": "0", "label": "Ads or trackers"}, {"value": "100%", "label": "Yours"}]}},
+            {"type": "problem", "variant": "cards", "content": {"heading": "Most sites fight the reader.", "subhead": "Cramped measures, restless layouts, borrowed identities.", "items": [
+                {"icon": "layers", "title": "Cluttered", "body": "Ten things shouting before the first sentence lands."},
+                {"icon": "gauge", "title": "Restless", "body": "Pop-ups and motion that pull attention away."},
+                {"icon": "book", "title": "Forgettable", "body": "Nothing that feels like a place of its own."}]}},
+            {"type": "features", "variant": "cards", "content": {"heading": "Made for reading.", "items": [
+                {"icon": "book", "title": "Real typography", "body": "A serif display and a generous measure, set with care."},
+                {"icon": "mail", "title": "A quiet newsletter", "body": "Let readers follow without another platform."},
+                {"icon": "shield", "title": "A place of your own", "body": "Your words, your domain, your design."}]}},
+            {"type": "testimonials", "content": {"heading": "Readers notice.", "items": [
+                {"quote": "It finally reads like a magazine, not a dashboard.", "author": "R. Ellison", "role": "Essayist"},
+                {"quote": "People actually finish the posts now.", "author": "D. Marsh", "role": "Newsletter writer"},
+                {"quote": "It feels like mine — not a template.", "author": "P. Quan", "role": "Studio owner"}]}},
+            {"type": "faq", "content": {"heading": "Good to know", "items": [
+                {"q": "Can I write in Markdown?", "a": "Yes — posts and pages are Markdown, rendered into this editorial type system."},
+                {"q": "Is the look fixed?", "a": "No — switch templates or fine-tune type, color, and sections whenever you like."}]}},
+            {"type": "cta", "variant": "banner", "content": {"headline": "Start writing.", "subhead": "A calm, beautiful home for your words.", "cta": {"label": "Get in touch", "href": "/contact"}}},
+        ],
+    },
+    # Meridian — structured, trustworthy, B2B. Denser navy/teal corporate look.
+    "corporate": {
+        "name": "Meridian — Professional",
+        "personality": "trustworthy, structured, credible, precise",
+        "tokens": {
+            "colors": {
+                "ink": "#101828", "muted": "#586172", "paper": "#f4f7fb", "surface": "#ffffff",
+                "line": "#dce3ef", "primary": "#1c4e8a", "accent": "#0f766e", "highlight": "#b7791f", "link": "#1c5fb0",
+            },
+            "typography": {"body": SANS, "heading": SANS},
+            "radius": {"card": "12px", "control": "9px", "pill": "999px"},
+            "layout": {"density": "compact", "heroMinHeight": "70vh", "sectionGap": "100px", "contentMaxWidth": "1180px", "cardPadding": "24px"},
+        },
+        "voice": {"headlineStyle": "clear, credible, outcome-led", "tone": "professional and precise"},
+        "sections": [
+            {"type": "hero", "variant": "split", "content": {
+                "kicker": "Built for serious work",
+                "headline": "A credible home for", "headlineAccent": "your business.",
+                "subhead": "Clear structure, trustworthy design, and the pages your customers expect — set up once, fully owned.",
+                "cta": {"label": "Book a call", "href": "/contact"}, "secondaryCta": {"label": "See the blog", "href": "/blog"}}},
+            {"type": "logos", "content": {"heading": "A dependable stack", "items": [{"label": "Next.js"}, {"label": "Flask"}, {"label": "PostgreSQL"}, {"label": "Cloudflare"}]}},
+            {"type": "stats", "content": {"items": [
+                {"value": "99.9%", "label": "Uptime-ready"}, {"value": "<1s", "label": "Typical load"},
+                {"value": "SEO", "label": "Built in"}, {"value": "24/7", "label": "Always on"}]}},
+            {"type": "features", "variant": "minimal", "content": {"heading": "What you get", "subhead": "The essentials, done properly.", "items": [
+                {"icon": "shield", "title": "Trust by design", "body": "Clean structure and accessible contrast throughout."},
+                {"icon": "gauge", "title": "Fast & reliable", "body": "Lightweight pages that load quickly, everywhere."},
+                {"icon": "layers", "title": "Easy to extend", "body": "Add pages, services, and posts as you grow."}]}},
+            {"type": "comparison", "content": {"heading": "Why teams choose this",
+                "left": {"title": "Page builders", "items": ["Monthly per-seat pricing", "Heavy, slow pages", "Generic look", "Locked-in content"]},
+                "right": {"title": "Meridian", "items": ["One-time setup", "Fast, lean delivery", "A credible identity", "Portable, owned data"]}}},
+            {"type": "testimonials", "content": {"heading": "Trusted by operators", "items": [
+                {"quote": "It looks like a company we'd hire.", "author": "S. Patel", "role": "Founder, consultancy"},
+                {"quote": "Set up once, runs itself since.", "author": "K. Brooks", "role": "Ops lead"},
+                {"quote": "Fast, clean, and clearly ours.", "author": "L. Romano", "role": "Managing director"}]}},
+            {"type": "pricing", "content": {"heading": "Straightforward pricing", "subhead": "Example tiers — adapt to your offer.",
+                "items": [
+                    {"name": "Starter", "price": "$0", "period": "/forever", "features": ["1 site", "Blog + newsletter", "Core pages"], "cta": {"label": "Get started", "href": "/contact"}},
+                    {"name": "Business", "price": "$99", "period": "/one-time", "features": ["Custom design", "Unlimited pages", "Priority support"], "featured": True, "cta": {"label": "Choose Business", "href": "/contact"}},
+                    {"name": "Enterprise", "price": "Custom", "period": "", "features": ["Multiple sites", "White-label", "Dedicated help"], "cta": {"label": "Contact sales", "href": "/contact"}}]}},
+            {"type": "faq", "content": {"heading": "Common questions", "items": [
+                {"q": "Can we use our own domain?", "a": "Yes — it runs on your domain and server, behind Cloudflare."},
+                {"q": "Can you match our brand?", "a": "Yes — colors, fonts, and sections are all adjustable."}]}},
+            {"type": "cta", "variant": "banner", "content": {"headline": "Ready to look the part?", "subhead": "Set up a credible site you fully own.", "cta": {"label": "Book a call", "href": "/contact"}}},
+        ],
     },
 }
 
