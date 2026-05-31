@@ -68,6 +68,41 @@ class BlogPost(TimestampMixin, db.Model):
         return item
 
 
+class Page(TimestampMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255), nullable=False)
+    slug = db.Column(db.String(255), unique=True, nullable=False, index=True)
+    body_markdown = db.Column(db.Text, nullable=False)
+    status = db.Column(db.String(32), nullable=False, default="draft")
+    nav_label = db.Column(db.String(255), nullable=False, default="")
+    nav_order = db.Column(db.Integer, nullable=False, default=100)
+    show_in_nav = db.Column(db.Boolean, nullable=False, default=True)
+    meta_title = db.Column(db.String(255), nullable=False, default="")
+    meta_description = db.Column(db.String(320), nullable=False, default="")
+    canonical_url = db.Column(db.Text, nullable=False, default="")
+    published_at = db.Column(db.DateTime, nullable=True)
+
+    def to_card_dict(self) -> dict:
+        return {
+            "id": self.id,
+            "title": self.title,
+            "slug": self.slug,
+            "navLabel": self.nav_label or self.title,
+            "navOrder": self.nav_order,
+            "showInNav": self.show_in_nav,
+            "metaTitle": self.meta_title,
+            "metaDescription": self.meta_description,
+        }
+
+    def to_detail_dict(self) -> dict:
+        item = self.to_card_dict()
+        item["bodyMarkdown"] = self.body_markdown
+        item["status"] = self.status
+        item["canonicalUrl"] = self.canonical_url
+        item["publishedAt"] = self.published_at.isoformat() if self.published_at else None
+        return item
+
+
 class NewsletterSubscription(TimestampMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), unique=True, nullable=False, index=True)

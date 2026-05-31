@@ -1,11 +1,12 @@
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from typing import Optional
 
 import click
 from flask import current_app
 
+from .auth import issue_jwt
 from .extensions import db
-from .models import BlogPost
+from .models import BlogPost, User
 from .routes.admin import _create_post
 from .services.ai_service import generate_blog_post
 
@@ -26,3 +27,36 @@ def generate_daily(topic: Optional[str], draft: bool):
         post.published_at = None
         db.session.commit()
     click.echo(f"{post.status}: {post.title} ({post.slug}) at {datetime.now(timezone.utc).isoformat()}")
+
+
+@click.group("token")
+def token_cli():
+    """Auth token operations (non-interactive)."""
+
+
+@token_cli.command("issue")
+@click.option("--email", default=None, help="Admin email (defaults to the first ADMIN_EMAILS entry).")
+@click.option("--days", default=None, type=int, help="Token lifetime in days (default: JWT_EXPIRES_HOURS).")
+def issue_token(email: Optional[str], days: Optional[int]):
+    """Mint a bearer JWT for an admin user — for agents/CI, no browser needed."""
+    admins = current_app.config["ADMIN_EMAILS"]
+    if not email:
+        if not admins:
+            raise click.ClickException("ADMIN_EMAILS is empty; pass --email or set ADMIN_EMAILS.")
+        email = sorted(admins)[0]
+    email = email.strip().lower()
+    if email not in admins:
+        raise click.ClickException(
+            f"{email!r} is not in ADMIN_EMAILS, so the token would not have admin access. "
+            "Add it to ADMIN_EMAILS first."
+        )
+    user = User.query.filter_by(email=email).first()
+    if user is None:
+        user = User(email=email, google_sub=f"cli:{email}", name="CLI Admin", role="admin")
+        db.session.add(user)
+    else:
+        user.role = "admin"
+    db.session.commit()
+    if days is not None:
+        current_app.config["JWT_EXPIRES"] = timedelta(days=days)
+    click.echo(issue_jwt(user))

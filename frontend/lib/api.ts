@@ -22,6 +22,21 @@ export type BlogPost = {
   geoRegion: string;
 };
 
+export type SitePage = {
+  id: number;
+  title: string;
+  slug: string;
+  navLabel: string;
+  navOrder: number;
+  showInNav: boolean;
+  bodyMarkdown?: string;
+  metaTitle: string;
+  metaDescription: string;
+  canonicalUrl?: string;
+  status?: string;
+  publishedAt?: string | null;
+};
+
 export type DesignProfile = {
   name: string;
   source: string;
@@ -113,13 +128,17 @@ const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000/
 type NextRequestInit = RequestInit & { next?: { revalidate?: number } };
 
 async function fetchJson<T>(path: string, init?: NextRequestInit): Promise<T> {
+  const { next, cache, headers, ...rest } = init ?? {};
+  // Respect a per-call caching choice; otherwise default to ISR revalidate=300.
+  // (Avoid no-store in the root layout — it forces build-time prerender to fetch and can hang the build.)
+  const caching = cache ? { cache } : { next: next ?? { revalidate: 300 } };
   const response = await fetch(`${API_BASE}${path}`, {
-    ...init,
+    ...rest,
     headers: {
       "Content-Type": "application/json",
-      ...(init?.headers || {})
+      ...((headers as Record<string, string>) || {})
     },
-    next: { revalidate: 300 }
+    ...caching
   });
   if (!response.ok) {
     throw new Error(`API request failed: ${response.status}`);
@@ -164,6 +183,26 @@ export async function getDesign(): Promise<DesignProfile> {
 export async function getPost(slug: string): Promise<BlogPost | null> {
   try {
     const data = await fetchJson<{ item: BlogPost }>(`/blogs/${slug}`);
+    return data.item;
+  } catch {
+    return null;
+  }
+}
+
+export async function getPages(): Promise<SitePage[]> {
+  try {
+    // no-store + the layout's force-dynamic: the nav always reflects currently
+    // published pages, so a new page shows in the menu immediately.
+    const data = await fetchJson<{ items: SitePage[] }>("/pages", { cache: "no-store" });
+    return data.items;
+  } catch {
+    return [];
+  }
+}
+
+export async function getPage(slug: string): Promise<SitePage | null> {
+  try {
+    const data = await fetchJson<{ item: SitePage }>(`/pages/${slug}`, { cache: "no-store" });
     return data.item;
   } catch {
     return null;

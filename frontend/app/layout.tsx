@@ -2,8 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
 import { AuthProvider } from "./providers";
-import { getDesign, getSite } from "@/lib/api";
+import { getDesign, getSite, getPages } from "@/lib/api";
 import { designCssVariables } from "@/lib/design";
+import { SiteNav } from "@/components/nav";
+
+// Content (pages, blog, nav) is DB-driven and must reflect changes immediately,
+// so render dynamically per request instead of statically prerendering at build.
+// This also keeps the build from prerendering routes that fetch the API.
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata(): Promise<Metadata> {
   const site = await getSite();
@@ -26,22 +32,14 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const [site, design] = await Promise.all([getSite(), getDesign()]);
+  const [site, design, pages] = await Promise.all([getSite(), getDesign(), getPages()]);
+  const navPages = pages.filter((page) => page.showInNav).map((page) => ({ slug: page.slug, navLabel: page.navLabel }));
   return (
     <html lang="en">
       <body style={designCssVariables(design)}>
         <AuthProvider>
           <div className="shell">
-            <header className="topbar">
-              <Link className="brand" href="/">
-                <span className="mark" />
-                <span>{site.name}</span>
-              </Link>
-              <nav className="nav" aria-label="Main navigation">
-                <Link href="/blog">Blog</Link>
-                <Link href="/contact">Contact</Link>
-              </nav>
-            </header>
+            <SiteNav siteName={site.name} pages={navPages} />
             {children}
             <footer className="footer">Built for Oracle VM, Cloudflare, Flask, Next.js, and maintainable AI workflows.</footer>
           </div>

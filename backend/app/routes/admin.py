@@ -6,7 +6,7 @@ from slugify import slugify
 
 from ..auth import require_auth
 from ..extensions import db
-from ..models import BlogPost, DesignProfile
+from ..models import BlogPost, DesignProfile, Page
 from ..services.ai_service import generate_blog_post
 from ..services.competitor_analyzer import analyze_competitors
 from ..services.design_service import deep_merge, normalized_profile, profile_for_industry
@@ -18,11 +18,11 @@ def _active_design_profile() -> Optional[DesignProfile]:
     return DesignProfile.query.filter_by(status="active").order_by(DesignProfile.updated_at.desc()).first()
 
 
-def _unique_slug(slug: str) -> str:
+def _unique_slug(slug: str, model=BlogPost) -> str:
     base = slugify(slug) or "post"
     candidate = base
     index = 2
-    while BlogPost.query.filter_by(slug=candidate).first():
+    while model.query.filter_by(slug=candidate).first():
         candidate = f"{base}-{index}"
         index += 1
     return candidate
@@ -199,3 +199,65 @@ def analyze_design_competitors():
     profile.notes = generated["notes"]
     db.session.commit()
     return {"item": profile.to_dict(), "analysis": generated["analysis"]}
+
+
+RESERVED_SLUGS = {"blog", "blogs", "contact", "api", "admin", "_next"}
+
+
+def _create_page(data: dict, publish: bool) -> Page:
+    status = "published" if publish else data.get("status", "draft")
+    page = Page(
+        title=data["title"],
+        slug=_unique_slug(data.get("slug") or data["title"], model=Page),
+        body_markdown=data["body_markdown"],
+        status=status,
+        nav_label=data.get("nav_label", ""),
+        nav_order=int(data.get("nav_order", 100)),
+        show_in_nav=bool(data.get("show_in_nav", True)),
+        meta_title=data.get("meta_title", data["title"][:60]),
+        meta_description=data.get("meta_description", "")[:320],
+        published_at=datetime.now(timezone.utc) if status == "published" else None,
+    )
+    page.canonical_url = f"{current_app.config['SITE_URL']}/{page.slug}"
+    db.session.add(page)
+    db.session.commit()
+    return page
+
+
+@bp.post("/pages")
+@require_auth(admin=True)
+def create_page():
+    data = request.get_json(silent=True) or {}
+    if not data.get("title") or not data.get("body_markdown"):
+        return jsonify({"error": {"code": "bad_request", "message": "title and body_markdown are required"}}), 400
+    if slugify(data.get("slug") or data["title"]) in RESERVED_SLUGS:
+        return jsonify({"error": {"code": "bad_request", "message": "slug is reserved"}}), 400
+    page = _create_page(data, publish=data.get("status") == "published")
+    return {"item": page.to_detail_dict()}, 201
+
+
+@bp.patch("/pages/<int:page_id>")
+@require_auth(admin=True)
+def update_page(page_id: int):
+    page = db.session.get(Page, page_id)
+    if not page:
+        return jsonify({"error": {"code": "not_found", "message": "Page not found"}}), 404
+    data = request.get_json(silent=True) or {}
+    for key in ["title", "body_markdown", "status", "nav_label", "nav_order", "show_in_nav", "meta_title", "meta_description"]:
+        if key in data:
+            setattr(page, key, data[key])
+    if data.get("status") == "published" and not page.published_at:
+        page.published_at = datetime.now(timezone.utc)
+    db.session.commit()
+    return {"item": page.to_detail_dict()}
+
+
+@bp.delete("/pages/<int:page_id>")
+@require_auth(admin=True)
+def delete_page(page_id: int):
+    page = db.session.get(Page, page_id)
+    if not page:
+        return jsonify({"error": {"code": "not_found", "message": "Page not found"}}), 404
+    db.session.delete(page)
+    db.session.commit()
+    return {"item": {"id": page_id, "deleted": True}}

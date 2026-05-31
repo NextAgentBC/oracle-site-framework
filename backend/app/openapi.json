@@ -14,11 +14,18 @@
     "/auth/google": { "post": { "summary": "Google signup/login" } },
     "/blogs": { "get": { "summary": "List published blog posts" } },
     "/blogs/{slug}": { "get": { "summary": "Get published blog post" } },
+    "/pages": { "get": { "summary": "List published content pages" } },
+    "/pages/{slug}": { "get": { "summary": "Get published content page" } },
     "/newsletter/subscribe": { "post": { "summary": "Subscribe to newsletter" } },
     "/contact": { "post": { "summary": "Send contact message" } },
     "/admin/blogs/generate": { "post": { "summary": "Generate AI blog post" } },
     "/admin/blogs": { "post": { "summary": "Create blog post" } },
     "/admin/blogs/{id}": { "patch": { "summary": "Update blog post" } },
+    "/admin/pages": { "post": { "summary": "Create content page" } },
+    "/admin/pages/{id}": {
+      "patch": { "summary": "Update content page" },
+      "delete": { "summary": "Delete content page" }
+    },
     "/admin/design": {
       "get": { "summary": "Get active design profile" },
       "patch": { "summary": "Update active design profile tokens" }

@@ -8,7 +8,7 @@ from sqlalchemy import text
 
 from ..auth import issue_jwt, upsert_google_user, verify_google_token
 from ..extensions import db
-from ..models import BlogPost, DesignProfile, NewsletterSubscription
+from ..models import BlogPost, DesignProfile, NewsletterSubscription, Page
 from ..services.design_service import DEFAULT_DESIGN_PROFILE, normalized_profile
 from ..services.email_service import send_email
 
@@ -77,6 +77,22 @@ def blogs():
 def blog_detail(slug: str):
     post = BlogPost.query.filter_by(slug=slug, status="published").first_or_404()
     return {"item": post.to_detail_dict()}
+
+
+@bp.get("/pages")
+def pages():
+    items = (
+        Page.query.filter_by(status="published")
+        .order_by(Page.nav_order.asc(), Page.title.asc())
+        .all()
+    )
+    return {"items": [page.to_card_dict() for page in items], "meta": {"count": len(items)}}
+
+
+@bp.get("/pages/<slug>")
+def page_detail(slug: str):
+    page = Page.query.filter_by(slug=slug, status="published").first_or_404()
+    return {"item": page.to_detail_dict()}
 
 
 @bp.post("/newsletter/subscribe")

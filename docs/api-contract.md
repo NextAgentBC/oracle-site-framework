@@ -12,18 +12,23 @@ The backend is intentionally OpenClaw-friendly: resources are grouped by domain,
 | `POST` | `/api/auth/google` | Verify Google ID token and create/login user |
 | `GET` | `/api/blogs` | List published blog posts |
 | `GET` | `/api/blogs/:slug` | Read one blog post |
+| `GET` | `/api/pages` | List published content pages |
+| `GET` | `/api/pages/:slug` | Read one content page |
 | `POST` | `/api/newsletter/subscribe` | Subscribe an email |
 | `POST` | `/api/contact` | Send a contact message |
 
 ## Admin Endpoints
 
-Admin endpoints require `Authorization: Bearer <token>` where the token comes from `/api/auth/google`.
+Admin endpoints require `Authorization: Bearer <token>` where the token comes from `/api/auth/google` (browser) or, for agents/CI, `flask --app app.main token issue --email <admin>` (non-interactive).
 
 | Method | Path | Purpose |
 | --- | --- | --- |
 | `POST` | `/api/admin/blogs/generate` | Generate a draft or published AI blog |
 | `POST` | `/api/admin/blogs` | Create a manual blog post |
 | `PATCH` | `/api/admin/blogs/:id` | Update a blog post |
+| `POST` | `/api/admin/pages` | Create a content page |
+| `PATCH` | `/api/admin/pages/:id` | Update a content page |
+| `DELETE` | `/api/admin/pages/:id` | Delete a content page |
 | `GET` | `/api/admin/design` | Read active UI/UX design profile |
 | `PATCH` | `/api/admin/design` | Update design tokens, voice, and notes |
 | `POST` | `/api/admin/design/generate` | Generate an industry/competitor-informed design profile |

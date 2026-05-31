@@ -15,3 +15,6 @@ instance/
 *.sqlite
 *.db
 .pytest_cache/
+
+# local deploy wiring (not part of the portable framework)
+docker-compose.override.yml

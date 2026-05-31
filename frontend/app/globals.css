@@ -81,6 +81,25 @@ textarea {
   font-size: 14px;
 }
 
+.nav-toggle {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px;
+}
+
+.nav-toggle-bar {
+  background: var(--color-ink);
+  border-radius: 2px;
+  display: block;
+  height: 2px;
+  width: 24px;
+}
+
 .main {
   margin: 0 auto;
   max-width: var(--layout-content-max);
@@ -260,7 +279,29 @@ textarea {
   }
 
   .topbar {
-    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  .nav {
+    display: none;
     flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    order: 3;
+    width: 100%;
+  }
+
+  .nav.is-open {
+    display: flex;
+  }
+
+  .nav a {
+    border-top: 1px solid var(--color-line);
+    font-size: 16px;
+    padding: 12px 2px;
   }
 }
