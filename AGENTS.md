@@ -13,3 +13,4 @@ Use this file when operating inside this repository.
 - Run `pytest -q` from `backend/` before reporting backend changes as complete.
 - For deployment, target `oracle-server:/home/ubuntu/projects/oracle-site` unless the human gives another path.
 - Prefer Cloudflare Tunnel over direct public Nginx exposure.
+- Student prerequisites live in `docs/student-prep.md`. You may run/verify steps marked 🤖 (e.g. `ssh oracle-server` checks, `gws auth status`); steps marked 🧑 require the human in a browser (domain, Cloudflare signup, Google OAuth Web client, SMTP app password) — guide, do not attempt them.
