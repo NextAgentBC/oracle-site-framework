@@ -813,3 +813,18 @@ a.post-card .button.ghost { margin-top: 4px; justify-self: start; }
   .steps, .gallery { grid-template-columns: 1fr; }
   .banner { flex-direction: column; align-items: stretch; text-align: center; }
 }
+
+/* ---------- Small phones (<=560px): tame oversized display type, full-width CTAs ---------- */
+@media (max-width: 560px) {
+  .hero h1 { font-size: clamp(33px, 9.6vw, 46px); line-height: 1.06; letter-spacing: -0.03em; }
+  [data-theme="creative"] .hero-centered h1 { font-size: clamp(36px, 11vw, 58px); }
+  .section h2, .section-flex h2 { font-size: clamp(25px, 7.4vw, 34px); }
+  .article h1 { font-size: clamp(28px, 8vw, 40px); }
+  .lede, .hero .lede { font-size: clamp(16px, 4.3vw, 18px); }
+  .stat-value { font-size: clamp(26px, 8vw, 36px); }
+  .stat { padding: 18px 16px; }
+  .main { padding: clamp(18px, 5vw, 28px) 16px clamp(48px, 12vw, 72px); }
+  .article { padding: clamp(20px, 6vw, 28px); }
+  .hero-actions { gap: 10px; }
+  .hero-actions .button, .cta-banner .button, .newsletter-panel .button { width: 100%; }
+}
