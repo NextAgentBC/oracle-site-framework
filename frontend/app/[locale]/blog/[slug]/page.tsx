@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { getPost } from "@/lib/api";
 import { alternatesFor, normalizeLocale } from "@/lib/i18n";
 
@@ -59,7 +60,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
             </span>
           ))}
         </div>
-        <ReactMarkdown>{post.bodyMarkdown || ""}</ReactMarkdown>
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.bodyMarkdown || ""}</ReactMarkdown>
       </article>
     </main>
   );

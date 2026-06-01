@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { getPage, getSite } from "@/lib/api";
 import { SectionRenderer } from "@/components/sections";
 import { alternatesFor, normalizeLocale } from "@/lib/i18n";
@@ -41,7 +42,7 @@ export default async function ContentPage({ params }: PageProps) {
     <main className="main">
       <article className="article">
         <h1>{page.title}</h1>
-        <ReactMarkdown>{page.bodyMarkdown || ""}</ReactMarkdown>
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>{page.bodyMarkdown || ""}</ReactMarkdown>
       </article>
     </main>
   );

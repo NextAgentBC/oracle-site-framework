@@ -550,6 +550,11 @@ a.post-card .button.ghost { margin-top: 4px; justify-self: start; }
 .article pre { background: #0c1018; color: #e6edf3; padding: 18px 20px; border-radius: 14px; overflow-x: auto; border: 1px solid rgba(255,255,255,0.06); }
 .article pre code { background: transparent; padding: 0; }
 .article img { border-radius: 14px; margin: 1.5em 0; }
+.article table { width: 100%; border-collapse: collapse; margin: 1.6em 0; font-size: 14px; line-height: 1.5; display: block; overflow-x: auto; }
+.article thead th { background: color-mix(in srgb, var(--color-ink) 6%, transparent); font-weight: 650; }
+.article th, .article td { border: 1px solid var(--edge); padding: 9px 13px; text-align: left; vertical-align: top; }
+.article td code, .article th code { white-space: nowrap; }
+.article hr { border: 0; border-top: 1px solid var(--edge); margin: 2.4em 0; }
 .article blockquote { border-left: 3px solid var(--color-primary); margin: 1.5em 0; padding: 4px 0 4px 20px; color: var(--color-muted); font-style: italic; }
 .article ul, .article ol { padding-left: 1.3em; }
 .article li { margin: 0.4em 0; }
