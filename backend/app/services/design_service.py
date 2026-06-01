@@ -837,6 +837,45 @@ STYLE_PRESETS = {
             {"type": "cta", "variant": "banner", "content": {"headline": "Got something to launch?", "subhead": "Tell us what you're building.", "cta": {"label": "Start a project", "href": "/contact"}}},
         ],
     },
+    # Onyx — luxe: near-black + gold, Fraunces serif, generous space. Premium/luxury.
+    "luxe": {
+        "name": "Onyx — Luxe",
+        "personality": "elegant, premium, understated, high-contrast",
+        "tokens": {
+            "colors": {
+                "ink": "#f4efe6", "muted": "#a99f8c", "paper": "#0c0b09", "surface": "#16140f",
+                "line": "#2a2620", "primary": "#c9a24a", "accent": "#c9a24a", "highlight": "#d9bd6e", "link": "#d9bd6e",
+                "surfaceInverse": "#060504", "inkInverse": "#f4efe6", "onPrimary": "#14110c",
+            },
+            "typography": {"body": SANS, "heading": FRAUNCES},
+            "radius": {"card": "4px", "control": "3px", "pill": "999px"},
+            "layout": {"density": "spacious", "heroMinHeight": "92vh", "sectionGap": "132px", "contentMaxWidth": "1080px", "cardPadding": "30px"},
+        },
+        "voice": {"headlineStyle": "elegant, restrained, premium", "tone": "understated luxury"},
+        "sections": [
+            {"type": "hero", "variant": "centered", "content": {
+                "badge": "By design",
+                "headline": "Crafted to be", "headlineAccent": "remembered.",
+                "subhead": "A quiet, premium presence — considered type, deep contrast, and room to breathe. Nothing shouts; everything lingers.",
+                "cta": {"label": "Begin", "href": "/contact"}, "secondaryCta": {"label": "View work", "href": "/blog"}}},
+            {"type": "stats", "content": {"items": [
+                {"value": "1:1", "label": "Made to order"}, {"value": "Gold", "label": "Standard"},
+                {"value": "Quiet", "label": "Luxury"}, {"value": "Yours", "label": "Entirely"}]}},
+            {"type": "logos", "content": {"heading": "In good company", "items": [{"label": "Aurum"}, {"label": "Noir"}, {"label": "Maison"}, {"label": "Élan"}]}},
+            {"type": "features", "variant": "minimal", "content": {"heading": "Considered, end to end.", "subhead": "Restraint is the luxury.", "items": [
+                {"icon": "sparkles", "title": "Refined", "body": "Every detail weighed — type, space, and tone."},
+                {"icon": "shield", "title": "Enduring", "body": "Built to age well, not to chase trends."},
+                {"icon": "layers", "title": "Bespoke", "body": "Made for you, owned by you, like nothing else."}]}},
+            {"type": "comparison", "content": {"heading": "Quiet beats loud.",
+                "left": {"title": "Off the shelf", "items": ["Templated and obvious", "Busy and bright", "Built to convert, fast", "Looks like the rest"]},
+                "right": {"title": "Onyx", "items": ["Bespoke and discreet", "Calm, deep, gold-touched", "Built to last", "Unmistakably yours"]}}},
+            {"type": "testimonials", "content": {"heading": "Quietly admired", "items": [
+                {"quote": "It feels expensive in the best way — calm, sure of itself.", "author": "A. Laurent", "role": "Maison"},
+                {"quote": "Understated and unforgettable. Exactly the brand we wanted.", "author": "R. Vance", "role": "Atelier"},
+                {"quote": "People slow down on it. That's the whole point.", "author": "M. Sole", "role": "Studio"}]}},
+            {"type": "cta", "variant": "banner", "content": {"headline": "Make something lasting.", "subhead": "A quiet conversation to begin.", "cta": {"label": "Get in touch", "href": "/contact"}}},
+        ],
+    },
 }
 
 

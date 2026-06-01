@@ -36,6 +36,9 @@ class Config:
     SITE_LOCALES = _csv(os.getenv("SITE_LOCALES", "en,zh")) or ["en"]
     SITE_DEFAULT_LOCALE = os.getenv("SITE_DEFAULT_LOCALE", "") or SITE_LOCALES[0]
 
+    # Self-hosted media (blog images, etc.), served at /api/media/<file> from a volume.
+    MEDIA_DIR = os.getenv("MEDIA_DIR", "/app/media")
+
     GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "")
     ADMIN_EMAILS = set(_csv(os.getenv("ADMIN_EMAILS", "")))
 

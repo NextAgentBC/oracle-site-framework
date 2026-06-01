@@ -3,7 +3,9 @@ from datetime import datetime, timezone
 import json
 from importlib.resources import files
 
-from flask import Blueprint, current_app, jsonify, request
+import os
+
+from flask import Blueprint, current_app, jsonify, request, send_from_directory
 from sqlalchemy import text
 
 from ..auth import issue_jwt, upsert_google_user, verify_google_token
@@ -31,6 +33,16 @@ def request_locale():
 def health():
     db.session.execute(text("select 1"))
     return {"status": "ok", "database": "ok"}
+
+
+@bp.get("/media/<path:filename>")
+def media(filename: str):
+    """Serve self-hosted media (blog images, etc.) from MEDIA_DIR — a persistent
+    volume so the site owns its images instead of hot-linking an external CDN.
+    send_from_directory guards against path traversal."""
+    media_dir = current_app.config["MEDIA_DIR"]
+    os.makedirs(media_dir, exist_ok=True)
+    return send_from_directory(media_dir, filename, max_age=86400)
 
 
 @bp.get("/site")

@@ -64,7 +64,7 @@ Other one-liners: `{"preset":"minimal"}` (Aurora, light) · `{"preset":"editoria
      -d '{"industry":"...","competitorUrls":["https://apple.com"],"notes":"Inspiration only — create a distinct identity."}'
    ```
 
-## Presets (twelve switchable templates)
+## Presets (thirteen switchable templates)
 
 Each is a full template — palette + light/dark mode + font pairing + hero style + section composition — not just a recolor. Switch with one `generate` call (`{"preset":"<key>"}`); renders instantly.
 
@@ -82,6 +82,7 @@ Each is a full template — palette + light/dark mode + font pairing + hero styl
 | `beauty` | Lumière | elegant salon / spa — blush + mauve | centered | light | Fraunces serif |
 | `legal` | Sterling | authoritative law / advisory — navy + gold | split | light | Spectral serif |
 | `creative` | Kinetic | bold studio / agency — near-black + acid accent | centered | light | Space Grotesk |
+| `luxe` | Onyx | premium / luxury — near-black + gold, serif, airy | centered | dark | Fraunces serif |
 
 **Industry shortcut:** `generate` with `{"industry":"<name>"}` (no preset) auto-maps common industries to the matching full template — e.g. `dental`/`clinic`/`wellness` → `healthcare`, `gym`/`yoga` → `fitness`, `cafe`/`bakery` → `restaurant`, `law`/`attorney` → `legal`, `saas`/`startup` → `tech`, `salon`/`spa` → `beauty`, `property`/`architecture` → `realestate`, `agency`/`studio`/`portfolio` → `creative`. Unmapped industries (education, accounting, retail, nonprofit, hospitality, construction) get a tuned palette over the default layout.
 

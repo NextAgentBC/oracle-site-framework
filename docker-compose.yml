@@ -22,6 +22,8 @@ services:
       DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-oracle_site}:${POSTGRES_PASSWORD:-oracle_site_password}@postgres:5432/${POSTGRES_DB:-oracle_site}
     ports:
       - "8000:8000"
+    volumes:
+      - media-data:/app/media      # self-hosted blog images, served at /api/media/<file>
     networks:
       default: {}
       # Cloudflare tunnel (in infra/) routes oracle-api.* -> this alias on `edge`.
@@ -56,3 +58,4 @@ networks:
 
 volumes:
   postgres-data:
+  media-data:
