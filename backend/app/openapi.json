@@ -15,6 +15,7 @@
     "/patterns": { "get": { "summary": "Public catalog of saved section patterns (the capture library)" } },
     "/patterns/{slug}": { "get": { "summary": "Get a saved section pattern (full spec)" } },
     "/i18n/{locale}": { "get": { "summary": "UI chrome strings (nav/footer/buttons) for a locale" } },
+    "/media/{filename}": { "get": { "summary": "Serve a self-hosted media file (blog images, etc.) from the media volume" } },
     "/auth/google": { "post": { "summary": "Google signup/login" } },
     "/blogs": { "get": { "summary": "List published blog posts (accepts ?locale=)" } },
     "/blogs/{slug}": { "get": { "summary": "Get published blog post (accepts ?locale=)" } },
