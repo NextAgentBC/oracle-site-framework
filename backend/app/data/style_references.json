@@ -1,12 +1,20 @@
 {
   "note": "Curated style references for the design skill. Inspiration signals only — never clone a brand's exact identity or assets.",
-  "families": ["minimal", "bold-dark", "editorial"],
+  "families": ["minimal", "bold-dark", "editorial", "corporate", "tech", "healthcare", "restaurant", "realestate", "fitness", "beauty", "legal", "creative"],
   "references": [
     {"site": "apple.com",  "family": "minimal",   "hero": "centered",  "vibe": "calm, spacious, premium",          "palette": {"bg": "#fbfbfd", "ink": "#1d1d1f", "accent": "#0a6cff"}, "notes": "Huge type, generous whitespace, restrained color, product-forward."},
     {"site": "notion.so",  "family": "minimal",   "hero": "centered",  "vibe": "friendly, clean, approachable",     "palette": {"bg": "#ffffff", "ink": "#191919", "accent": "#0a85ff"}, "notes": "Whitespace, simple type, light illustration."},
     {"site": "stripe.com", "family": "minimal",   "hero": "split",     "vibe": "polished, gradient-accented, trustworthy", "palette": {"bg": "#ffffff", "ink": "#0a2540", "accent": "#635bff"}, "notes": "Angled gradients, crisp type, developer-clean."},
     {"site": "tesla.com",  "family": "bold-dark", "hero": "fullbleed", "vibe": "dramatic, high-contrast, confident", "palette": {"bg": "#0c0f16", "ink": "#f4f6fb", "accent": "#e23b3b"}, "notes": "Full-bleed imagery, dark, short bold copy, dual CTAs."},
     {"site": "linear.app", "family": "bold-dark", "hero": "centered",  "vibe": "sleek, dark, focused",               "palette": {"bg": "#0b0c10", "ink": "#f7f8f8", "accent": "#5e6ad2"}, "notes": "Dark, tight type, subtle glow, minimal chrome."},
-    {"site": "airbnb.com", "family": "editorial", "hero": "split",     "vibe": "warm, friendly, photo-led",          "palette": {"bg": "#ffffff", "ink": "#222222", "accent": "#ff385c"}, "notes": "Rounded, warm, imagery + search-forward."}
+    {"site": "airbnb.com", "family": "editorial", "hero": "split",     "vibe": "warm, friendly, photo-led",          "palette": {"bg": "#ffffff", "ink": "#222222", "accent": "#ff385c"}, "notes": "Rounded, warm, imagery + search-forward."},
+    {"site": "intercom.com",  "family": "tech",        "hero": "centered",  "vibe": "modern SaaS, geometric, product-forward", "palette": {"bg": "#f7f9fc", "ink": "#0d1424", "accent": "#4f46e5"}, "notes": "Crisp grotesk, indigo + cyan, clear product shots."},
+    {"site": "onemedical.com","family": "healthcare",  "hero": "split",     "vibe": "calm, trustworthy, patient-first",   "palette": {"bg": "#f1f8f6", "ink": "#102a2c", "accent": "#0d7e77"}, "notes": "Soft teal, rounded cards, reassuring tone."},
+    {"site": "sweetgreen.com","family": "restaurant",  "hero": "fullbleed", "vibe": "warm, appetizing, seasonal",         "palette": {"bg": "#fbf3e8", "ink": "#2a1a12", "accent": "#c0461f"}, "notes": "Earthy paprika + olive, serif display, food-forward."},
+    {"site": "compass.com",   "family": "realestate",  "hero": "split",     "vibe": "premium, structured, photographic",  "palette": {"bg": "#f5f5f2", "ink": "#1b1d22", "accent": "#a47e3b"}, "notes": "Slate + brass, serif headings, listing-led grid."},
+    {"site": "equinox.com",   "family": "fitness",     "hero": "fullbleed", "vibe": "high-energy, dark, athletic",        "palette": {"bg": "#0d1110", "ink": "#eef2f0", "accent": "#e0452a"}, "notes": "Dark canvas, condensed display, volt accents, bold imagery."},
+    {"site": "glossier.com",  "family": "beauty",      "hero": "centered",  "vibe": "elegant, soft, refined",             "palette": {"bg": "#fbf3f5", "ink": "#2e2230", "accent": "#9d4a62"}, "notes": "Blush + mauve, serif, generous whitespace, gentle."},
+    {"site": "latham.com",    "family": "legal",       "hero": "split",     "vibe": "authoritative, discreet, conservative", "palette": {"bg": "#f6f7fa", "ink": "#0f1a32", "accent": "#8a6d3b"}, "notes": "Deep navy + gold, serif, structured and credible."},
+    {"site": "pentagram.com", "family": "creative",    "hero": "centered",  "vibe": "bold, expressive, oversized type",   "palette": {"bg": "#f4f4f0", "ink": "#0a0a0a", "accent": "#ff4d2e"}, "notes": "Near-black + acid accent, huge grotesk, work-forward."}
   ]
 }

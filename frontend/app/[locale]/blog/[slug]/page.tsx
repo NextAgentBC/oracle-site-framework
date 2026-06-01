@@ -2,19 +2,21 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import { getPost } from "@/lib/api";
+import { alternatesFor, normalizeLocale } from "@/lib/i18n";
 
 type PageProps = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const post = await getPost(slug);
+  const { slug, locale: raw } = await params;
+  const locale = normalizeLocale(raw);
+  const post = await getPost(slug, locale);
   if (!post) return {};
   return {
     title: post.metaTitle || post.title,
     description: post.metaDescription || post.excerpt,
-    alternates: { canonical: post.canonicalUrl || `/blog/${post.slug}` },
+    alternates: alternatesFor(locale, `/blog/${post.slug}`),
     openGraph: {
       title: post.title,
       description: post.excerpt,
@@ -26,8 +28,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function BlogDetailPage({ params }: PageProps) {
-  const { slug } = await params;
-  const post = await getPost(slug);
+  const { slug, locale: raw } = await params;
+  const locale = normalizeLocale(raw);
+  const post = await getPost(slug, locale);
   if (!post) notFound();
 
   const jsonLd = {
@@ -35,6 +38,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
     "@type": "BlogPosting",
     headline: post.title,
     description: post.excerpt,
+    inLanguage: locale,
     datePublished: post.publishedAt,
     author: { "@type": "Person", name: post.author },
     keywords: post.tags.join(", "),
@@ -60,4 +64,3 @@ export default async function BlogDetailPage({ params }: PageProps) {
     </main>
   );
 }
-

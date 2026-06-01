@@ -94,8 +94,23 @@ response has `failedAt` + per-op `results` — report which step failed and retr
 Discover everything editable (home + all pages) before picking a target:
 ```bash
 curl -s "$ORACLE_SITE_API/admin/surfaces" -H "Authorization: Bearer $ORACLE_SITE_TOKEN" \
-  | jq '.items[] | {target, kind, status, blocks: [.blocks[].type]}'
+  | jq '.items[] | {target, kind, status, locales, blocks: [.blocks[].type]}'
 ```
+
+## 3.6 Locales & patterns
+
+**Locales** — add `?locale=zh` to any compose call (add/update/move/batch/…) to edit
+that locale's copy of the page instead of the default. On first edit it's seeded from
+the default-locale blocks (same ids), so you translate in place. Full guide:
+`../oracle-site-i18n/SKILL.md`.
+
+**Patterns** — insert a saved section pattern instead of a typed block:
+```bash
+curl -s -X POST "$ORACLE_SITE_API/admin/compose/home/blocks" -H "Authorization: Bearer $ORACLE_SITE_TOKEN" -H "Content-Type: application/json" \
+  -d '{"pattern":"how-it-works-3-steps","position":"end"}'      # from GET /patterns
+```
+Capturing a section from a screenshot (and the flexible `section` block) lives in
+`../oracle-site-capture/SKILL.md`.
 
 **Per-block skills:** each block type also has a thin trigger skill
 (`oracle-site-block-hero`, `…-pricing`, …) so "加个价格表 / add an FAQ" routes
@@ -106,5 +121,5 @@ precisely; they all delegate here. Regenerate after adding a block type:
 - **Discover before you write.** Use real `type` / `variant` values from `/blocks` and real ids from the target's list. Unknown type/variant/id or a bad `position` returns a clear `error.message` — read it and retry.
 - **Objects merge, arrays replace.** For list edits: read → modify the array → send it back.
 - Edits are **instant** — live site updates on next load, no redeploy.
-- Available block types (P1): `hero` · `stats` · `logos` · `features` · `problem` · `comparison` · `testimonials` · `pricing` · `faq` · `cta`. The catalog is the source of truth; new types appear there as they're added.
+- Available block types: `hero` · `stats` · `logos` · `features` · `problem` · `comparison` · `testimonials` · `pricing` · `faq` · `cta` · `section` (the flexible token-driven block — see `../oracle-site-capture/SKILL.md`). The catalog is the source of truth; new types appear there as they're added.
 - A **brand-new block type** (not an instance of an existing one) is a code change — add it to `backend/app/services/block_service.py` (manifest) **and** a renderer in `frontend/components/sections.tsx`, then redeploy. After that it shows up in `/blocks` automatically.

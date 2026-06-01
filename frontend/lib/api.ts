@@ -5,6 +5,8 @@ export type Site = {
   audience: string;
   region: string;
   googleClientId: string;
+  locales: string[];
+  defaultLocale: string;
 };
 
 export type BlogPost = {
@@ -40,11 +42,19 @@ export type SitePage = {
 
 export type SectionCta = { label: string; href: string };
 
+export type SectionLayout = {
+  columns?: number;
+  align?: "left" | "center";
+  media?: "none" | "left" | "right" | "top";
+  tone?: "plain" | "tint" | "inverse";
+};
+
 export type Section = {
   type: string;
   variant?: string;
   content?: {
     kicker?: string;
+    eyebrow?: string;
     badge?: string;
     headline?: string;
     headlineAccent?: string;
@@ -52,9 +62,11 @@ export type Section = {
     cta?: SectionCta;
     secondaryCta?: SectionCta;
     heading?: string;
+    layout?: SectionLayout;
     left?: { title?: string; items?: string[] };
     right?: { title?: string; items?: string[] };
     items?: {
+      kind?: string;
       icon?: string;
       title?: string;
       body?: string;
@@ -70,6 +82,8 @@ export type Section = {
       featured?: boolean;
       q?: string;
       a?: string;
+      image?: string;
+      href?: string;
       cta?: SectionCta;
     }[];
   };
@@ -92,6 +106,9 @@ export type DesignProfile = {
       accent: string;
       highlight: string;
       link: string;
+      surfaceInverse: string;
+      inkInverse: string;
+      onPrimary: string;
     };
     typography: {
       body: string;
@@ -117,6 +134,7 @@ export type DesignProfile = {
   };
   notes: string;
   sections?: Section[];
+  availableLocales?: string[];
 };
 
 export const fallbackDesign: DesignProfile = {
@@ -135,7 +153,10 @@ export const fallbackDesign: DesignProfile = {
       primary: "#216e5f",
       accent: "#b54945",
       highlight: "#c79b3b",
-      link: "#356b9f"
+      link: "#356b9f",
+      surfaceInverse: "#0b0f1a",
+      inkInverse: "#f6f9ff",
+      onPrimary: "#ffffff"
     },
     typography: {
       body: "var(--font-sans), system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
@@ -186,6 +207,12 @@ async function fetchJson<T>(path: string, init?: NextRequestInit): Promise<T> {
   return response.json() as Promise<T>;
 }
 
+// Append ?locale= only for a non-empty locale; the backend treats the default
+// or an unknown locale as the base content, so this stays harmless either way.
+function localeQuery(locale?: string): string {
+  return locale ? `?locale=${encodeURIComponent(locale)}` : "";
+}
+
 export async function getSite(): Promise<Site> {
   try {
     const data = await fetchJson<{ item: Site }>("/site");
@@ -197,56 +224,67 @@ export async function getSite(): Promise<Site> {
       industry: "education",
       audience: "students and independent creators",
       region: "United States",
-      googleClientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""
+      googleClientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || "",
+      locales: (process.env.NEXT_PUBLIC_SITE_LOCALES || "en,zh").split(",").map((s) => s.trim()).filter(Boolean),
+      defaultLocale: process.env.NEXT_PUBLIC_DEFAULT_LOCALE || "en"
     };
   }
 }
 
-export async function getPosts(): Promise<BlogPost[]> {
+export async function getPosts(locale?: string): Promise<BlogPost[]> {
   try {
-    const data = await fetchJson<{ items: BlogPost[] }>("/blogs", { cache: "no-store" });
+    const data = await fetchJson<{ items: BlogPost[] }>(`/blogs${localeQuery(locale)}`, { cache: "no-store" });
     return data.items;
   } catch {
     return [];
   }
 }
 
-export async function getDesign(): Promise<DesignProfile> {
+export async function getDesign(locale?: string): Promise<DesignProfile> {
   try {
     // no-store: applying a style preset / editing the design must reflect immediately.
-    const data = await fetchJson<{ item: DesignProfile }>("/design", { cache: "no-store" });
+    const data = await fetchJson<{ item: DesignProfile }>(`/design${localeQuery(locale)}`, { cache: "no-store" });
     return data.item;
   } catch {
     return fallbackDesign;
   }
 }
 
-export async function getPost(slug: string): Promise<BlogPost | null> {
+export async function getPost(slug: string, locale?: string): Promise<BlogPost | null> {
   try {
-    const data = await fetchJson<{ item: BlogPost }>(`/blogs/${slug}`);
+    const data = await fetchJson<{ item: BlogPost }>(`/blogs/${slug}${localeQuery(locale)}`);
     return data.item;
   } catch {
     return null;
   }
 }
 
-export async function getPages(): Promise<SitePage[]> {
+export async function getPages(locale?: string): Promise<SitePage[]> {
   try {
     // no-store + the layout's force-dynamic: the nav always reflects currently
     // published pages, so a new page shows in the menu immediately.
-    const data = await fetchJson<{ items: SitePage[] }>("/pages", { cache: "no-store" });
+    const data = await fetchJson<{ items: SitePage[] }>(`/pages${localeQuery(locale)}`, { cache: "no-store" });
     return data.items;
   } catch {
     return [];
   }
 }
 
-export async function getPage(slug: string): Promise<SitePage | null> {
+export async function getPage(slug: string, locale?: string): Promise<SitePage | null> {
   try {
-    const data = await fetchJson<{ item: SitePage }>(`/pages/${slug}`, { cache: "no-store" });
+    const data = await fetchJson<{ item: SitePage }>(`/pages/${slug}${localeQuery(locale)}`, { cache: "no-store" });
     return data.item;
   } catch {
     return null;
+  }
+}
+
+export async function getMessages(locale: string): Promise<Record<string, string>> {
+  try {
+    const data = await fetchJson<{ item: { messages: Record<string, string> } }>(`/i18n/${locale}`, { cache: "no-store" });
+    return data.item.messages || {};
+  } catch {
+    return {};
   }
 }
 

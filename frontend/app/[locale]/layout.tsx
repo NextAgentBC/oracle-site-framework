@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Inter, Space_Grotesk, Spectral } from "next/font/google";
-import "./globals.css";
-import { AuthProvider } from "./providers";
+import { Inter, Space_Grotesk, Spectral, Fraunces, Oswald } from "next/font/google";
+import "../globals.css";
+import { AuthProvider } from "../providers";
 import { getDesign, getSite, getPages } from "@/lib/api";
 import { designCssVariables } from "@/lib/design";
 import { SiteNav } from "@/components/nav";
+import { loadMessages, normalizeLocale, LOCALES, t } from "@/lib/i18n";
 import type { DesignProfile } from "@/lib/api";
 
 // Content (pages, blog, nav) is DB-driven and must reflect changes immediately,
 // so render dynamically per request instead of statically prerendering at build.
-// This also keeps the build from prerendering routes that fetch the API.
 export const dynamic = "force-dynamic";
 
 // A small font palette loaded once; templates pick which face to use through
@@ -18,10 +18,10 @@ export const dynamic = "force-dynamic";
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans", display: "swap" });
 const grotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-grotesk", display: "swap", weight: ["400", "500", "600", "700"] });
 const serif = Spectral({ subsets: ["latin"], variable: "--font-display", display: "swap", weight: ["400", "500", "600", "700"] });
-const fontVars = `${inter.variable} ${grotesk.variable} ${serif.variable}`;
+const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunces", display: "swap", weight: ["400", "500", "600", "700"] });
+const oswald = Oswald({ subsets: ["latin"], variable: "--font-condensed", display: "swap", weight: ["400", "500", "600", "700"] });
+const fontVars = `${inter.variable} ${grotesk.variable} ${serif.variable} ${fraunces.variable} ${oswald.variable}`;
 
-// Derive the two adaptive axes the stylesheet reads, straight from the active
-// design profile — no extra API fields needed.
 function hexLuminance(hex?: string): number | null {
   if (!hex) return null;
   let h = hex.trim().replace("#", "");
@@ -44,35 +44,40 @@ function deriveThemeFamily(design: DesignProfile): string {
   return (design.industry || "default").toLowerCase();
 }
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
   const site = await getSite();
   const article = /^[aeiou]/i.test(site.industry) ? "an" : "a";
   return {
-    title: {
-      default: site.name,
-      template: `%s | ${site.name}`
-    },
+    title: { default: site.name, template: `%s | ${site.name}` },
     description: `${article[0].toUpperCase()}${article.slice(1)} ${site.industry} website framework with daily blogs, newsletter, Google login, SEO, and GEO.`,
     metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || site.url),
-    openGraph: {
-      title: site.name,
-      description: `Daily ${site.industry} insights for ${site.audience}.`,
-      url: site.url,
-      siteName: site.name,
-      type: "website"
-    }
+    openGraph: { title: site.name, description: `Daily ${site.industry} insights for ${site.audience}.`, url: `${site.url}/${locale}`, siteName: site.name, type: "website" }
   };
 }
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const [site, design, pages] = await Promise.all([getSite(), getDesign(), getPages()]);
+export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
+  const { locale: raw } = await params;
+  const locale = normalizeLocale(raw);
+  const [site, design, pages, messages] = await Promise.all([getSite(), getDesign(), getPages(locale), loadMessages(locale)]);
   const navPages = pages.filter((page) => page.showInNav).map((page) => ({ slug: page.slug, navLabel: page.navLabel }));
+  const localeList = site.locales?.length ? site.locales : LOCALES;
   return (
-    <html lang="en" data-mode={deriveMode(design)} data-theme={deriveThemeFamily(design)} className={fontVars}>
-      <body style={designCssVariables(design)}>
+    <html
+      lang={locale}
+      data-mode={deriveMode(design)}
+      data-theme={deriveThemeFamily(design)}
+      className={fontVars}
+      // Tokens must live on :root (<html>) — the derived vars (--page-bg, --tint,
+      // shadows…) are declared in :root and resolve their nested var(--color-*)
+      // against this element, not <body>. On <body> the dark templates' page
+      // background would fall back to the light :root default.
+      style={designCssVariables(design)}
+    >
+      <body>
         <AuthProvider>
           <div className="shell">
-            <SiteNav siteName={site.name} pages={navPages} />
+            <SiteNav siteName={site.name} pages={navPages} locale={locale} locales={localeList} messages={messages} />
             {children}
             <footer className="footer">
               <div className="footer-grid">
@@ -81,22 +86,20 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                     <span className="mark" />
                     <strong>{site.name}</strong>
                   </span>
-                  <p className="muted">
-                    {site.industry} site built on the Oracle Site framework — Next.js, Flask, Cloudflare.
-                  </p>
+                  <p className="muted">{t(messages, "footer.tagline", { industry: site.industry })}</p>
                 </div>
-                <nav className="footer-col" aria-label="Pages">
-                  <h4>Pages</h4>
+                <nav className="footer-col" aria-label={t(messages, "footer.pages")}>
+                  <h4>{t(messages, "footer.pages")}</h4>
                   {navPages.map((page) => (
-                    <Link href={`/${page.slug}`} key={page.slug}>
+                    <Link href={`/${locale}/${page.slug}`} key={page.slug}>
                       {page.navLabel}
                     </Link>
                   ))}
                 </nav>
-                <nav className="footer-col" aria-label="More">
-                  <h4>More</h4>
-                  <Link href="/blog">Blog</Link>
-                  <Link href="/contact">Contact</Link>
+                <nav className="footer-col" aria-label={t(messages, "footer.more")}>
+                  <h4>{t(messages, "footer.more")}</h4>
+                  <Link href={`/${locale}/blog`}>{t(messages, "footer.blog")}</Link>
+                  <Link href={`/${locale}/contact`}>{t(messages, "footer.contact")}</Link>
                 </nav>
               </div>
               <div className="footer-bottom">© {new Date().getFullYear()} {site.name}</div>

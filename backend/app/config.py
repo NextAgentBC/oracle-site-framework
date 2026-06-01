@@ -32,6 +32,10 @@ class Config:
     SITE_AUDIENCE = os.getenv("SITE_AUDIENCE", "students and independent creators")
     SITE_REGION = os.getenv("SITE_REGION", "United States")
 
+    # i18n — first locale is the default (base columns). Add "zh" for Chinese.
+    SITE_LOCALES = _csv(os.getenv("SITE_LOCALES", "en,zh")) or ["en"]
+    SITE_DEFAULT_LOCALE = os.getenv("SITE_DEFAULT_LOCALE", "") or SITE_LOCALES[0]
+
     GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "")
     ADMIN_EMAILS = set(_csv(os.getenv("ADMIN_EMAILS", "")))
 

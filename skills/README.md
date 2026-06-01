@@ -11,12 +11,18 @@ edit + `docker compose up -d --build` loop, not a skill.
 
 | Skill | Covers | Auth |
 |---|---|---|
-| `oracle-site-shared` | base URL, auth/token, conventions, site/health/openapi/login — **read first** | public + admin |
+| `oracle-site-shared` | base URL, auth/token, conventions, locales, site/health/openapi/login — **read first** | public + admin |
 | `oracle-site-blog` | list/read; generate/create/update posts | public + admin |
-| `oracle-site-design` | read; update/generate/analyze design profile | public + admin |
+| `oracle-site-design` | read; update/generate/analyze design profile (12 style templates) | public + admin |
+| `oracle-site-compose` | block-level page editing (add/move/edit/remove/batch), locale-aware | public + admin |
+| `oracle-site-capture` | rebuild a section from a screenshot → flexible `section` block + `/patterns` library | public + admin |
+| `oracle-site-i18n` | translate content + UI chrome (path-based `/zh`) — the agent is the translator | public + admin |
 | `oracle-site-pages` | create/manage content pages (about, services…) — instant, no rebuild | public + admin |
 | `oracle-site-newsletter` | newsletter subscribe, contact form | public |
 | `oracle-site-ops` | status/logs/health; redeploy/restart (confirm first) | server shell |
+
+Plus one thin trigger skill per block type (`oracle-site-block-*`), generated from the
+live catalog by `generate-block-skills.py` — they delegate to `oracle-site-compose`.
 
 ## Configure
 

@@ -4,19 +4,37 @@ import { Send } from "lucide-react";
 import { FormEvent, useState } from "react";
 import { postJson } from "@/lib/api";
 
-export function NewsletterForm() {
+type Labels = {
+  placeholder?: string;
+  button?: string;
+  subscribing?: string;
+  subscribed?: string;
+  failed?: string;
+  emailAria?: string;
+};
+
+export function NewsletterForm({ labels = {} }: { labels?: Labels }) {
+  const l = {
+    placeholder: "you@example.com",
+    button: "Subscribe",
+    subscribing: "Subscribing...",
+    subscribed: "Subscribed. Check your inbox if email is configured.",
+    failed: "Subscription failed. Check the API logs.",
+    emailAria: "Email address",
+    ...labels
+  };
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setMessage("Subscribing...");
+    setMessage(l.subscribing);
     try {
       await postJson("/newsletter/subscribe", { email });
       setEmail("");
-      setMessage("Subscribed. Check your inbox if email is configured.");
+      setMessage(l.subscribed);
     } catch {
-      setMessage("Subscription failed. Check the API logs.");
+      setMessage(l.failed);
     }
   }
 
@@ -27,16 +45,15 @@ export function NewsletterForm() {
         type="email"
         value={email}
         onChange={(event) => setEmail(event.target.value)}
-        placeholder="you@example.com"
-        aria-label="Email address"
+        placeholder={l.placeholder}
+        aria-label={l.emailAria}
         required
       />
       <button className="button secondary" type="submit">
         <Send size={16} />
-        Subscribe
+        {l.button}
       </button>
       {message ? <p className="muted">{message}</p> : null}
     </form>
   );
 }
-

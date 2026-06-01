@@ -208,6 +208,52 @@ BLOCK_MANIFEST = [
         ],
         "defaultContent": {"headline": "Ready to get started?", "subhead": "", "cta": {"label": "Get in touch", "href": "/contact"}},
     },
+    {
+        # The "capture" target — one flexible, token-driven block that can express
+        # most section layouts the fixed blocks don't cover (e.g. rebuilt from a
+        # screenshot). It reads only design tokens, so it auto-harmonizes; the
+        # frontend SectionRenderer ('section') must mirror these field names.
+        "type": "section",
+        "label": "Custom section (flexible)",
+        "category": "custom",
+        "description": (
+            "Flexible token-driven section for layouts the fixed blocks don't cover "
+            "(e.g. captured from a screenshot). Pick a variant (grid/split/stack/banner), "
+            "set layout.columns 1-4, layout.align left|center, layout.media none|left|right|top, "
+            "layout.tone plain|tint|inverse. Each item has a 'kind': feature/stat/quote/step/media/text/button. "
+            "Never copy a source's exact colors — colors come from the site's tokens."
+        ),
+        "variants": ["grid", "split", "stack", "banner"],
+        "fields": [
+            {"key": "eyebrow", "type": "text", "label": "Eyebrow (optional)"},
+            {"key": "heading", "type": "text", "label": "Heading (optional)"},
+            {"key": "subhead", "type": "textarea", "label": "Subhead (optional)"},
+            {"key": "layout", "type": "object", "label": "Layout", "shape": [
+                {"key": "columns", "type": "number", "label": "Columns 1-4"},
+                {"key": "align", "type": "enum", "options": ["left", "center"]},
+                {"key": "media", "type": "enum", "options": ["none", "left", "right", "top"]},
+                {"key": "tone", "type": "enum", "options": ["plain", "tint", "inverse"]},
+            ]},
+            {"key": "items", "type": "list", "label": "Items", "item": [
+                {"key": "kind", "type": "enum", "options": ["feature", "stat", "quote", "step", "media", "text", "button"]},
+                {"key": "icon", "type": "icon"}, {"key": "title", "type": "text"}, {"key": "body", "type": "textarea"},
+                {"key": "value", "type": "text"}, {"key": "label", "type": "text"},
+                {"key": "quote", "type": "textarea"}, {"key": "author", "type": "text"}, {"key": "role", "type": "text"},
+                {"key": "image", "type": "text"}, {"key": "href", "type": "text"},
+            ]},
+            {"key": "cta", "type": "cta", "label": "Footer button (optional)"},
+        ],
+        "defaultContent": {
+            "eyebrow": "", "heading": "A flexible section", "subhead": "",
+            "layout": {"columns": 3, "align": "center", "media": "none", "tone": "plain"},
+            "items": [
+                {"kind": "feature", "icon": "sparkles", "title": "Item one", "body": "Describe it."},
+                {"kind": "feature", "icon": "shield", "title": "Item two", "body": "Describe it."},
+                {"kind": "feature", "icon": "gauge", "title": "Item three", "body": "Describe it."},
+            ],
+            "cta": {"label": "", "href": ""},
+        },
+    },
 ]
 
 _BY_TYPE = {b["type"]: b for b in BLOCK_MANIFEST}

@@ -3,6 +3,18 @@ from datetime import datetime, timezone
 from .extensions import db
 
 
+def _pick(i18n: dict, locale, field, base):
+    """Resolve a localized field: i18n[locale][field] if present & non-empty,
+    else the base-column value (the default locale). locale=None → base."""
+    if not locale:
+        return base
+    tr = (i18n or {}).get(locale) or {}
+    val = tr.get(field)
+    if val is None or val == "":
+        return base
+    return val
+
+
 class TimestampMixin:
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
     updated_at = db.Column(
@@ -45,25 +57,28 @@ class BlogPost(TimestampMixin, db.Model):
     canonical_url = db.Column(db.Text, nullable=False, default="")
     geo_region = db.Column(db.String(255), nullable=False, default="")
     published_at = db.Column(db.DateTime, nullable=True)
+    # {"<locale>": {"title":..,"excerpt":..,"body_markdown":..,"tags":[..],"meta_title":..,"meta_description":..}}
+    i18n = db.Column(db.JSON, nullable=False, default=dict)
 
-    def to_card_dict(self) -> dict:
+    def to_card_dict(self, locale=None) -> dict:
         return {
             "id": self.id,
-            "title": self.title,
+            "title": _pick(self.i18n, locale, "title", self.title),
             "slug": self.slug,
-            "excerpt": self.excerpt,
-            "tags": self.tags,
+            "excerpt": _pick(self.i18n, locale, "excerpt", self.excerpt),
+            "tags": _pick(self.i18n, locale, "tags", self.tags),
             "author": self.author,
             "publishedAt": self.published_at.isoformat() if self.published_at else None,
-            "metaTitle": self.meta_title,
-            "metaDescription": self.meta_description,
+            "metaTitle": _pick(self.i18n, locale, "meta_title", self.meta_title),
+            "metaDescription": _pick(self.i18n, locale, "meta_description", self.meta_description),
             "canonicalUrl": self.canonical_url,
             "geoRegion": self.geo_region,
+            "locales": sorted((self.i18n or {}).keys()),
         }
 
-    def to_detail_dict(self) -> dict:
-        item = self.to_card_dict()
-        item["bodyMarkdown"] = self.body_markdown
+    def to_detail_dict(self, locale=None) -> dict:
+        item = self.to_card_dict(locale)
+        item["bodyMarkdown"] = _pick(self.i18n, locale, "body_markdown", self.body_markdown)
         item["status"] = self.status
         return item
 
@@ -82,26 +97,30 @@ class Page(TimestampMixin, db.Model):
     meta_description = db.Column(db.String(320), nullable=False, default="")
     canonical_url = db.Column(db.Text, nullable=False, default="")
     published_at = db.Column(db.DateTime, nullable=True)
+    # {"<locale>": {"title":..,"nav_label":..,"body_markdown":..,"sections":[..],"meta_title":..,"meta_description":..}}
+    i18n = db.Column(db.JSON, nullable=False, default=dict)
 
-    def to_card_dict(self) -> dict:
+    def to_card_dict(self, locale=None) -> dict:
+        title = _pick(self.i18n, locale, "title", self.title)
         return {
             "id": self.id,
-            "title": self.title,
+            "title": title,
             "slug": self.slug,
-            "navLabel": self.nav_label or self.title,
+            "navLabel": _pick(self.i18n, locale, "nav_label", self.nav_label) or title,
             "navOrder": self.nav_order,
             "showInNav": self.show_in_nav,
-            "metaTitle": self.meta_title,
-            "metaDescription": self.meta_description,
+            "metaTitle": _pick(self.i18n, locale, "meta_title", self.meta_title),
+            "metaDescription": _pick(self.i18n, locale, "meta_description", self.meta_description),
+            "locales": sorted((self.i18n or {}).keys()),
         }
 
-    def to_detail_dict(self) -> dict:
-        item = self.to_card_dict()
-        item["bodyMarkdown"] = self.body_markdown
+    def to_detail_dict(self, locale=None) -> dict:
+        item = self.to_card_dict(locale)
+        item["bodyMarkdown"] = _pick(self.i18n, locale, "body_markdown", self.body_markdown)
         item["status"] = self.status
         item["canonicalUrl"] = self.canonical_url
         item["publishedAt"] = self.published_at.isoformat() if self.published_at else None
-        item["sections"] = self.sections
+        item["sections"] = _pick(self.i18n, locale, "sections", self.sections)
         return item
 
 
@@ -125,8 +144,10 @@ class DesignProfile(TimestampMixin, db.Model):
     voice = db.Column(db.JSON, nullable=False, default=dict)
     notes = db.Column(db.Text, nullable=False, default="")
     sections = db.Column(db.JSON, nullable=False, default=list)
+    # {"<locale>": {"sections": [..localized home blocks..]}}
+    i18n = db.Column(db.JSON, nullable=False, default=dict)
 
-    def to_dict(self) -> dict:
+    def to_dict(self, locale=None) -> dict:
         return {
             "id": self.id,
             "name": self.name,
@@ -138,6 +159,53 @@ class DesignProfile(TimestampMixin, db.Model):
             "tokens": self.tokens,
             "voice": self.voice,
             "notes": self.notes,
-            "sections": self.sections,
+            "sections": _pick(self.i18n, locale, "sections", self.sections),
+            "availableLocales": sorted((self.i18n or {}).keys()),
             "updatedAt": self.updated_at.isoformat() if self.updated_at else None,
         }
+
+
+class UiMessages(TimestampMixin, db.Model):
+    """UI chrome strings (nav/footer/buttons) per locale, so even the framework
+    labels are not hard-coded — the agent can edit them with no redeploy. The
+    frontend ships English defaults and overlays whatever this returns."""
+    id = db.Column(db.Integer, primary_key=True)
+    locale = db.Column(db.String(16), unique=True, nullable=False, index=True)
+    messages = db.Column(db.JSON, nullable=False, default=dict)
+
+    def to_dict(self) -> dict:
+        return {"locale": self.locale, "messages": self.messages or {}}
+
+
+class BlockPattern(TimestampMixin, db.Model):
+    """A saved, reusable section spec — the 'capture' library. A pattern's `spec`
+    is a full block ({type, variant, content}); inserting it scaffolds a new
+    instance. Lets the block vocabulary grow from screenshots with no redeploy."""
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+    slug = db.Column(db.String(255), unique=True, nullable=False, index=True)
+    category = db.Column(db.String(64), nullable=False, default="captured")
+    tags = db.Column(db.JSON, nullable=False, default=list)
+    spec = db.Column(db.JSON, nullable=False, default=dict)
+    source = db.Column(db.String(255), nullable=False, default="capture")
+    notes = db.Column(db.Text, nullable=False, default="")
+
+    def to_card_dict(self) -> dict:
+        spec = self.spec or {}
+        return {
+            "id": self.id,
+            "name": self.name,
+            "slug": self.slug,
+            "category": self.category,
+            "tags": self.tags,
+            "type": spec.get("type"),
+            "variant": spec.get("variant"),
+            "source": self.source,
+            "updatedAt": self.updated_at.isoformat() if self.updated_at else None,
+        }
+
+    def to_detail_dict(self) -> dict:
+        item = self.to_card_dict()
+        item["spec"] = self.spec or {}
+        item["notes"] = self.notes
+        return item

@@ -212,7 +212,7 @@ Design profile responsibilities:
 
 - `industry`: education, accounting, retail, healthcare, real estate, etc.
 - `competitorUrls`: websites the student's Codex/OpenClaw should inspect for design direction.
-- `tokens.colors`: brand palette and contrast system.
+- `tokens.colors`: brand palette and contrast system. Includes `surfaceInverse` / `inkInverse` (the dark "contrast band" behind a full-bleed hero and the CTA banner) and `onPrimary` (text/icon color on primary-filled buttons) so even the dark surfaces are theme-driven, never hard-coded in components.
 - `tokens.typography`: body, heading, and monospace font stacks.
 - `tokens.radius`: card/control/pill shape.
 - `tokens.layout`: max content width, hero height, spacing density.
@@ -278,6 +278,21 @@ curl -X POST https://api.student-domain.example/api/admin/design/analyze-competi
 ```
 
 OpenClaw browser workflow lives in `docs/openclaw-competitor-analyzer.md`.
+
+## Internationalization & screenshot capture
+
+Two agent-driven capabilities; architecture in [`docs/capture-and-i18n.md`](docs/capture-and-i18n.md).
+
+- **i18n (path-based `/zh`)** — content is never single-language. Each entity carries an
+  `i18n` map; OpenClaw/Codex *is* the translator (it reads the English blocks and writes the
+  Chinese ones). Set `SITE_LOCALES` / `SITE_DEFAULT_LOCALE` (and the frontend's
+  `NEXT_PUBLIC_SITE_LOCALES`). Read localized content with `?locale=zh` on `/api/design`,
+  `/api/pages*`, `/api/blogs*`; write with `?locale=zh` on the admin routes. UI chrome strings:
+  `GET /api/i18n/:locale`, `PATCH /api/admin/i18n/:locale`. Skill: `oracle-site-i18n`.
+- **Capture** — rebuild a section from a screenshot into the flexible, token-driven `section`
+  block (so it auto-harmonizes to the theme — inspiration, never a pixel copy). Save good ones
+  to the pattern library (`GET /api/patterns`, `POST /api/admin/patterns`) to grow the block
+  vocabulary with no redeploy. Skill: `oracle-site-capture`.
 
 ## Daily Blog Automation
 

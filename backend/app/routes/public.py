@@ -8,12 +8,23 @@ from sqlalchemy import text
 
 from ..auth import issue_jwt, upsert_google_user, verify_google_token
 from ..extensions import db
-from ..models import BlogPost, DesignProfile, NewsletterSubscription, Page
+from ..models import BlockPattern, BlogPost, DesignProfile, NewsletterSubscription, Page, UiMessages
 from ..services.design_service import DEFAULT_DESIGN_PROFILE, normalized_profile
 from ..services import block_service
 from ..services.email_service import send_email
 
 bp = Blueprint("public", __name__)
+
+
+def request_locale():
+    """The validated ?locale= query arg, or None for the default locale (which
+    means 'use base columns'). Keeps content selection in one place."""
+    loc = (request.args.get("locale") or "").strip().lower()
+    if not loc or loc == current_app.config["SITE_DEFAULT_LOCALE"]:
+        return None
+    if loc not in current_app.config["SITE_LOCALES"]:
+        return None
+    return loc
 
 
 @bp.get("/health")
@@ -32,16 +43,42 @@ def site():
             "audience": current_app.config["SITE_AUDIENCE"],
             "region": current_app.config["SITE_REGION"],
             "googleClientId": current_app.config["GOOGLE_CLIENT_ID"],
+            "locales": current_app.config["SITE_LOCALES"],
+            "defaultLocale": current_app.config["SITE_DEFAULT_LOCALE"],
         }
     }
 
 
 @bp.get("/design")
 def design():
+    locale = request_locale()
     profile = DesignProfile.query.filter_by(status="active").order_by(DesignProfile.updated_at.desc()).first()
     if not profile:
         return {"item": DEFAULT_DESIGN_PROFILE}
-    return {"item": normalized_profile(profile.to_dict(), profile.industry or current_app.config["SITE_INDUSTRY"])}
+    return {"item": normalized_profile(profile.to_dict(locale), profile.industry or current_app.config["SITE_INDUSTRY"])}
+
+
+@bp.get("/i18n/<locale>")
+def ui_messages(locale: str):
+    """UI chrome strings for a locale (nav/footer/buttons). The frontend ships
+    English defaults and overlays whatever is returned here — so even framework
+    labels are editable by the agent, no redeploy."""
+    locale = (locale or "").strip().lower()
+    row = UiMessages.query.filter_by(locale=locale).first()
+    return {"item": {"locale": locale, "messages": row.messages if row else {}}}
+
+
+@bp.get("/patterns")
+def patterns():
+    """Public catalog of saved section patterns — the growing 'capture' library."""
+    items = BlockPattern.query.order_by(BlockPattern.updated_at.desc()).all()
+    return {"items": [p.to_card_dict() for p in items], "meta": {"count": len(items)}}
+
+
+@bp.get("/patterns/<slug>")
+def pattern_detail(slug: str):
+    pattern = BlockPattern.query.filter_by(slug=slug).first_or_404()
+    return {"item": pattern.to_detail_dict()}
 
 
 @bp.get("/blocks")
@@ -75,34 +112,38 @@ def google_auth():
 
 @bp.get("/blogs")
 def blogs():
+    locale = request_locale()
     posts = (
         BlogPost.query.filter_by(status="published")
         .order_by(BlogPost.published_at.desc().nullslast(), BlogPost.created_at.desc())
         .all()
     )
-    return {"items": [post.to_card_dict() for post in posts], "meta": {"count": len(posts)}}
+    return {"items": [post.to_card_dict(locale) for post in posts], "meta": {"count": len(posts)}}
 
 
 @bp.get("/blogs/<slug>")
 def blog_detail(slug: str):
+    locale = request_locale()
     post = BlogPost.query.filter_by(slug=slug, status="published").first_or_404()
-    return {"item": post.to_detail_dict()}
+    return {"item": post.to_detail_dict(locale)}
 
 
 @bp.get("/pages")
 def pages():
+    locale = request_locale()
     items = (
         Page.query.filter_by(status="published")
         .order_by(Page.nav_order.asc(), Page.title.asc())
         .all()
     )
-    return {"items": [page.to_card_dict() for page in items], "meta": {"count": len(items)}}
+    return {"items": [page.to_card_dict(locale) for page in items], "meta": {"count": len(items)}}
 
 
 @bp.get("/pages/<slug>")
 def page_detail(slug: str):
+    locale = request_locale()
     page = Page.query.filter_by(slug=slug, status="published").first_or_404()
-    return {"item": page.to_detail_dict()}
+    return {"item": page.to_detail_dict(locale)}
 
 
 @bp.post("/newsletter/subscribe")

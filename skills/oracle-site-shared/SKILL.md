@@ -42,6 +42,17 @@ The email must be in the backend's `ADMIN_EMAILS`. `--days N` overrides lifetime
 - JSON in/out. Single object → `{"item": {...}}`, list → `{"items": [...]}`.
 - Errors → `{"error": {"code","message"}}` (401 missing/bad token, 403 not admin, 404 not found).
 - Send `-H "Content-Type: application/json"` on POST/PATCH.
+- **Locales (i18n):** `GET /site` → `locales` + `defaultLocale`. Read localized content with
+  `?locale=zh` on `/design`, `/pages*`, `/blogs*`; write it with `?locale=zh` on the matching
+  admin routes (content goes into that locale's overlay, default columns untouched). UI chrome
+  strings: `GET /i18n/<locale>`, `PATCH /admin/i18n/<locale>`. Full guide: `../oracle-site-i18n`.
+
+## Skill map
+
+- `oracle-site-blog` · `…-pages` · `…-newsletter` — content over the API.
+- `oracle-site-design` — theme/tokens + the 12 style templates. `…-compose` — block-level page editing.
+- `oracle-site-capture` — rebuild a section from a screenshot (flexible `section` block + `/patterns` library).
+- `oracle-site-i18n` — translate content + chrome (path-based `/zh`). `…-ops` — deploy/status.
 
 ## Site basics & login (public, no token)
 

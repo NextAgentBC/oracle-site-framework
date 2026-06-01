@@ -1,6 +1,6 @@
 ---
 name: oracle-site-design
-description: "Design the Oracle Site's look — interview the user, offer 2-3 style options (Apple-style minimal / Tesla-style bold-dark / editorial), apply one, then fine-tune colors, fonts, hero style, and section content. Triggers: '设计网站 / 换个风格 / 重新设计首页', 'make it like apple / tesla / stripe', '改主题色 / 换配色 / 改颜色', 'design the homepage', 'hero 换成大图 / 居中', '看起来更高级 / 更大胆 / 更简洁', 'generate a design', '分析竞品设计'."
+description: "Design the Oracle Site's look — interview the user, offer style options from 12 templates (minimal / bold-dark / editorial / corporate + industry templates: tech, healthcare, restaurant, realestate, fitness, beauty, legal, creative), apply one, then fine-tune colors, fonts, hero style, and section content. Triggers: '设计网站 / 换个风格 / 重新设计首页', 'make it like apple / tesla / stripe', '做个餐厅网站 / 健身房风格 / 律所网站 / 美容院风格', 'a site for a clinic / gym / cafe / law firm', '改主题色 / 换配色 / 改颜色', 'design the homepage', 'hero 换成大图 / 居中', '看起来更高级 / 更大胆 / 更简洁', 'generate a design', '分析竞品设计'."
 metadata:
   version: 0.2.0
   openclaw:
@@ -15,7 +15,7 @@ metadata:
 > Prerequisite: `../oracle-site-shared/SKILL.md` for `$ORACLE_SITE_API` + `$ORACLE_SITE_TOKEN`.
 
 Design has two layers, both in the active design profile, both render **instantly**:
-- **Theme** — `tokens` (colors / fonts / radius / spacing).
+- **Theme** — `tokens` (colors / fonts / radius / spacing). `tokens.colors` keys: `ink` · `muted` · `paper` · `surface` · `line` · `primary` · `accent` · `highlight` · `link`, plus three for the dark "contrast band" (full-bleed hero + CTA banner): `surfaceInverse` (band background), `inkInverse` (text on it), `onPrimary` (text/icon on primary-filled buttons — set dark when `primary` is light). Nothing is hard-coded in components; every surface is a token.
 - **Composition** — `sections`: an ordered list of `hero`, `features`, `cta`, each with a **variant**.
 
 ## Quick recipes (skip the interview when the ask is clear)
@@ -29,7 +29,7 @@ curl -s -X PATCH "$ORACLE_SITE_API/admin/design" -H "Authorization: Bearer $ORAC
 # 3) verify
 curl -s "$ORACLE_SITE_API/design" | grep -o '"paper":"#050505"' && curl -s -o /dev/null -w "site %{http_code}\n" https://oracle.nextagent.ca
 ```
-Other one-liners: `{"preset":"minimal"}` (Aurora, light) · `{"preset":"editorial"}` (Atelier, warm serif) · `{"preset":"corporate"}` (Meridian, B2B navy). All instant, no redeploy.
+Other one-liners: `{"preset":"minimal"}` (Aurora, light) · `{"preset":"editorial"}` (Atelier, warm serif) · `{"preset":"corporate"}` (Meridian, B2B navy) · plus eight industry templates — `tech` · `healthcare` · `restaurant` · `realestate` · `fitness` · `beauty` · `legal` · `creative` (see the Presets table). Or skip the preset and pass `{"industry":"dental"|"gym"|"law"|…}` to auto-pick one. All instant, no redeploy.
 
 ## Run this as a conversation
 
@@ -42,7 +42,7 @@ Other one-liners: `{"preset":"minimal"}` (Aurora, light) · `{"preset":"editoria
    ```bash
    curl -s -X POST "$ORACLE_SITE_API/admin/design/generate" \
      -H "Authorization: Bearer $ORACLE_SITE_TOKEN" -H "Content-Type: application/json" \
-     -d '{"preset": "minimal"}'        # minimal | bold-dark | editorial
+     -d '{"preset": "minimal"}'        # any key from the Presets table, or {"industry":"<name>"}
    ```
 4. **Fine-tune** with PATCH (tokens merge; `sections` replaces the whole list):
    ```bash
@@ -64,16 +64,26 @@ Other one-liners: `{"preset":"minimal"}` (Aurora, light) · `{"preset":"editoria
      -d '{"industry":"...","competitorUrls":["https://apple.com"],"notes":"Inspiration only — create a distinct identity."}'
    ```
 
-## Presets (four switchable templates)
+## Presets (twelve switchable templates)
 
-Each is a full template — palette + light/dark mode + font pairing + hero style + section composition — not just a recolor. Switch with one `generate` call; renders instantly.
+Each is a full template — palette + light/dark mode + font pairing + hero style + section composition — not just a recolor. Switch with one `generate` call (`{"preset":"<key>"}`); renders instantly.
 
 | preset | name | vibe | hero | mode | font |
 |---|---|---|---|---|---|
 | `minimal` | Aurora | Apple / Linear / Stripe — calm, premium, spacious | centered | light | Inter |
 | `bold-dark` | Eclipse | Tesla / Vercel — dramatic, high-contrast, electric violet | fullbleed | dark | Space Grotesk |
 | `editorial` | Atelier | warm, literary — serif display, drop-cap long-form | split | light | Spectral serif |
-| `corporate` | Meridian | trustworthy B2B — structured navy, pricing tiers | split | light | Inter |
+| `corporate` | Meridian | trustworthy B2B — structured navy, pricing tiers | split | light | Space Grotesk |
+| `tech` | Nimbus | modern SaaS / startup — indigo + cyan, geometric | centered | light | Space Grotesk |
+| `healthcare` | Vitalis | calm clinic / wellness — teal, rounded, trustworthy | split | light | Inter |
+| `restaurant` | Saffron | warm restaurant / café — paprika + olive | fullbleed | light | Fraunces serif |
+| `realestate` | Cornerstone | premium property / architecture — slate + brass | split | light | Spectral serif |
+| `fitness` | Ignite | high-energy gym / sport — dark, volt accent, condensed | fullbleed | dark | Oswald |
+| `beauty` | Lumière | elegant salon / spa — blush + mauve | centered | light | Fraunces serif |
+| `legal` | Sterling | authoritative law / advisory — navy + gold | split | light | Spectral serif |
+| `creative` | Kinetic | bold studio / agency — near-black + acid accent | centered | light | Space Grotesk |
+
+**Industry shortcut:** `generate` with `{"industry":"<name>"}` (no preset) auto-maps common industries to the matching full template — e.g. `dental`/`clinic`/`wellness` → `healthcare`, `gym`/`yoga` → `fitness`, `cafe`/`bakery` → `restaurant`, `law`/`attorney` → `legal`, `saas`/`startup` → `tech`, `salon`/`spa` → `beauty`, `property`/`architecture` → `realestate`, `agency`/`studio`/`portfolio` → `creative`. Unmapped industries (education, accounting, retail, nonprofit, hospitality, construction) get a tuned palette over the default layout.
 
 ## Modules (section types — compose a page by ordering these in `sections`)
 
@@ -94,7 +104,7 @@ A strong landing order: **hero → stats → logos → problem → features → 
 ## Reference library
 
 Mapped in `backend/app/data/style_references.json`:
-apple / notion / stripe → **minimal** · tesla / linear / vercel → **bold-dark** · airbnb → **editorial** · consultancy / agency / SaaS-B2B → **corporate**.
+apple / notion / stripe → **minimal** · tesla / linear / vercel → **bold-dark** · airbnb → **editorial** · consultancy / SaaS-B2B → **corporate** · vercel-dashboard / dev tools → **tech** · clinic / dentist / wellness → **healthcare** · restaurant / café / bakery → **restaurant** · real estate / architecture → **realestate** · gym / fitness / sport → **fitness** · salon / spa / cosmetics → **beauty** · law firm / advisory → **legal** · studio / agency / portfolio → **creative**.
 
 ## Rules
 - **Inspiration only — never clone a brand's exact identity or assets.**

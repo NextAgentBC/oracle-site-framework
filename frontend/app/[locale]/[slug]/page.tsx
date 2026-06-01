@@ -3,25 +3,28 @@ import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import { getPage, getSite } from "@/lib/api";
 import { SectionRenderer } from "@/components/sections";
+import { alternatesFor, normalizeLocale } from "@/lib/i18n";
 
 type PageProps = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 };
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const page = await getPage(slug);
+  const { slug, locale: raw } = await params;
+  const locale = normalizeLocale(raw);
+  const page = await getPage(slug, locale);
   if (!page) return {};
   return {
     title: page.metaTitle || page.title,
     description: page.metaDescription || undefined,
-    alternates: { canonical: page.canonicalUrl || `/${page.slug}` }
+    alternates: alternatesFor(locale, `/${page.slug}`)
   };
 }
 
 export default async function ContentPage({ params }: PageProps) {
-  const { slug } = await params;
-  const page = await getPage(slug);
+  const { slug, locale: raw } = await params;
+  const locale = normalizeLocale(raw);
+  const page = await getPage(slug, locale);
   if (!page) notFound();
 
   // Module-composed page (like the home), or a simple markdown page.

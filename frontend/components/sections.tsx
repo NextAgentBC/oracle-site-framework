@@ -236,6 +236,103 @@ function Faq({ section }: { section: Section }) {
   );
 }
 
+// --- Flexible "capture" section: a token-driven DSL the agent emits from a
+// screenshot. Reads only design tokens, so it auto-harmonizes with the theme.
+type FlexItem = NonNullable<NonNullable<Section["content"]>["items"]>[number];
+
+function FlexItemView({ item }: { item: FlexItem }) {
+  const kind = item.kind || "feature";
+  if (kind === "stat") {
+    return (
+      <div className="flex-item flex-stat">
+        <span className="stat-value">{item.value}</span>
+        <span className="stat-label">{item.label}</span>
+      </div>
+    );
+  }
+  if (kind === "quote") {
+    return (
+      <figure className="flex-item quote-card">
+        <blockquote>{item.quote}</blockquote>
+        <figcaption>
+          <strong>{item.author}</strong>
+          {item.role && <span>{item.role}</span>}
+        </figcaption>
+      </figure>
+    );
+  }
+  if (kind === "media") {
+    return (
+      <div className="flex-item flex-media">
+        {item.image ? <img src={item.image} alt={item.title || ""} /> : <div className="flex-media-ph" aria-hidden="true" />}
+        {item.title && <h3>{item.title}</h3>}
+      </div>
+    );
+  }
+  if (kind === "button") {
+    return (
+      <Link className="button ghost flex-item-btn" href={item.href || "#"}>
+        {item.title || item.label}
+      </Link>
+    );
+  }
+  if (kind === "text") {
+    return (
+      <div className="flex-item flex-text">
+        {item.title && <h3>{item.title}</h3>}
+        {item.body && <p>{item.body}</p>}
+      </div>
+    );
+  }
+  // feature (default) | step — step shows an ordinal via CSS counter
+  return (
+    <div className={`flex-item ${kind === "step" ? "flex-step" : "flex-feature"}`}>
+      {item.icon && <SectionIcon name={item.icon} />}
+      {item.title && <h3>{item.title}</h3>}
+      {item.body && <p>{item.body}</p>}
+    </div>
+  );
+}
+
+function FlexSection({ section }: { section: Section }) {
+  const c = section.content ?? {};
+  const layout = c.layout ?? {};
+  const variant = section.variant || "grid";
+  const tone = layout.tone || "plain";
+  const align = layout.align || "left";
+  const cols = Math.min(Math.max(Number(layout.columns) || 3, 1), 4);
+  const items = c.items ?? [];
+  const spread = variant === "stack" || variant === "banner";
+  return (
+    <section className={`section section-flex flex-${variant} tone-${tone} align-${align}`}>
+      {(c.eyebrow || c.heading || c.subhead) && (
+        <div className="section-head">
+          {c.eyebrow && <p className="kicker">{c.eyebrow}</p>}
+          {c.heading && <h2>{c.heading}</h2>}
+          {c.subhead && <p className="lede">{c.subhead}</p>}
+        </div>
+      )}
+      {items.length > 0 && (
+        <div
+          className="flex-items"
+          style={spread ? undefined : { gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
+        >
+          {items.map((item, index) => (
+            <FlexItemView key={index} item={item} />
+          ))}
+        </div>
+      )}
+      {c.cta?.label && (
+        <div className="flex-cta">
+          <Link className="button secondary" href={c.cta.href || "#"}>
+            {c.cta.label} <ArrowRight size={16} />
+          </Link>
+        </div>
+      )}
+    </section>
+  );
+}
+
 function Cta({ section }: { section: Section }) {
   const c = section.content ?? {};
   return (
@@ -263,7 +360,8 @@ const RENDERERS: Record<string, (s: Section, site: Site) => ReactNode> = {
   testimonials: (s) => <Testimonials section={s} />,
   pricing: (s) => <Pricing section={s} />,
   faq: (s) => <Faq section={s} />,
-  cta: (s) => <Cta section={s} />
+  cta: (s) => <Cta section={s} />,
+  section: (s) => <FlexSection section={s} />
 };
 
 export function SectionRenderer({ sections, site }: { sections: Section[]; site: Site }) {

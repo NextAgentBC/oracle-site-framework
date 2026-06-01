@@ -31,6 +31,7 @@ TRIGGERS = {
     "pricing": "加价格表 / 套餐 / 定价 / add pricing / tiers / 改某档价格",
     "faq": "加 FAQ / 常见问题 / 问答 / add an FAQ / questions",
     "cta": "加行动号召 / CTA / 引导按钮区 / add a CTA banner",
+    "section": "加一个自定义板块 / 照着截图做个 section / 柔性板块 / custom section / build from a screenshot / flexible block",
 }
 
 

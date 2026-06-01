@@ -10,13 +10,16 @@
   "paths": {
     "/health": { "get": { "summary": "Health check" } },
     "/site": { "get": { "summary": "Public site config" } },
-    "/design": { "get": { "summary": "Public active design profile" } },
+    "/design": { "get": { "summary": "Public active design profile (accepts ?locale= for localized sections)" } },
     "/blocks": { "get": { "summary": "Public block catalog: typed-block library (types, variants, fields, defaults, icons)" } },
+    "/patterns": { "get": { "summary": "Public catalog of saved section patterns (the capture library)" } },
+    "/patterns/{slug}": { "get": { "summary": "Get a saved section pattern (full spec)" } },
+    "/i18n/{locale}": { "get": { "summary": "UI chrome strings (nav/footer/buttons) for a locale" } },
     "/auth/google": { "post": { "summary": "Google signup/login" } },
-    "/blogs": { "get": { "summary": "List published blog posts" } },
-    "/blogs/{slug}": { "get": { "summary": "Get published blog post" } },
-    "/pages": { "get": { "summary": "List published content pages" } },
-    "/pages/{slug}": { "get": { "summary": "Get published content page" } },
+    "/blogs": { "get": { "summary": "List published blog posts (accepts ?locale=)" } },
+    "/blogs/{slug}": { "get": { "summary": "Get published blog post (accepts ?locale=)" } },
+    "/pages": { "get": { "summary": "List published content pages (accepts ?locale=)" } },
+    "/pages/{slug}": { "get": { "summary": "Get published content page (accepts ?locale=)" } },
     "/newsletter/subscribe": { "post": { "summary": "Subscribe to newsletter" } },
     "/contact": { "post": { "summary": "Send contact message" } },
     "/admin/blogs/generate": { "post": { "summary": "Generate AI blog post" } },
@@ -36,8 +39,8 @@
       "post": { "summary": "Analyze competitor websites and update active design profile" }
     },
     "/admin/compose/{target}/blocks": {
-      "get": { "summary": "List blocks on a page (target = 'home' or a page slug)" },
-      "post": { "summary": "Add a block (type, variant, content, position)" }
+      "get": { "summary": "List blocks on a page (target = 'home' or a page slug; ?locale= for a locale copy)" },
+      "post": { "summary": "Add a block (type, variant, content, position) or insert a saved {pattern}; ?locale= edits that locale" }
     },
     "/admin/compose/{target}/blocks/{blockId}": {
       "patch": { "summary": "Update a block (variant and/or content; content deep-merges)" },
@@ -53,7 +56,16 @@
       "post": { "summary": "Apply many block ops in one call (add/update/move/duplicate/remove); atomic by default" }
     },
     "/admin/surfaces": {
-      "get": { "summary": "List every editable surface (home + all pages) with their blocks" }
+      "get": { "summary": "List every editable surface (home + all pages) with their blocks and available locales" }
+    },
+    "/admin/patterns": {
+      "post": { "summary": "Save a section as a reusable pattern (full spec, or capture {target, blockId} off a page)" }
+    },
+    "/admin/patterns/{id}": {
+      "delete": { "summary": "Delete a saved pattern" }
+    },
+    "/admin/i18n/{locale}": {
+      "patch": { "summary": "Edit UI chrome strings for a locale (merges; {replace:true} overwrites)" }
     }
   }
 }
