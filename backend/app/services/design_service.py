@@ -876,6 +876,201 @@ STYLE_PRESETS = {
             {"type": "cta", "variant": "banner", "content": {"headline": "Make something lasting.", "subhead": "A quiet conversation to begin.", "cta": {"label": "Get in touch", "href": "/contact"}}},
         ],
     },
+    # Scholar — education: friendly blue + warm amber, rounded, trustworthy.
+    "education": {
+        "name": "Scholar — Education",
+        "personality": "friendly, credible, encouraging, clear",
+        "tokens": {
+            "colors": {
+                "ink": "#16263d", "muted": "#5a6b82", "paper": "#f5f8fc", "surface": "#ffffff",
+                "line": "#dce6f2", "primary": "#2b6cb0", "accent": "#dd6b20", "highlight": "#ecc94b", "link": "#2b6cb0",
+                "surfaceInverse": "#0e1c30", "inkInverse": "#eef4fb", "onPrimary": "#ffffff",
+            },
+            "typography": {"body": SANS, "heading": SANS},
+            "radius": {"card": "18px", "control": "12px", "pill": "999px"},
+            "layout": {"density": "comfortable", "heroMinHeight": "74vh", "sectionGap": "108px", "contentMaxWidth": "1120px", "cardPadding": "26px"},
+        },
+        "voice": {"headlineStyle": "warm, clear, encouraging", "tone": "supportive and credible"},
+        "sections": [
+            {"type": "hero", "variant": "split", "content": {
+                "kicker": "Learn with confidence",
+                "headline": "Teaching that", "headlineAccent": "actually sticks.",
+                "subhead": "Clear lessons, real progress, and a teacher who meets you where you are.",
+                "cta": {"label": "Book a free trial", "href": "/contact"}, "secondaryCta": {"label": "Read the blog", "href": "/blog"}}},
+            {"type": "stats", "content": {"items": [
+                {"value": "1,200+", "label": "Students taught"}, {"value": "4.9★", "label": "Parent rating"},
+                {"value": "10+ yrs", "label": "Experience"}, {"value": "1:1", "label": "Attention"}]}},
+            {"type": "features", "variant": "cards", "content": {"heading": "How we teach", "subhead": "Structure, clarity, and encouragement.", "items": [
+                {"icon": "book", "title": "Clear curriculum", "body": "A plan you can follow, milestone by milestone."},
+                {"icon": "gauge", "title": "Real progress", "body": "Regular check-ins so you always know where you stand."},
+                {"icon": "shield", "title": "Caring support", "body": "Patient teachers who make hard things click."}]}},
+            {"type": "comparison", "content": {"heading": "Why families choose us",
+                "left": {"title": "Big tutoring chains", "items": ["A different tutor each time", "One-size lessons", "Slow to adapt", "Hard to reach"]},
+                "right": {"title": "With us", "items": ["Your dedicated teacher", "Built around the student", "Adapts every week", "Always responsive"]}}},
+            {"type": "testimonials", "content": {"heading": "What parents say", "items": [
+                {"quote": "Her grades jumped a full level in one term — and she actually enjoys it now.", "author": "A parent", "role": "Grade 9"},
+                {"quote": "Patient, clear, and genuinely kind. Exactly what we hoped for.", "author": "A parent", "role": "Grade 11"},
+                {"quote": "Booked a trial, never looked back.", "author": "A parent", "role": "Grade 7"}]}},
+            {"type": "faq", "content": {"heading": "Common questions", "items": [
+                {"q": "Do you teach online or in person?", "a": "Both — whatever works best for the student."},
+                {"q": "Can we start with a trial?", "a": "Yes — a free first session to make sure it's a fit."}]}},
+            {"type": "cta", "variant": "banner", "content": {"headline": "Ready to see progress?", "subhead": "Book a free trial lesson today.", "cta": {"label": "Book a trial", "href": "/contact"}}},
+        ],
+    },
+    # Grove — nonprofit: warm green + amber, humane, mission-driven.
+    "nonprofit": {
+        "name": "Grove — Nonprofit",
+        "personality": "warm, hopeful, sincere, community-minded",
+        "tokens": {
+            "colors": {
+                "ink": "#1e2a22", "muted": "#5f6f63", "paper": "#f3f8f1", "surface": "#ffffff",
+                "line": "#dde8d8", "primary": "#2f855a", "accent": "#dd6b20", "highlight": "#ecc94b", "link": "#2f7d6f",
+                "surfaceInverse": "#0e1c14", "inkInverse": "#eef5ee", "onPrimary": "#ffffff",
+            },
+            "typography": {"body": SANS, "heading": SANS},
+            "radius": {"card": "20px", "control": "14px", "pill": "999px"},
+            "layout": {"density": "comfortable", "heroMinHeight": "74vh", "sectionGap": "108px", "contentMaxWidth": "1120px", "cardPadding": "26px"},
+        },
+        "voice": {"headlineStyle": "warm, hopeful, action-led", "tone": "sincere and inviting"},
+        "sections": [
+            {"type": "hero", "variant": "centered", "content": {
+                "badge": "Join the cause",
+                "headline": "Together,", "headlineAccent": "we can do more.",
+                "subhead": "Real change, made by ordinary people who show up. Your support goes further than you think.",
+                "cta": {"label": "Donate", "href": "/contact"}, "secondaryCta": {"label": "Volunteer", "href": "/contact"}}},
+            {"type": "stats", "content": {"items": [
+                {"value": "50k+", "label": "People helped"}, {"value": "120", "label": "Volunteers"},
+                {"value": "92%", "label": "Goes to programs"}, {"value": "15 yrs", "label": "On the ground"}]}},
+            {"type": "problem", "variant": "cards", "content": {"heading": "The need is real.", "subhead": "And it's closer than you think.", "items": [
+                {"icon": "layers", "title": "Too many left out", "body": "Families slipping through the cracks every day."},
+                {"icon": "gauge", "title": "Help can't wait", "body": "Small support now prevents bigger crises later."},
+                {"icon": "shield", "title": "Trust matters", "body": "Every dollar accounted for, every story real."}]}},
+            {"type": "features", "variant": "cards", "content": {"heading": "How we help", "items": [
+                {"icon": "sparkles", "title": "Direct support", "body": "Meeting immediate needs with dignity."},
+                {"icon": "book", "title": "Long-term programs", "body": "Building skills and stability that last."},
+                {"icon": "mail", "title": "Community", "body": "Connecting people who care to people who need it."}]}},
+            {"type": "testimonials", "content": {"heading": "Voices we serve", "items": [
+                {"quote": "They didn't just help — they treated us like family.", "author": "A. R.", "role": "Program member"},
+                {"quote": "I volunteer because I see exactly where it goes.", "author": "J. M.", "role": "Volunteer"},
+                {"quote": "This is what hope looks like, up close.", "author": "Local partner", "role": "Community"}]}},
+            {"type": "cta", "variant": "banner", "content": {"headline": "Be part of it.", "subhead": "Give, volunteer, or just spread the word.", "cta": {"label": "Get involved", "href": "/contact"}}},
+        ],
+    },
+    # Vault — finance: emerald + trust-blue, structured, credible.
+    "finance": {
+        "name": "Vault — Finance",
+        "personality": "trustworthy, precise, calm, credible",
+        "tokens": {
+            "colors": {
+                "ink": "#0f211d", "muted": "#5a6e68", "paper": "#f4f8f6", "surface": "#ffffff",
+                "line": "#d8e4df", "primary": "#0b6e4f", "accent": "#1c4e8a", "highlight": "#b8924c", "link": "#0b6e5f",
+                "surfaceInverse": "#08140f", "inkInverse": "#eef4f1", "onPrimary": "#ffffff",
+            },
+            "typography": {"body": SANS, "heading": SANS},
+            "radius": {"card": "10px", "control": "7px", "pill": "999px"},
+            "layout": {"density": "compact", "heroMinHeight": "70vh", "sectionGap": "100px", "contentMaxWidth": "1160px", "cardPadding": "24px"},
+        },
+        "voice": {"headlineStyle": "clear, credible, outcome-led", "tone": "calm and precise"},
+        "sections": [
+            {"type": "hero", "variant": "split", "content": {
+                "kicker": "Money, managed well",
+                "headline": "Grow it. Protect it.", "headlineAccent": "Understand it.",
+                "subhead": "Clear advice and steady hands for your money — no jargon, no surprises.",
+                "cta": {"label": "Book a consultation", "href": "/contact"}, "secondaryCta": {"label": "Learn more", "href": "/blog"}}},
+            {"type": "logos", "content": {"heading": "Regulated & insured", "items": [{"label": "SIPC"}, {"label": "FINRA"}, {"label": "SEC"}, {"label": "Bonded"}]}},
+            {"type": "stats", "content": {"items": [
+                {"value": "$2B+", "label": "Under advice"}, {"value": "20 yrs", "label": "Track record"},
+                {"value": "0", "label": "Hidden fees"}, {"value": "24/7", "label": "Account access"}]}},
+            {"type": "features", "variant": "minimal", "content": {"heading": "What we do", "subhead": "The essentials, done with care.", "items": [
+                {"icon": "shield", "title": "Plan", "body": "A clear roadmap for your goals and timeline."},
+                {"icon": "gauge", "title": "Invest", "body": "Disciplined, diversified, and tax-aware."},
+                {"icon": "layers", "title": "Protect", "body": "Insurance and estate planning that hold up."}]}},
+            {"type": "comparison", "content": {"heading": "A better standard",
+                "left": {"title": "Typical advisor", "items": ["Hidden commissions", "Generic portfolios", "Hard to reach", "Jargon-heavy"]},
+                "right": {"title": "Vault", "items": ["Transparent fees", "Built for you", "Always available", "Plain-English advice"]}}},
+            {"type": "pricing", "content": {"heading": "Simple, transparent fees", "subhead": "No surprises.", "items": [
+                {"name": "Starter", "price": "0.5%", "period": "/yr", "features": ["Core plan", "Annual review", "Online access"], "cta": {"label": "Start", "href": "/contact"}},
+                {"name": "Wealth", "price": "0.8%", "period": "/yr", "features": ["Full plan", "Quarterly reviews", "Tax + estate"], "featured": True, "cta": {"label": "Choose", "href": "/contact"}},
+                {"name": "Family office", "price": "Custom", "period": "", "features": ["Dedicated team", "Bespoke", "Concierge"], "cta": {"label": "Contact", "href": "/contact"}}]}},
+            {"type": "faq", "content": {"heading": "Questions", "items": [
+                {"q": "Are you a fiduciary?", "a": "Yes — we're legally bound to act in your best interest."},
+                {"q": "What's the minimum?", "a": "We work with a range of clients — let's talk about your situation."}]}},
+            {"type": "cta", "variant": "banner", "content": {"headline": "Take the first step.", "subhead": "A free, no-pressure consultation.", "cta": {"label": "Book a call", "href": "/contact"}}},
+        ],
+    },
+    # Pop — playful: purple + pink + yellow, very rounded, fun.
+    "playful": {
+        "name": "Pop — Playful",
+        "personality": "fun, energetic, friendly, bold",
+        "tokens": {
+            "colors": {
+                "ink": "#2d1b4e", "muted": "#7a6a95", "paper": "#fef6fb", "surface": "#ffffff",
+                "line": "#f0e4f5", "primary": "#7c3aed", "accent": "#ec4899", "highlight": "#f59e0b", "link": "#db2777",
+                "surfaceInverse": "#1a0f2e", "inkInverse": "#fdf4ff", "onPrimary": "#ffffff",
+            },
+            "typography": {"body": SANS, "heading": GROTESK},
+            "radius": {"card": "28px", "control": "18px", "pill": "999px"},
+            "layout": {"density": "comfortable", "heroMinHeight": "84vh", "sectionGap": "116px", "contentMaxWidth": "1120px", "cardPadding": "28px"},
+        },
+        "voice": {"headlineStyle": "punchy, fun, upbeat", "tone": "friendly and energetic"},
+        "sections": [
+            {"type": "hero", "variant": "centered", "content": {
+                "badge": "Hello there 👋",
+                "headline": "Make it", "headlineAccent": "wonderfully fun.",
+                "subhead": "Bright, bold, and a joy to use — a site that makes people smile the moment it loads.",
+                "cta": {"label": "Let's go", "href": "/contact"}, "secondaryCta": {"label": "See more", "href": "/blog"}}},
+            {"type": "stats", "content": {"items": [
+                {"value": "😄", "label": "Joy, by default"}, {"value": "Bold", "label": "Colors"},
+                {"value": "Fast", "label": "& bouncy"}, {"value": "Yours", "label": "100%"}]}},
+            {"type": "features", "variant": "cards", "content": {"heading": "Why it's fun", "items": [
+                {"icon": "sparkles", "title": "Bright", "body": "Big color, big rounded shapes, big personality."},
+                {"icon": "zap", "title": "Lively", "body": "Snappy and playful on every tap."},
+                {"icon": "mail", "title": "Friendly", "body": "Warm copy that talks like a human."}]}},
+            {"type": "comparison", "content": {"heading": "Fun beats boring",
+                "left": {"title": "Beige website", "items": ["Looks like everyone else", "Stiff and corporate", "Forgettable", "No personality"]},
+                "right": {"title": "Pop", "items": ["Unmistakably you", "Playful and warm", "Memorable", "Full of character"]}}},
+            {"type": "testimonials", "content": {"heading": "People love it", "items": [
+                {"quote": "Our bounce rate dropped — people actually stick around now.", "author": "A. Founder", "role": "DTC brand"},
+                {"quote": "It made our brand feel alive.", "author": "M. Creator", "role": "Studio"},
+                {"quote": "So fun. Everyone comments on it.", "author": "J. Owner", "role": "Shop"}]}},
+            {"type": "cta", "variant": "banner", "content": {"headline": "Ready to have fun?", "subhead": "Let's make something people love.", "cta": {"label": "Start now", "href": "/contact"}}},
+        ],
+    },
+    # Pulse — neon: near-black + cyan/magenta neon, cyberpunk, dark.
+    "neon": {
+        "name": "Pulse — Neon",
+        "personality": "futuristic, electric, bold, high-tech",
+        "tokens": {
+            "colors": {
+                "ink": "#e6f7ff", "muted": "#7d96a8", "paper": "#07090f", "surface": "#0e131d",
+                "line": "#1e2636", "primary": "#06d6f0", "accent": "#ff2bd6", "highlight": "#c6ff3a", "link": "#5cf2ff",
+                "surfaceInverse": "#04060a", "inkInverse": "#e6f7ff", "onPrimary": "#04060a",
+            },
+            "typography": {"body": SANS, "heading": GROTESK},
+            "radius": {"card": "12px", "control": "8px", "pill": "999px"},
+            "layout": {"density": "comfortable", "heroMinHeight": "92vh", "sectionGap": "118px", "contentMaxWidth": "1160px", "cardPadding": "26px"},
+        },
+        "voice": {"headlineStyle": "bold, electric, future-facing", "tone": "high-energy and modern"},
+        "sections": [
+            {"type": "hero", "variant": "fullbleed", "content": {
+                "badge": "Online now",
+                "headline": "Built for", "headlineAccent": "what's next.",
+                "subhead": "A high-voltage presence that glows in the dark and moves at the speed of now.",
+                "cta": {"label": "Enter", "href": "/blog"}, "secondaryCta": {"label": "Contact", "href": "/contact"}}},
+            {"type": "stats", "content": {"items": [
+                {"value": "120fps", "label": "Buttery"}, {"value": "Neon", "label": "Native"},
+                {"value": "0ms", "label": "Hesitation"}, {"value": "∞", "label": "Energy"}]}},
+            {"type": "logos", "content": {"heading": "Powering", "items": [{"label": "Nova"}, {"label": "Hyperloop"}, {"label": "Volt"}, {"label": "Synth"}]}},
+            {"type": "features", "variant": "minimal", "content": {"heading": "Charged different.", "subhead": "Dark, glowing, hard to look away from.", "items": [
+                {"icon": "zap", "title": "Electric", "body": "Neon accents on a deep black canvas."},
+                {"icon": "gauge", "title": "Fast", "body": "Performance you feel instantly."},
+                {"icon": "sparkles", "title": "Future", "body": "A look that's three years ahead."}]}},
+            {"type": "comparison", "content": {"heading": "Stand out, after dark",
+                "left": {"title": "Flat & beige", "items": ["Blends into the feed", "No motion, no glow", "Light-only", "Forgettable"]},
+                "right": {"title": "Pulse", "items": ["Impossible to ignore", "Neon depth & glow", "Dark-native", "Three years ahead"]}}},
+            {"type": "cta", "variant": "banner", "content": {"headline": "Plug in.", "subhead": "See what the future feels like.", "cta": {"label": "Get in touch", "href": "/contact"}}},
+        ],
+    },
 }
 
 

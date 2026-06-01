@@ -350,6 +350,94 @@ function Cta({ section }: { section: Section }) {
   );
 }
 
+function Steps({ section }: { section: Section }) {
+  const c = section.content ?? {};
+  const items = c.items ?? [];
+  return (
+    <section className="section">
+      <SectionHead heading={c.heading} subhead={c.subhead} />
+      <ol className="steps">
+        {items.map((item, index) => (
+          <li className="step" key={index}>
+            <span className="step-num">{index + 1}</span>
+            <div className="step-body">
+              {item.icon && <SectionIcon name={item.icon} />}
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+  );
+}
+
+function Gallery({ section }: { section: Section }) {
+  const c = section.content ?? {};
+  const items = c.items ?? [];
+  return (
+    <section className="section">
+      <SectionHead heading={c.heading} subhead={c.subhead} />
+      <div className="gallery">
+        {items.map((item, index) => (
+          <figure className="gallery-item" key={index}>
+            {item.image ? (
+              <img src={item.image} alt={item.caption || ""} loading="lazy" />
+            ) : (
+              <div className="gallery-ph" aria-hidden="true" />
+            )}
+            {item.caption && <figcaption>{item.caption}</figcaption>}
+          </figure>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Team({ section }: { section: Section }) {
+  const c = section.content ?? {};
+  const items = c.items ?? [];
+  return (
+    <section className="section">
+      <SectionHead heading={c.heading} subhead={c.subhead} />
+      <div className="grid">
+        {items.map((item, index) => (
+          <div className="post-card team-card" key={index}>
+            {item.image ? (
+              <img className="team-avatar" src={item.image} alt={item.name || ""} loading="lazy" />
+            ) : (
+              <span className="team-avatar team-initial" aria-hidden="true">
+                {(item.name || "?").slice(0, 1)}
+              </span>
+            )}
+            <h3>{item.name}</h3>
+            {item.role && <p className="team-role">{item.role}</p>}
+            {item.body && <p>{item.body}</p>}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Banner({ section }: { section: Section }) {
+  const c = section.content ?? {};
+  const tint = section.variant === "tint";
+  return (
+    <section className={`banner${tint ? " banner-tint" : ""}`}>
+      <span className="banner-msg">
+        {c.icon && <SectionIcon name={c.icon} />}
+        {c.text}
+      </span>
+      {c.cta?.label && (
+        <Link className="button ghost" href={c.cta.href || "#"}>
+          {c.cta.label} <ArrowRight size={16} />
+        </Link>
+      )}
+    </section>
+  );
+}
+
 const RENDERERS: Record<string, (s: Section, site: Site) => ReactNode> = {
   hero: (s, site) => <Hero section={s} site={site} />,
   stats: (s) => <Stats section={s} />,
@@ -361,7 +449,11 @@ const RENDERERS: Record<string, (s: Section, site: Site) => ReactNode> = {
   pricing: (s) => <Pricing section={s} />,
   faq: (s) => <Faq section={s} />,
   cta: (s) => <Cta section={s} />,
-  section: (s) => <FlexSection section={s} />
+  section: (s) => <FlexSection section={s} />,
+  steps: (s) => <Steps section={s} />,
+  gallery: (s) => <Gallery section={s} />,
+  team: (s) => <Team section={s} />,
+  banner: (s) => <Banner section={s} />
 };
 
 export function SectionRenderer({ sections, site }: { sections: Section[]; site: Site }) {

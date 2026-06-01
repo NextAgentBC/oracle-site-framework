@@ -254,6 +254,71 @@ BLOCK_MANIFEST = [
             "cta": {"label": "", "href": ""},
         },
     },
+    {
+        "type": "steps",
+        "label": "Steps / process",
+        "category": "content",
+        "description": "Numbered how-it-works steps — icon + title + body, connected in order.",
+        "variants": ["default"],
+        "fields": [
+            {"key": "heading", "type": "text", "label": "Heading"},
+            {"key": "subhead", "type": "textarea", "label": "Subhead"},
+            {"key": "items", "type": "list", "label": "Steps",
+             "item": [{"key": "icon", "type": "icon"}, {"key": "title", "type": "text"}, {"key": "body", "type": "textarea"}]},
+        ],
+        "defaultContent": {"heading": "How it works", "subhead": "", "items": [
+            {"icon": "sparkles", "title": "Step one", "body": "What happens first."},
+            {"icon": "gauge", "title": "Step two", "body": "Then this."},
+            {"icon": "shield", "title": "Step three", "body": "And you're done."},
+        ]},
+    },
+    {
+        "type": "gallery",
+        "label": "Image gallery",
+        "category": "media",
+        "description": "A responsive grid of images. Use self-hosted URLs (/api/media/<file>) or any public image URL; optional caption per image.",
+        "variants": ["grid"],
+        "fields": [
+            {"key": "heading", "type": "text", "label": "Heading"},
+            {"key": "subhead", "type": "textarea", "label": "Subhead"},
+            {"key": "items", "type": "list", "label": "Images",
+             "item": [{"key": "image", "type": "text"}, {"key": "caption", "type": "text"}]},
+        ],
+        "defaultContent": {"heading": "Gallery", "subhead": "", "items": [
+            {"image": "", "caption": "Caption one"}, {"image": "", "caption": "Caption two"}, {"image": "", "caption": "Caption three"},
+        ]},
+    },
+    {
+        "type": "team",
+        "label": "Team",
+        "category": "social-proof",
+        "description": "Team member cards — name, role, optional photo (image URL) and short bio.",
+        "variants": ["cards"],
+        "fields": [
+            {"key": "heading", "type": "text", "label": "Heading"},
+            {"key": "subhead", "type": "textarea", "label": "Subhead"},
+            {"key": "items", "type": "list", "label": "Members",
+             "item": [{"key": "image", "type": "text"}, {"key": "name", "type": "text"}, {"key": "role", "type": "text"}, {"key": "body", "type": "textarea"}]},
+        ],
+        "defaultContent": {"heading": "Meet the team", "subhead": "", "items": [
+            {"image": "", "name": "Alex Kim", "role": "Founder", "body": "Leads the work and keeps it honest."},
+            {"image": "", "name": "Sam Lee", "role": "Design", "body": "Makes everything look the part."},
+            {"image": "", "name": "Jo Ray", "role": "Engineering", "body": "Builds it fast and solid."},
+        ]},
+    },
+    {
+        "type": "banner",
+        "label": "Highlight banner",
+        "category": "conversion",
+        "description": "A slim highlight strip — an icon, a short message, and an optional button. Good for announcements or offers.",
+        "variants": ["default", "tint"],
+        "fields": [
+            {"key": "icon", "type": "icon", "label": "Icon"},
+            {"key": "text", "type": "text", "label": "Message"},
+            {"key": "cta", "type": "cta", "label": "Button (optional)"},
+        ],
+        "defaultContent": {"icon": "sparkles", "text": "Now in beta — try it free this month.", "cta": {"label": "Learn more", "href": "/contact"}},
+    },
 ]
 
 _BY_TYPE = {b["type"]: b for b in BLOCK_MANIFEST}

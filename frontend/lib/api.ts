@@ -62,6 +62,8 @@ export type Section = {
     cta?: SectionCta;
     secondaryCta?: SectionCta;
     heading?: string;
+    text?: string;
+    icon?: string;
     layout?: SectionLayout;
     left?: { title?: string; items?: string[] };
     right?: { title?: string; items?: string[] };
@@ -70,6 +72,7 @@ export type Section = {
       icon?: string;
       title?: string;
       body?: string;
+      caption?: string;
       value?: string;
       label?: string;
       quote?: string;

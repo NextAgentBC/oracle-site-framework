@@ -64,7 +64,7 @@ Other one-liners: `{"preset":"minimal"}` (Aurora, light) · `{"preset":"editoria
      -d '{"industry":"...","competitorUrls":["https://apple.com"],"notes":"Inspiration only — create a distinct identity."}'
    ```
 
-## Presets (thirteen switchable templates)
+## Presets (eighteen switchable templates)
 
 Each is a full template — palette + light/dark mode + font pairing + hero style + section composition — not just a recolor. Switch with one `generate` call (`{"preset":"<key>"}`); renders instantly.
 
@@ -83,6 +83,11 @@ Each is a full template — palette + light/dark mode + font pairing + hero styl
 | `legal` | Sterling | authoritative law / advisory — navy + gold | split | light | Spectral serif |
 | `creative` | Kinetic | bold studio / agency — near-black + acid accent | centered | light | Space Grotesk |
 | `luxe` | Onyx | premium / luxury — near-black + gold, serif, airy | centered | dark | Fraunces serif |
+| `education` | Scholar | school / tutoring — friendly blue + amber, rounded | split | light | Inter |
+| `nonprofit` | Grove | cause / charity — warm green + amber, humane | centered | light | Inter |
+| `finance` | Vault | finance / advisory — emerald + trust-blue, structured | split | light | Inter |
+| `playful` | Pop | fun / kids / DTC — purple + pink + yellow, very rounded | centered | light | Space Grotesk |
+| `neon` | Pulse | futuristic / gaming — near-black + cyan/magenta neon | fullbleed | dark | Space Grotesk |
 
 **Industry shortcut:** `generate` with `{"industry":"<name>"}` (no preset) auto-maps common industries to the matching full template — e.g. `dental`/`clinic`/`wellness` → `healthcare`, `gym`/`yoga` → `fitness`, `cafe`/`bakery` → `restaurant`, `law`/`attorney` → `legal`, `saas`/`startup` → `tech`, `salon`/`spa` → `beauty`, `property`/`architecture` → `realestate`, `agency`/`studio`/`portfolio` → `creative`. Unmapped industries (education, accounting, retail, nonprofit, hospitality, construction) get a tuned palette over the default layout.
 

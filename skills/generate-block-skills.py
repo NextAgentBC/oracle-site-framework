@@ -32,6 +32,10 @@ TRIGGERS = {
     "faq": "加 FAQ / 常见问题 / 问答 / add an FAQ / questions",
     "cta": "加行动号召 / CTA / 引导按钮区 / add a CTA banner",
     "section": "加一个自定义板块 / 照着截图做个 section / 柔性板块 / custom section / build from a screenshot / flexible block",
+    "steps": "加步骤区 / 流程 / 操作步骤 / 怎么做 / add steps / how it works / process",
+    "gallery": "加图库 / 图片网格 / 相册 / 作品集图 / add a gallery / image grid",
+    "team": "加团队介绍 / 成员 / 我们的团队 / add a team section / members",
+    "banner": "加横幅 / 公告条 / 提示条 / 促销条 / add a banner / announcement strip",
 }
 
 
