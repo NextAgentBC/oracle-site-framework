@@ -22,6 +22,12 @@ services:
       DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-oracle_site}:${POSTGRES_PASSWORD:-oracle_site_password}@postgres:5432/${POSTGRES_DB:-oracle_site}
     ports:
       - "8000:8000"
+    networks:
+      default: {}
+      # Cloudflare tunnel (in infra/) routes oracle-api.* -> this alias on `edge`.
+      edge:
+        aliases:
+          - oracle-site-backend
     depends_on:
       postgres:
         condition: service_healthy
@@ -35,8 +41,18 @@ services:
         NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${NEXT_PUBLIC_GOOGLE_CLIENT_ID:-}
     ports:
       - "3000:3000"
+    networks:
+      default: {}
+      # Cloudflare tunnel (in infra/) routes oracle.* -> this alias on `edge`.
+      edge:
+        aliases:
+          - oracle-site-frontend
     depends_on:
       - backend
+
+networks:
+  edge:
+    external: true
 
 volumes:
   postgres-data:
