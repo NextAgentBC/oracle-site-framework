@@ -526,8 +526,14 @@ def _create_page(data: dict, publish: bool) -> Page:
 @require_auth(admin=True)
 def create_page():
     data = request.get_json(silent=True) or {}
+    if data.get("template"):
+        scaffolded = block_service.build_page_template(data["template"])
+        if scaffolded is None:
+            return jsonify({"error": {"code": "bad_request", "message": f"Unknown page template '{data['template']}'. See GET /api/page-templates."}}), 400
+        data.setdefault("sections", scaffolded)
+        data.setdefault("title", block_service.page_template(data["template"])["label"])
     if not data.get("title") or (not data.get("body_markdown") and not data.get("sections")):
-        return jsonify({"error": {"code": "bad_request", "message": "title and (body_markdown or sections) are required"}}), 400
+        return jsonify({"error": {"code": "bad_request", "message": "title, and (body_markdown | sections | template), are required"}}), 400
     if slugify(data.get("slug") or data["title"]) in RESERVED_SLUGS:
         return jsonify({"error": {"code": "bad_request", "message": "slug is reserved"}}), 400
     page = _create_page(data, publish=data.get("status") == "published")

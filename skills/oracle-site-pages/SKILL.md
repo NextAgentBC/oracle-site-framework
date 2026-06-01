@@ -71,8 +71,32 @@ curl -s -X POST "$ORACLE_SITE_API/admin/pages" \
   }'
 ```
 
+## Page templates (recipes by page — one-shot scaffold)
+
+Don't hand-write the section list — **scaffold a whole page from a recipe**. The block library is
+organized *by page*; pass `{"template":"<name>"}` and the page is composed for you, then refine.
+
+| template | builds | sections (in order) |
+|---|---|---|
+| `home` | landing | hero · stats · logos · features · steps · comparison · cta |
+| `about` | About | hero · section(story) · stats · team · cta |
+| `services` | Services | hero · features · steps · pricing · faq · cta |
+| `solutions` | Solutions | hero · problem · features · steps · testimonials · cta |
+| `pricing` | Pricing | hero · pricing · comparison · faq · cta |
+| `landing` | Campaign landing | hero(fullbleed) · features · testimonials · pricing · cta |
+
+```bash
+curl -s "$ORACLE_SITE_API/page-templates"          # browse the recipes (public)
+# scaffold + publish a Services page, then tweak any block via the compose skill
+curl -s -X POST "$ORACLE_SITE_API/admin/pages" -H "Authorization: Bearer $ORACLE_SITE_TOKEN" -H "Content-Type: application/json" \
+  -d '{"template":"services","slug":"services","status":"published","nav_label":"Services"}'
+```
+`title` defaults to the recipe label (pass your own to override). After scaffolding, refine copy with
+`../oracle-site-compose/SKILL.md` and translate with `?locale=zh`. **contact** + **blog** aren't here —
+they're built-in frontend routes (the contact form and blog index aren't composed from blocks).
+
 Notes:
-- A page uses `sections` if present, otherwise `body_markdown`. Provide one of them.
+- A page uses `sections` if present, otherwise `body_markdown`. Provide one of them (or a `template`).
 - `body_markdown` is the content **below** the heading — the page renders `title` as the `<h1>` automatically, so don't repeat it as a leading `# Title` (avoids a duplicate heading).
 - Create requires `title` + `body_markdown`. `slug` auto-derives from title if omitted; duplicates get `-2`, `-3`.
 - Reserved slugs (`blog`, `contact`, `api`, `admin`, …) are rejected — taken by built-in routes.

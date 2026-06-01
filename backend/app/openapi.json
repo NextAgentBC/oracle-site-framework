@@ -21,12 +21,13 @@
     "/blogs/{slug}": { "get": { "summary": "Get published blog post (accepts ?locale=)" } },
     "/pages": { "get": { "summary": "List published content pages (accepts ?locale=)" } },
     "/pages/{slug}": { "get": { "summary": "Get published content page (accepts ?locale=)" } },
+    "/page-templates": { "get": { "summary": "Page recipes — recommended block composition per page type (home/about/services/solutions/pricing/landing)" } },
     "/newsletter/subscribe": { "post": { "summary": "Subscribe to newsletter" } },
     "/contact": { "post": { "summary": "Send contact message" } },
     "/admin/blogs/generate": { "post": { "summary": "Generate AI blog post" } },
     "/admin/blogs": { "post": { "summary": "Create blog post" } },
     "/admin/blogs/{id}": { "patch": { "summary": "Update blog post" } },
-    "/admin/pages": { "post": { "summary": "Create content page" } },
+    "/admin/pages": { "post": { "summary": "Create a content page (or scaffold from a page recipe with {template})" } },
     "/admin/pages/{id}": {
       "patch": { "summary": "Update content page" },
       "delete": { "summary": "Delete content page" }

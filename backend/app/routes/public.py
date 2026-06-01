@@ -102,6 +102,14 @@ def blocks_catalog():
     return {"items": items, "icons": block_service.ICONS, "meta": {"count": len(items)}}
 
 
+@bp.get("/page-templates")
+def page_templates_catalog():
+    """Page recipes — the block library organized by page (home/about/services/...).
+    Each is a recommended composition; scaffold one with POST /admin/pages {template:"<name>"}."""
+    items = block_service.list_page_templates()
+    return {"items": items, "meta": {"count": len(items)}}
+
+
 @bp.get("/openapi.json")
 def openapi():
     spec = files("app").joinpath("openapi.json").read_text(encoding="utf-8")

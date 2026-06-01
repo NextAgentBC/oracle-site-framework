@@ -509,3 +509,60 @@ def summarize(sections: list) -> list:
             "items": len(content["items"]) if isinstance(content.get("items"), list) else None,
         })
     return out
+
+
+# ---------------------------------------------------------------------------
+# Page templates — the block library organized *by page*. Each common page is a
+# recipe of blocks in a sensible order; POST /admin/pages {template:"<name>"}
+# scaffolds a full page from one. (The home page = the active design's sections.)
+# ---------------------------------------------------------------------------
+PAGE_TEMPLATES = {
+    "home": {"label": "Home / landing",
+        "blurb": "Full landing: open -> prove -> explain -> convert.",
+        "blocks": [("hero", "centered", None), ("stats", None, None), ("logos", None, None),
+                   ("features", "cards", None), ("steps", None, None), ("comparison", None, None),
+                   ("cta", "banner", None)]},
+    "about": {"label": "About",
+        "blurb": "Who you are, the team, and what you stand for.",
+        "blocks": [("hero", "centered", {"headline": "About us", "headlineAccent": "", "subhead": "Who we are and what we believe."}),
+                   ("section", "stack", {"heading": "Our story", "items": [
+                       {"kind": "text", "title": "How we started", "body": "Share the origin and the why."},
+                       {"kind": "text", "title": "What drives us", "body": "The values and the work you care about."}]}),
+                   ("stats", None, None), ("team", None, None),
+                   ("cta", "banner", {"headline": "Want to work with us?"})]},
+    "services": {"label": "Services",
+        "blurb": "What you offer, how it works, what it costs.",
+        "blocks": [("hero", "centered", {"headline": "What we do", "headlineAccent": "", "subhead": "Clear services, clearly explained."}),
+                   ("features", "cards", {"heading": "Services"}), ("steps", None, {"heading": "How we work"}),
+                   ("pricing", None, None), ("faq", None, None), ("cta", "banner", None)]},
+    "solutions": {"label": "Solutions",
+        "blurb": "Problem-first: the pain, your answer, the proof.",
+        "blocks": [("hero", "centered", {"headline": "Solutions", "headlineAccent": "", "subhead": "The problems we solve."}),
+                   ("problem", None, None), ("features", "cards", {"heading": "How we help"}),
+                   ("steps", None, None), ("testimonials", None, None), ("cta", "banner", None)]},
+    "pricing": {"label": "Pricing",
+        "blurb": "Tiers, comparison, and an FAQ to close.",
+        "blocks": [("hero", "centered", {"headline": "Pricing", "headlineAccent": "", "subhead": "Simple, transparent plans."}),
+                   ("pricing", None, None), ("comparison", None, None), ("faq", None, None), ("cta", "banner", None)]},
+    "landing": {"label": "Campaign landing",
+        "blurb": "Focused single-offer landing page.",
+        "blocks": [("hero", "fullbleed", None), ("features", "minimal", None),
+                   ("testimonials", None, None), ("pricing", None, None), ("cta", "banner", None)]},
+}
+
+
+def page_template(name: str) -> Optional[dict]:
+    return PAGE_TEMPLATES.get((name or "").strip().lower())
+
+
+def build_page_template(name: str) -> Optional[list]:
+    """Fresh sections list scaffolded from a page template, or None if unknown."""
+    tpl = page_template(name)
+    if not tpl:
+        return None
+    return [make_block(bt, variant, overrides) for (bt, variant, overrides) in tpl["blocks"]]
+
+
+def list_page_templates() -> list:
+    return [{"name": k, "label": v["label"], "blurb": v.get("blurb", ""),
+             "sections": [b[0] for b in v["blocks"]]} for k, v in PAGE_TEMPLATES.items()]
