@@ -1,42 +1,56 @@
 # API Contract
 
-The backend is intentionally OpenClaw-friendly: resources are grouped by domain, responses are JSON, and the API has a small stable surface.
+The backend is intentionally OpenClaw-friendly: resources are grouped by domain, responses are JSON, and the surface stays small and stable.
 
-## Public Endpoints
+**Authoritative sources:** the machine-readable contract is `GET /api/openapi.json`; a categorized human map (APIs · fonts · 18 themes · 15 blocks · skill↔API) is in [`REFERENCE.zh.md`](REFERENCE.zh.md). This page summarizes shape + conventions.
+
+## Public Endpoints (no token)
 
 | Method | Path | Purpose |
 | --- | --- | --- |
 | `GET` | `/api/health` | Health check |
-| `GET` | `/api/site` | Public site config |
-| `GET` | `/api/design` | Active UI/UX design profile |
-| `POST` | `/api/auth/google` | Verify Google ID token and create/login user |
-| `GET` | `/api/blogs` | List published blog posts |
-| `GET` | `/api/blogs/:slug` | Read one blog post |
-| `GET` | `/api/pages` | List published content pages |
-| `GET` | `/api/pages/:slug` | Read one content page |
+| `GET` | `/api/site` | Public site config (name, locales, …) |
+| `GET` | `/api/design` | Active design profile — tokens + sections (`?locale=`) |
+| `GET` | `/api/blocks` | Block catalog: types, variants, fields, icons |
+| `GET` | `/api/patterns` · `/api/patterns/:slug` | Saved section patterns (capture library) |
+| `GET` | `/api/i18n/:locale` | UI chrome strings (nav/footer/buttons) |
+| `GET` | `/api/media/:filename` | Self-hosted image |
+| `GET` | `/api/openapi.json` | Machine-readable contract |
+| `GET` | `/api/blogs` · `/api/blogs/:slug` | Published blog posts (`?locale=`) |
+| `GET` | `/api/pages` · `/api/pages/:slug` | Published content pages (`?locale=`) |
+| `POST` | `/api/auth/google` | Verify Google ID token, create/login user |
 | `POST` | `/api/newsletter/subscribe` | Subscribe an email |
 | `POST` | `/api/contact` | Send a contact message |
 
 ## Admin Endpoints
 
-Admin endpoints require `Authorization: Bearer <token>` where the token comes from `/api/auth/google` (browser) or, for agents/CI, `flask --app app.main token issue --email <admin>` (non-interactive).
+`Authorization: Bearer <token>` — from `/api/auth/google` (browser) or, for agents/CI, `flask --app app.main token issue --email <admin>` (non-interactive).
 
 | Method | Path | Purpose |
 | --- | --- | --- |
-| `POST` | `/api/admin/blogs/generate` | Generate a draft or published AI blog |
-| `POST` | `/api/admin/blogs` | Create a manual blog post |
-| `PATCH` | `/api/admin/blogs/:id` | Update a blog post |
-| `POST` | `/api/admin/pages` | Create a content page |
-| `PATCH` | `/api/admin/pages/:id` | Update a content page |
-| `DELETE` | `/api/admin/pages/:id` | Delete a content page |
-| `GET` | `/api/admin/design` | Read active UI/UX design profile |
-| `PATCH` | `/api/admin/design` | Update design tokens, voice, and notes |
-| `POST` | `/api/admin/design/generate` | Generate an industry/competitor-informed design profile |
-| `POST` | `/api/admin/design/analyze-competitors` | Fetch competitor signals and update active design profile |
+| `POST` | `/api/admin/blogs/generate` | Generate a draft/published AI blog |
+| `POST` `PATCH` | `/api/admin/blogs` · `…/:id` | Create / update a blog post (`?locale=` localizes) |
+| `POST` `PATCH` `DELETE` | `/api/admin/pages` · `…/:id` | Create / update / delete a content page |
+| `GET` `PATCH` | `/api/admin/design` | Read / update tokens, sections, voice |
+| `POST` | `/api/admin/design/generate` | Apply a preset/industry, or generate from competitors |
+| `POST` | `/api/admin/design/analyze-competitors` | Fetch competitor signals → update design |
+| `GET` | `/api/admin/surfaces` | List every editable surface (home + pages) + locales |
+| `GET` `POST` | `/api/admin/compose/:target/blocks` | List / add a block (or insert a `{pattern}`) |
+| `PATCH` `DELETE` | `/api/admin/compose/:target/blocks/:id` | Update / remove a block |
+| `POST` | `/api/admin/compose/:target/blocks/:id/move` · `…/duplicate` | Reorder / duplicate |
+| `POST` | `/api/admin/compose/:target/batch` | Many block ops in one atomic call |
+| `POST` `DELETE` | `/api/admin/patterns` · `…/:id` | Save / delete a reusable section pattern |
+| `PATCH` | `/api/admin/i18n/:locale` | Edit UI chrome strings for a locale |
+| `GET` `POST` | `/api/admin/media` | List / upload an image (upload-only, no generation) |
+| `DELETE` | `/api/admin/media/:filename` | Delete a hosted image |
+
+## Page composition (blocks)
+
+A page (and the home page) is an ordered list of **blocks** — `{ id, type, variant, content }`. `GET /api/blocks` is the source of truth for the 15 types and their fields; edit a surface's block list through `/api/admin/compose/:target/*` (`target` = `home` or a page slug). Theme (colors/fonts) is separate — it lives in the design profile tokens, so structure and skin stay decoupled. Edits are instant (no redeploy). Full guide: `REFERENCE.zh.md` + the `oracle-site-compose` / `oracle-site-capture` skills.
 
 ## Design Profile
 
-The frontend must not hard-code industry styling. It reads `GET /api/design` and maps tokens to CSS variables.
+The frontend must not hard-code industry styling. It reads `GET /api/design` and maps tokens to CSS variables; `sections` (the block composition) drives the home page.
 
 ```json
 {
@@ -56,18 +70,16 @@ The frontend must not hard-code industry styling. It reads `GET /api/design` and
         "primary": "#1f5f4a",
         "accent": "#8f3f3b",
         "highlight": "#b88a2d",
-        "link": "#275f91"
+        "link": "#275f91",
+        "surfaceInverse": "#15201d",
+        "inkInverse": "#f6f7f4",
+        "onPrimary": "#ffffff"
       },
       "typography": {
-        "body": "Source Sans 3, Arial, Helvetica, sans-serif",
-        "heading": "Source Sans 3, Arial, Helvetica, sans-serif",
-        "mono": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
+        "body": "var(--font-sans), system-ui, -apple-system, sans-serif",
+        "heading": "var(--font-grotesk), var(--font-sans), system-ui, sans-serif"
       },
-      "radius": {
-        "card": "8px",
-        "control": "8px",
-        "pill": "999px"
-      },
+      "radius": { "card": "8px", "control": "8px", "pill": "999px" },
       "layout": {
         "contentMaxWidth": "1120px",
         "heroMinHeight": "50vh",
@@ -80,10 +92,13 @@ The frontend must not hard-code industry styling. It reads `GET /api/design` and
       "headlineStyle": "plain offer or brand name",
       "tone": "precise, plainspoken, risk-aware"
     },
+    "sections": [ { "type": "hero", "variant": "centered", "content": { } } ],
     "notes": "Design rationale and competitor observations."
   }
 }
 ```
+
+The three inverse keys (`surfaceInverse` / `inkInverse` / `onPrimary`) drive the dark "contrast band" (full-bleed hero + CTA banner) so even dark surfaces are token-driven, never hard-coded. Fonts are token stacks (`var(--font-*)`) wired in the frontend root layout: Inter, Space Grotesk, Spectral, Fraunces, Oswald.
 
 ## Competitor Analyzer
 
@@ -110,42 +125,9 @@ Request:
 }
 ```
 
-Response:
-
-```json
-{
-  "item": {
-    "name": "Local Retail Signal",
-    "source": "competitor-analyzer",
-    "tokens": {}
-  },
-  "analysis": {
-    "snapshots": [],
-    "observations": [],
-    "dominantColors": [],
-    "dominantFonts": []
-  }
-}
-```
-
 ## Response Shape
 
-Successful list:
-
-```json
-{
-  "items": [],
-  "meta": { "count": 0 }
-}
-```
-
-Successful object:
-
-```json
-{
-  "item": {}
-}
-```
+Successful object → `{ "item": { … } }`. Successful list → `{ "items": [ … ] }`. Write endpoints that return the changed block also include the surrounding `page`.
 
 Error:
 
@@ -157,3 +139,5 @@ Error:
   }
 }
 ```
+
+Common codes: `401` missing/bad token, `403` not admin, `404` not found, `400` bad input, `413` upload too large.

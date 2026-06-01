@@ -1,7 +1,10 @@
 # Design System & Section Composition — Design Spec
 
-> **Status: proposal for review. Not built yet.** Edit this doc; once it's agreed we implement.
-> Principles: subtract, reuse what exists, modular, maintainable. No duplicate systems.
+> **Status: ✅ shipped — and extended well beyond this spec.** This is the original design
+> proposal, kept as an architecture/decision record. The live system now has **18 style presets**
+> (not 3–4), **15 block types** (not 5), path-based i18n (`/zh`), and image upload. Authoritative
+> current state: [`REFERENCE.zh.md`](REFERENCE.zh.md) + the `oracle-site-design` / `oracle-site-compose`
+> skills. Principles below still hold: subtract, reuse, modular, maintainable, no duplicate systems.
 
 ## 1. Goal / Non-goal
 
@@ -30,6 +33,11 @@
 A single `<SectionRenderer>` maps `type + variant` → a component variant; the home page renders the composition instead of hardcoded JSX. Every section reads theme via CSS vars (already themed), so theme and structure stay decoupled.
 
 ## 4. Section catalog (Phase 1)
+
+> ✅ Shipped & grown to **15 block types** (hero, stats, logos, features, problem, comparison,
+> testimonials, pricing, faq, cta, section, steps, gallery, team, banner). `GET /api/blocks` is the
+> source of truth; the flexible `section` block + pattern library cover novel layouts with no code.
+> The table below is the original Phase-1 seed.
 
 | type | variants | content fields |
 |---|---|---|
@@ -70,6 +78,8 @@ Extend the **active design config** with a `sections` array (single source of tr
 ## 6. Style presets (the "options")
 
 Each preset = `{ tokens (incl. mode) + sections (types/variants) + default content tone }`, named and tagged by vibe/industry. Extends `INDUSTRY_PRESETS`.
+
+> ✅ Shipped & grown to **18 presets**: base (`minimal`, `bold-dark`, `editorial`, `corporate`) + industry (`tech`, `healthcare`, `restaurant`, `realestate`, `fitness`, `beauty`, `legal`, `creative`) + style (`luxe`, `education`, `nonprofit`, `finance`, `playful`, `neon`). `POST /admin/design/generate {preset|industry}`. The table below is the original seed of 3.
 
 | Preset | Vibe | Hero | Palette/mode | Features |
 |---|---|---|---|---|
@@ -116,7 +126,7 @@ All through existing design endpoints. Triggers (zh+en) added to the skill descr
 
 - **Phase 0 (prerequisite):** fix the frontend build failure; land the nav `no-store` fix so new pages hit the menu immediately. *(Required before any of this — it all needs a working build.)*
 - **Phase 1 (this spec):** Section catalog §4, composition model §5, 3–4 presets §6, `SectionRenderer`, data-driven home, upgraded skill §9.
-- **Phase 2 (later):** testimonials/logos sections, per-page (landing-page) compositions, image/asset upload, `transparent-on-hero` header.
+- **Phase 2 — ✅ shipped:** testimonials/logos + 10 more block types, per-page compositions, **image upload** (`/api/admin/media`, upload-only), path-based i18n (`/zh`), screenshot capture + pattern library. (`transparent-on-hero` header not pursued.)
 
 ## 12. Decisions (locked)
 
