@@ -1,6 +1,6 @@
 ---
 name: oracle-site-design
-description: "Design the Oracle Site's look — interview the user, offer style options from 12 templates (minimal / bold-dark / editorial / corporate + industry templates: tech, healthcare, restaurant, realestate, fitness, beauty, legal, creative), apply one, then fine-tune colors, fonts, hero style, and section content. Triggers: '设计网站 / 换个风格 / 重新设计首页', 'make it like apple / tesla / stripe', '做个餐厅网站 / 健身房风格 / 律所网站 / 美容院风格', 'a site for a clinic / gym / cafe / law firm', '改主题色 / 换配色 / 改颜色', 'design the homepage', 'hero 换成大图 / 居中', '看起来更高级 / 更大胆 / 更简洁', 'generate a design', '分析竞品设计'."
+description: "Design the Oracle Site's look — interview the user, offer style options from 18 templates (base: minimal / bold-dark / editorial / corporate · industry: tech / healthcare / restaurant / realestate / fitness / beauty / legal / creative · style: luxe / education / nonprofit / finance / playful / neon), apply one, then fine-tune colors, fonts, hero style, content width (wide/narrow), and section content. Triggers: '设计网站 / 换个风格 / 重新设计首页', 'make it like apple / tesla / stripe', '做个餐厅网站 / 健身房风格 / 律所网站 / 美容院风格', 'a site for a clinic / gym / cafe / law firm', '改主题色 / 换配色 / 改颜色', 'design the homepage', 'hero 换成大图 / 居中', '看起来更高级 / 更大胆 / 更简洁', '调宽一点 / 窄一点 / 宽屏 / 全宽 / make it wider / narrower', 'generate a design', '分析竞品设计'."
 metadata:
   version: 0.2.0
   openclaw:
@@ -111,6 +111,25 @@ A strong landing order: **hero → stats → logos → problem → features → 
 
 Mapped in `backend/app/data/style_references.json`:
 apple / notion / stripe → **minimal** · tesla / linear / vercel → **bold-dark** · airbnb → **editorial** · consultancy / SaaS-B2B → **corporate** · vercel-dashboard / dev tools → **tech** · clinic / dentist / wellness → **healthcare** · restaurant / café / bakery → **restaurant** · real estate / architecture → **realestate** · gym / fitness / sport → **fitness** · salon / spa / cosmetics → **beauty** · law firm / advisory → **legal** · studio / agency / portfolio → **creative**.
+
+## 内容宽度（宽屏 · 窄屏 — 一句话即可调）
+
+整站内容宽度就是一个 token：`tokens.layout.contentMaxWidth`（驱动页面容器 + 页脚的 `--layout-content-max`）。一条 PATCH **即时生效、无需重部署**。命名档位：
+
+| 说法 | contentMaxWidth | 感觉 |
+|---|---|---|
+| 窄屏 / narrow | `1040px` | 聚焦、留白多，文字为主时好读 |
+| 标准 / standard | `1160px` | 默认平衡 |
+| 宽屏 / wide | `1280px` | 更充实，桌面铺得更开（**当前值**） |
+| 全宽 / extra-wide | `1440px` | 大屏、几乎贴边 |
+
+```bash
+# “调宽一点 / make it wider / 宽屏”
+curl -s -X PATCH "$ORACLE_SITE_API/admin/design" -H "Authorization: Bearer $ORACLE_SITE_TOKEN" -H "Content-Type: application/json" \
+  -d '{"tokens":{"layout":{"contentMaxWidth":"1280px"}}}'
+# 窄一点 → "1040px"；全宽 → "1440px"。其它布局 token 同理：sectionGap(段间距) · cardPadding · heroMinHeight · density。
+```
+Hero 和长文本各自有可读上限（文字不会被拉太宽），这个 token 只管**整体页面容器**的宽度。
 
 ## Rules
 - **Inspiration only — never clone a brand's exact identity or assets.**
