@@ -215,7 +215,9 @@ function localeQuery(locale?: string): string {
 
 export async function getSite(): Promise<Site> {
   try {
-    const data = await fetchJson<{ item: Site }>("/site");
+    // no-store: site name / locales / config must reflect changes immediately,
+    // like design + content (the layout is force-dynamic, so this is safe).
+    const data = await fetchJson<{ item: Site }>("/site", { cache: "no-store" });
     return data.item;
   } catch {
     return {
