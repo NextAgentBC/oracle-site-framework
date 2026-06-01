@@ -1,6 +1,7 @@
 services:
   postgres:
     image: postgres:17-alpine
+    restart: unless-stopped
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-oracle_site}
       POSTGRES_USER: ${POSTGRES_USER:-oracle_site}
@@ -16,6 +17,7 @@ services:
       retries: 20
 
   backend:
+    restart: unless-stopped
     build: ./backend
     env_file: ./backend/.env
     environment:
@@ -35,6 +37,7 @@ services:
         condition: service_healthy
 
   frontend:
+    restart: unless-stopped
     build:
       context: ./frontend
       args:
