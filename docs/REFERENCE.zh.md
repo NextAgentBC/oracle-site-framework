@@ -38,7 +38,9 @@
 |---|---|---|
 | POST | `/auth/google` | Google 登录 / 注册 |
 | POST | `/newsletter/subscribe` | 订阅邮件列表 |
-| POST | `/contact` | 联系表单 |
+| POST | `/contact` | 联系表单（同时推送到运营 Telegram） |
+| POST | `/chat` | 在线聊天：访客消息 `{sessionId?, message}`，由**沙箱无工具小爪**应答，返回 `{sessionId, reply}`（有限流） |
+| GET | `/chat/{sessionId}` | 在线聊天：某会话完整记录 |
 
 ### 管理写（需 admin token，前缀 `/admin`）
 
@@ -84,6 +86,15 @@
 | DELETE | `/admin/media/{filename}` | 删除图片 |
 
 > ⚠️ **图片 URL 必须用绝对地址**（`https://homestead-api…/api/media/<file>`）。前端无 `/api` 反代，裸 `/api/media/…` 在前端会 404；上传接口已直接返回绝对 `url`。
+
+**在线聊天 chat（运营台 + 接管）**
+| 方法 | 路径 | 说明 |
+|---|---|---|
+| GET | `/admin/chat` `?status=` · `/admin/chat/{sessionId}` | 列出会话 / 读某会话完整记录 |
+| POST | `/admin/chat/{sessionId}/reply` | 人工 / 小爪**接管**，回复直接进访客聊天窗 |
+| POST | `/admin/chat/{sessionId}/close` | 关闭（`{reopen:true}` 重开）会话 |
+
+> 💬 **聊天大脑是无工具的一次性模型调用**（host `webchat-bridge`）：没有 shell / 文件 / 工具面，注入也无法执行；prompt 只含公开站点知识 + 本访客对话，不碰私有记忆。每段对话镜像到运营 Telegram，可随时接管。
 
 ---
 
@@ -188,6 +199,7 @@
 - **语言**：`en`（默认）· `zh`，路径式 `/zh`（利于 SEO）。内容译文存各模型的 `i18n` JSON 列，界面文案走 `/i18n`。
 - **媒体**：仅上传，`png/jpg/gif/webp`，≤ 10MB；魔术字节校验；存 `media-data` 卷；返回绝对 URL；CDN 缓存 24h（文件名唯一不可变）。
 - **每种 block 各有一个轻量触发技能**（`oracle-site-block-*`，opt-in 默认不装），让「加个价格表 / add an FAQ」精准路由，最终都委托 compose 引擎。
+- **在线聊天**：右下角气泡，由**沙箱无工具小爪**实时应答（host `webchat-bridge` → `openclaw infer`，零工具面、防注入），中英文自适应；每段对话镜像到运营 Telegram，可随时接管；contact 表单也会推送线索到 Telegram。
 
 ---
 
@@ -205,6 +217,7 @@
 | 双语 | `oracle-site-i18n`（`/oracle_site_i18n`） | `/admin/i18n`、`?locale=` 系列、`/i18n` |
 | 媒体 | `oracle-site-media`（`/oracle_site_media`） | `/admin/media*`、`/media` |
 | 互动 | `oracle-site-newsletter`（`/oracle_site_newsletter`） | `/newsletter/subscribe`、`/contact` |
+| 在线客服 | `oracle-site-chat`（接管网站聊天） | `/admin/chat*`、`/chat` |
 | 运维 | `oracle-site-ops`（`/oracle_site_ops`） | `/health`、docker / 部署 |
 
 ---
