@@ -14,11 +14,11 @@ from werkzeug.utils import secure_filename
 
 from ..auth import require_auth
 from ..extensions import db
-from ..models import BlockPattern, BlogPost, ChatConversation, ChatMessage, DesignProfile, Page, UiMessages
+from ..models import BlockPattern, BlogPost, ChatConversation, ChatMessage, DesignProfile, Page, Revision, UiMessages
 from ..services.ai_service import generate_blog_post
 from ..services.competitor_analyzer import analyze_competitors
 from ..services.design_service import apply_style, deep_merge, normalized_profile, profile_for_industry
-from ..services import block_service
+from ..services import block_service, revision_service
 
 bp = Blueprint("admin", __name__)
 
@@ -151,6 +151,8 @@ def update_design():
             notes=preset["notes"],
         )
         db.session.add(profile)
+    else:
+        revision_service.record("design", "", "design", profile.to_dict(), "design update")
 
     if "name" in data:
         profile.name = data["name"]
@@ -197,6 +199,8 @@ def generate_design():
     if not profile:
         profile = DesignProfile(status="active")
         db.session.add(profile)
+    else:
+        revision_service.record("design", "", "design", profile.to_dict(), f"theme → {generated['name']}")
 
     profile.name = generated["name"]
     profile.source = generated["source"]
@@ -243,6 +247,8 @@ def analyze_design_competitors():
     if not profile:
         profile = DesignProfile(status="active")
         db.session.add(profile)
+    else:
+        revision_service.record("design", "", "design", profile.to_dict(), "competitor redesign")
 
     profile.name = generated["name"]
     profile.source = generated["source"]
@@ -326,6 +332,34 @@ def _block_404(target, block_id):
     return jsonify({"error": {"code": "not_found", "message": f"No block '{block_id}' on '{target}'."}}), 404
 
 
+# --- Revisions: snapshot before each edit so changes are undoable ------------
+
+def _surface_for(kind, obj) -> str:
+    return "home" if kind == "home" else f"page:{obj.slug}"
+
+
+def _snapshot_sections(kind, obj, before, locale, label) -> None:
+    """Record the prior section list as a revision, before a mutation is saved."""
+    revision_service.record(_surface_for(kind, obj), locale or "", "sections", before, label)
+
+
+def _valid_locale(loc):
+    """Validate a locale supplied in a request *body* (args use _admin_locale)."""
+    loc = (loc or "").strip().lower()
+    if not loc or loc == current_app.config["SITE_DEFAULT_LOCALE"]:
+        return None
+    return loc if loc in current_app.config["SITE_LOCALES"] else None
+
+
+def _surface_from_target(target: str) -> str:
+    t = (target or "").strip()
+    return t if t in ("home", "design") else f"page:{t}"
+
+
+def _target_from_surface(surface: str) -> str:
+    return surface.split("page:", 1)[1] if surface.startswith("page:") else surface
+
+
 @bp.get("/compose/<target>/blocks")
 @require_auth(admin=True)
 def compose_list(target):
@@ -347,6 +381,7 @@ def compose_add(target):
         return _surface_404(target)
     data = request.get_json(silent=True) or {}
     block_service.ensure_ids(sections)
+    before = deepcopy(sections)
     # `pattern` inserts a saved capture; otherwise scaffold a typed block.
     spec = None
     if data.get("pattern"):
@@ -361,6 +396,7 @@ def compose_add(target):
             block = block_service.add_block(sections, data.get("type"), data.get("variant"), data.get("content"), data.get("position", "end"))
     except block_service.BlockError as exc:
         return jsonify({"error": {"code": "bad_request", "message": str(exc)}}), 400
+    _snapshot_sections(kind, obj, before, locale, f"add {block.get('type')}")
     _save_surface(obj, sections, locale)
     return {"item": block, "page": _surface_payload(kind, obj, sections, locale)}, 201
 
@@ -375,6 +411,7 @@ def compose_update(target, block_id):
     block_service.ensure_ids(sections)
     if block_service.find_index(sections, block_id) < 0:
         return _block_404(target, block_id)
+    before = deepcopy(sections)
     data = request.get_json(silent=True) or {}
     try:
         block = block_service.update_block(
@@ -382,6 +419,7 @@ def compose_update(target, block_id):
         )
     except block_service.BlockError as exc:
         return jsonify({"error": {"code": "bad_request", "message": str(exc)}}), 400
+    _snapshot_sections(kind, obj, before, locale, f"edit {block.get('type')}")
     _save_surface(obj, sections, locale)
     return {"item": block, "page": _surface_payload(kind, obj, sections, locale)}
 
@@ -396,11 +434,13 @@ def compose_move(target, block_id):
     block_service.ensure_ids(sections)
     if block_service.find_index(sections, block_id) < 0:
         return _block_404(target, block_id)
+    before = deepcopy(sections)
     data = request.get_json(silent=True) or {}
     try:
         block = block_service.move_block(sections, block_id, data.get("position", "end"))
     except block_service.BlockError as exc:
         return jsonify({"error": {"code": "bad_request", "message": str(exc)}}), 400
+    _snapshot_sections(kind, obj, before, locale, f"move {block.get('type')}")
     _save_surface(obj, sections, locale)
     return {"item": block, "page": _surface_payload(kind, obj, sections, locale)}
 
@@ -415,7 +455,9 @@ def compose_duplicate(target, block_id):
     block_service.ensure_ids(sections)
     if block_service.find_index(sections, block_id) < 0:
         return _block_404(target, block_id)
+    before = deepcopy(sections)
     block = block_service.duplicate_block(sections, block_id)
+    _snapshot_sections(kind, obj, before, locale, f"duplicate {block.get('type')}")
     _save_surface(obj, sections, locale)
     return {"item": block, "page": _surface_payload(kind, obj, sections, locale)}, 201
 
@@ -430,7 +472,9 @@ def compose_remove(target, block_id):
     block_service.ensure_ids(sections)
     if block_service.find_index(sections, block_id) < 0:
         return _block_404(target, block_id)
+    before = deepcopy(sections)
     removed = block_service.remove_block(sections, block_id)
+    _snapshot_sections(kind, obj, before, locale, f"remove {removed.get('type')}")
     _save_surface(obj, sections, locale)
     return {"item": {"id": block_id, "type": removed.get("type"), "deleted": True}, "page": _surface_payload(kind, obj, sections, locale)}
 
@@ -469,8 +513,11 @@ def compose_batch(target):
                     "message": f"Batch failed at op {i}: {exc} No changes were applied (atomic).",
                     "failedAt": i, "results": results}}), 400
 
+    applied = sum(1 for r in results if r["ok"])
+    if applied:
+        _snapshot_sections(kind, obj, deepcopy(sections), locale, f"batch ({applied} ops)")
     _save_surface(obj, working, locale)
-    return {"item": {"applied": sum(1 for r in results if r["ok"]), "total": len(ops), "results": results},
+    return {"item": {"applied": applied, "total": len(ops), "results": results},
             "page": _surface_payload(kind, obj, working, locale)}
 
 
@@ -503,6 +550,109 @@ def list_surfaces():
     return {"items": out, "meta": {"count": len(out),
             "defaultLocale": current_app.config["SITE_DEFAULT_LOCALE"],
             "locales": current_app.config["SITE_LOCALES"]}}
+
+
+# --- Revisions: list history · undo the last change · restore a kept point ---
+
+def _restore_design(snapshot) -> None:
+    profile = _active_design_profile()
+    if profile is None:
+        profile = DesignProfile(status="active")
+        db.session.add(profile)
+    snap = snapshot or {}
+    for col, key in (("name", "name"), ("source", "source"), ("industry", "industry"),
+                     ("personality", "personality"), ("notes", "notes")):
+        if key in snap:
+            setattr(profile, col, snap[key])
+    if "competitorUrls" in snap:
+        profile.competitor_urls = snap["competitorUrls"]
+    if isinstance(snap.get("tokens"), dict):
+        profile.tokens = snap["tokens"]
+    if isinstance(snap.get("voice"), dict):
+        profile.voice = snap["voice"]
+    if "sections" in snap:
+        profile.sections = snap["sections"]
+
+
+def _restore_sections(surface, locale, snapshot):
+    kind, obj, _ = _resolve_surface(_target_from_surface(surface), locale or None)
+    if kind is None:
+        return None
+    sections = list(snapshot or [])
+    _save_surface(obj, sections, locale or None)
+    return _surface_payload(kind, obj, sections, locale or None)
+
+
+def _apply_revision(rev):
+    """Write a revision's snapshot back onto its surface. Returns a result payload,
+    or None if a section surface no longer exists. Caller commits."""
+    if rev.kind == "design":
+        _restore_design(rev.snapshot)
+        return {"target": "design"}
+    return _restore_sections(rev.surface, rev.locale, rev.snapshot)
+
+
+@bp.get("/revisions")
+@require_auth(admin=True)
+def list_revisions():
+    """History of saved snapshots (newest first). Each is the state *before* a
+    change, so restoring one reverts that change. ?target=home|<page-slug>|design
+    scopes to one surface (+ optional ?locale=); omit target for recent across all."""
+    target = request.args.get("target")
+    limit = int(request.args.get("limit", "50"))
+    if target:
+        surface = _surface_from_target(target)
+        locale = _valid_locale(request.args.get("locale")) or ""
+        revs = revision_service.history(surface, locale, limit)
+    else:
+        revs = revision_service.history(None, None, limit)
+    return {"items": [r.to_card_dict() for r in revs], "meta": {"count": len(revs)}}
+
+
+@bp.post("/undo")
+@require_auth(admin=True)
+def undo():
+    """Undo the most recent change to a surface: restore its latest snapshot and
+    consume it, so repeated calls walk back. Body: {target:"home"|<slug>|"design", locale?}."""
+    data = request.get_json(silent=True) or {}
+    target = data.get("target") or "home"
+    surface = _surface_from_target(target)
+    locale = _valid_locale(data.get("locale"))
+    rev = revision_service.latest(surface, locale or "")
+    if rev is None:
+        return jsonify({"error": {"code": "not_found", "message": f"No history to undo for '{target}'."}}), 404
+    card = rev.to_card_dict()
+    result = _apply_revision(rev)
+    if result is None:
+        return _surface_404(target)
+    db.session.delete(rev)
+    db.session.commit()
+    return {"item": {"undone": card, "restoredTo": result}}
+
+
+@bp.post("/revisions/<int:rev_id>/restore")
+@require_auth(admin=True)
+def restore_revision(rev_id: int):
+    """Jump a surface back to a specific kept snapshot. Snapshots the current state
+    first (so the restore is itself undoable), then writes the chosen one."""
+    rev = db.session.get(Revision, rev_id)
+    if rev is None:
+        return jsonify({"error": {"code": "not_found", "message": "Revision not found"}}), 404
+    if rev.kind == "design":
+        cur = _active_design_profile()
+        if cur is not None:
+            revision_service.record("design", "", "design", cur.to_dict(), "before restore")
+    else:
+        kind, obj, sections = _resolve_surface(_target_from_surface(rev.surface), rev.locale or None)
+        if kind is not None:
+            block_service.ensure_ids(sections)
+            _snapshot_sections(kind, obj, deepcopy(sections), rev.locale or "", "before restore")
+    card = rev.to_card_dict()
+    result = _apply_revision(rev)
+    if result is None:
+        return _surface_404(_target_from_surface(rev.surface))
+    db.session.commit()
+    return {"item": {"restored": card, "restoredTo": result}}
 
 
 RESERVED_SLUGS = {"blog", "blogs", "contact", "api", "admin", "_next"}

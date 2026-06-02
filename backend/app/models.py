@@ -211,6 +211,46 @@ class BlockPattern(TimestampMixin, db.Model):
         return item
 
 
+class Revision(TimestampMixin, db.Model):
+    """A point-in-time snapshot of an editable *surface*, captured **before** each
+    change so an edit can be undone or rolled back ("撤销 / 回到上一版") with no
+    redeploy. A surface is "home" (the active design profile's section list),
+    "page:<slug>" (a content page's sections), or "design" (the whole active
+    design profile — tokens + voice + sections, snapshotted on a theme switch).
+    History is capped per (surface, locale); see `revision_service`."""
+    __tablename__ = "revision"
+
+    id = db.Column(db.Integer, primary_key=True)
+    surface = db.Column(db.String(128), nullable=False, index=True)  # home | page:<slug> | design
+    locale = db.Column(db.String(16), nullable=False, default="")    # "" = default/base locale
+    kind = db.Column(db.String(16), nullable=False, default="sections")  # sections | design
+    label = db.Column(db.String(255), nullable=False, default="")    # what the change was
+    snapshot = db.Column(db.JSON, nullable=False, default=dict)       # prior state (list or dict)
+
+    def to_card_dict(self) -> dict:
+        snap = self.snapshot
+        if isinstance(snap, list):
+            blocks = len(snap)
+        elif isinstance(snap, dict):
+            blocks = len(snap.get("sections") or []) if "sections" in snap else None
+        else:
+            blocks = None
+        return {
+            "id": self.id,
+            "surface": self.surface,
+            "locale": self.locale,
+            "kind": self.kind,
+            "label": self.label,
+            "blocks": blocks,
+            "createdAt": self.created_at.isoformat() if self.created_at else None,
+        }
+
+    def to_detail_dict(self) -> dict:
+        item = self.to_card_dict()
+        item["snapshot"] = self.snapshot
+        return item
+
+
 class ChatConversation(TimestampMixin, db.Model):
     """One website chat thread, keyed by a browser-generated session id. The bot
     brain is the (tool-less) OpenClaw model turn run by the host webchat-bridge;

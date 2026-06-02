@@ -36,6 +36,10 @@ class Config:
     SITE_LOCALES = _csv(os.getenv("SITE_LOCALES", "en,zh")) or ["en"]
     SITE_DEFAULT_LOCALE = os.getenv("SITE_DEFAULT_LOCALE", "") or SITE_LOCALES[0]
 
+    # Undo/restore: how many prior-state snapshots to keep per editable surface
+    # (home / each page / the design) and locale. Older ones are pruned.
+    REVISION_HISTORY = int(os.getenv("REVISION_HISTORY", "50"))
+
     # Self-hosted media (blog images, etc.), served at /api/media/<file> from a volume.
     # Upload-only (no generation): POST /api/admin/media stores user images here.
     MEDIA_DIR = os.getenv("MEDIA_DIR", "/app/media")

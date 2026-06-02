@@ -41,6 +41,9 @@ The backend is intentionally OpenClaw-friendly: resources are grouped by domain,
 | `PATCH` `DELETE` | `/api/admin/compose/:target/blocks/:id` | Update / remove a block |
 | `POST` | `/api/admin/compose/:target/blocks/:id/move` · `…/duplicate` | Reorder / duplicate |
 | `POST` | `/api/admin/compose/:target/batch` | Many block ops in one atomic call |
+| `GET` | `/api/admin/revisions` | Edit history — snapshots newest-first; `?target=home\|:slug\|design` (+ `?locale=`) |
+| `POST` | `/api/admin/undo` | Undo the last change to a surface (`{target, locale?}`); consumes its latest snapshot |
+| `POST` | `/api/admin/revisions/:id/restore` | Restore a surface to a kept snapshot (current state snapshotted first) |
 | `POST` `DELETE` | `/api/admin/patterns` · `…/:id` | Save / delete a reusable section pattern |
 | `PATCH` | `/api/admin/i18n/:locale` | Edit UI chrome strings for a locale |
 | `GET` `POST` | `/api/admin/media` | List / upload an image (upload-only, no generation) |

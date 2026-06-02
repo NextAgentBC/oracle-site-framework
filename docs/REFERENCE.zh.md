@@ -67,6 +67,13 @@
 | POST | `…/blocks/{blockId}/move` · `…/duplicate` | 移动 / 复制 |
 | POST | `/admin/compose/{target}/batch` | 一次多步、默认原子 |
 
+**撤销 / 版本 revisions（每次 compose / design 改动前自动快照，可撤销 / 回滚）**
+| 方法 | 路径 | 说明 |
+|---|---|---|
+| GET | `/admin/revisions` `?target=&locale=` | 改动历史（最新在前）；`target`=`home` / 页面 slug / `design`；不给 target 则跨面汇总 |
+| POST | `/admin/undo` | 撤销某面最近一次改动 `{target, locale?}`（消费最新快照，可连撤） |
+| POST | `/admin/revisions/{id}/restore` | 回到某个历史快照（会先快照当前态，故 restore 本身也可再撤销） |
+
 **捕获 patterns**
 | 方法 | 路径 | 说明 |
 |---|---|---|

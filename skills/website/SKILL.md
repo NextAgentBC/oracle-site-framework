@@ -32,6 +32,7 @@ to the matching skill** for whatever they pick — don't re-implement, route.
 - **/oracle_site_design** — 换模板(共 18 套)/ 改配色 / 改字体 / 改 hero · templates · colors · fonts
 - **/oracle_site_capture** — 发一张截图 → 自动重建成板块(同化成本站风格)· screenshot → section
 - **/oracle_site_compose** — 给某页加 / 改 / 移 / 删 / 复制板块 · add·edit·move·remove blocks
+- **/oracle_site_history** — 撤销 / 回到上一版 / 改动历史(首页·页面·主题)· undo · restore · history
 
 ## 🌐 双语 · Language (中 / EN)
 - **/oracle_site_i18n** — 把首页 / 某个页面 / 某篇博客翻成中文(或其它语言)· translate content + UI
