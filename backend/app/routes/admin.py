@@ -9,6 +9,7 @@ from typing import Optional
 
 from flask import Blueprint, current_app, jsonify, request
 from slugify import slugify
+from sqlalchemy.orm.attributes import flag_modified
 from werkzeug.utils import secure_filename
 
 from ..auth import require_auth
@@ -295,11 +296,17 @@ def _resolve_surface(target: str, locale=None):
 
 
 def _save_surface(obj, sections, locale=None):
-    # JSON column is plain (no mutation tracking) — reassign to persist.
+    # JSON column is plain (no mutation tracking). _locale_sections() shallow-copies
+    # the section list, so its dicts are shared with obj.sections — an in-place edit
+    # (ensure_ids / content deep-merge) also mutates SQLAlchemy's baseline, making
+    # `obj.sections = sections` look unchanged (old == new) so the UPDATE is skipped.
+    # flag_modified forces the column dirty regardless of shared refs.
     if locale:
         _set_i18n(obj, locale, {"sections": sections})
+        flag_modified(obj, "i18n")
     else:
         obj.sections = sections
+        flag_modified(obj, "sections")
     db.session.commit()
 
 
