@@ -160,5 +160,6 @@ or build the frontend with `NEXT_PUBLIC_WEBCHAT_ENABLED=false`.
 
 - **Independent instance:** its own DB, content, and design — nothing shared with other deployments.
 - **Volumes** `postgres-data` + `media-data` persist across rebuilds (DB rows + uploaded images survive).
+- **No image generator needed.** Switch to your industry — `POST /api/admin/site/rebrand {"industry":"<yours>"}` (or the `oracle-site-rebrand` skill) — and the home/pages fill with a complete layout where every image slot is a **prompt-labelled placeholder**. Replace each with your own uploaded photo (`/api/admin/media`); the on-page prompt says what fits. Generating real images is optional (only if you have a generator).
 - **Domain is build-time** for the frontend (step 3a); to change it, rebuild frontend.
 - Updates: `git pull` → `docker compose up -d --build` → restart cloudflared (the gotcha above).

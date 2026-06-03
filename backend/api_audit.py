@@ -114,6 +114,10 @@ r=c.get("/api/admin/media", headers=H); chk("GET /admin/media (list)", r.status_
 r=c.delete(f"/api/admin/media/{mname}", headers=H); chk("DELETE /admin/media/<file>", r.status_code==200, str(r.status_code))
 r=c.delete("/api/admin/media/missing.png", headers=H); chk("DELETE /admin/media/<missing> -> 404", r.status_code==404, str(r.status_code))
 
+# site-level: rebrand (dryRun — no writes) + consistency audit
+r=c.post("/api/admin/site/rebrand", json={"industry":"beauty","dryRun":True}, headers=H); chk("POST /admin/site/rebrand (dryRun)", r.status_code==200 and bool(j(r).get("imagery",{}).get("images")) and len(j(r)["item"]["wouldApply"]["sectionTypes"])>=9, str(r.status_code))
+r=c.get("/api/admin/consistency", headers=H); chk("GET /admin/consistency", r.status_code==200 and "findings" in j(r).get("item",{}), str(r.status_code))
+
 # ---------- cleanup write ----------
 r=c.delete(f"/api/admin/pages/{pid}", headers=H); chk("DELETE /admin/pages/{id}", r.status_code==200, str(r.status_code))
 

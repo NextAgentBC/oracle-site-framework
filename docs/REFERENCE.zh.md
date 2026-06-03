@@ -51,6 +51,12 @@
 | POST | `/admin/design/generate` | 套用预设 `{preset}` 或按行业 `{industry}` 生成 |
 | POST | `/admin/design/analyze-competitors` | 喂入竞品观察 → 生成和谐配色 |
 
+**站点级 site（高层操作 —— 把"换行业""查一致性"变成一次调用）**
+| 方法 | 路径 | 说明 |
+|---|---|---|
+| POST | `/admin/site/rebrand` | **一键换行业**：重生成首页设计+版块、清掉各语言残留的旧版块（防止"中文页卡在旧站"）、每面快照（一次 `undo` 全量回滚）、返回 `imagery`（模板声明的配图提示词+落点）与一致性审计。`{industry\|preset, competitorUrls?, brandName?, dryRun?}`。是 rebrand 不是微调——会重生成首页、重置本地化文案 |
+| GET | `/admin/consistency` | **一致性审计 = "做完"的机器判定**：逐 面×语言 报 `structural_drift`（结构漂移）/ `missing_translation`（缺/未译）/ `language_mismatch`（中英错位）/ `industry_residue`（旧行业残留）→ `{ok, findings[], summary}`。换行业/翻译后循环修到 `ok:true` 才算完 |
+
 **内容 content**
 | 方法 | 路径 | 说明 |
 |---|---|---|
@@ -156,6 +162,8 @@
 - → `creative`：agency / studio / design / portfolio / marketing / photography
 - 其它行业（教育 / 会计 / 零售…）→ 在默认版式上套一层定制配色。
 
+> **图文完整模板**：`beauty · restaurant · healthcare · legal · fitness` 已升级为「9 块完整 + 自带配图声明」的一等模板（全幅大图 hero · 服务 · 作品集 · 流程 · 口碑 · 价格 · FAQ · 图文 CTA，每个图槽都带 `imagePrompt`）。`rebrand`/`generate` 到这些行业即出完整专业结构。**新增一个行业**只需在 `design_service.py` 的 `_RICH_INDUSTRY_SPECS` 加一条几行的 spec（行业文案 + 6 个配图提示词）——这就是「自己加模板」的快路径。
+
 ### 3) Design tokens（改这些 = 改主题，PATCH `/admin/design` 即时）
 
 | 组 | 键 |
@@ -174,7 +182,7 @@
 
 | type | 名字 | 变体 variants | 内容字段 | 带图 |
 |---|---|---|---|---|
-| `hero` | Hero | split · centered · fullbleed | badge, kicker, headline, headlineAccent, subhead, cta, secondaryCta | |
+| `hero` | Hero | split · centered · fullbleed | badge, kicker, headline, headlineAccent, subhead, **image, imageFocal, imageAlt, imagePrompt**, cta, secondaryCta | ✅大图（fullbleed/centered 全幅背景；split 并排） |
 | `stats` | Stats / KPI | default | items{value,label} | |
 | `logos` | Logo / 信任条 | default | heading, items{label} | |
 | `features` | Features | cards · minimal | heading, subhead, items{icon,title,body} | |
@@ -183,7 +191,7 @@
 | `testimonials` | 用户证言 | default | heading, items{quote,author,role,**image**,href} | ✅头像 |
 | `pricing` | 价格档 | default | heading, subhead, items{name,price,period,features,featured,cta} | |
 | `faq` | 常见问答 | default | heading, items{q,a} | |
-| `cta` | 行动号召 | banner | headline, subhead, cta | |
+| `cta` | 行动号召 | banner | headline, subhead, **image, imagePrompt**, cta | ✅背景图 |
 | `section` | **柔性自定义** | grid · split · stack · banner | eyebrow, heading, subhead, layout, items, cta | ✅media |
 | `steps` | 步骤 / 流程 | default | heading, subhead, items{title,body} | |
 | `gallery` | 图库 | grid | heading, subhead, items{**image**,caption} | ✅ |
@@ -197,7 +205,9 @@
 
 **icon 库（8）**：`sparkles` · `mail` · `shield` · `gauge` · `layers` · `zap` · `book` · `cloud`
 
-> 新增**一种全新 block 类型**或**一套全新预设**仍是代码改动（`block_service.py` + `sections.tsx` / `design_service.py`）；其余日常操作都是聊天即时。
+> **配图策略（学员无需任何生成器）**：模板的图槽默认**留空**并带 `imagePrompt`。前端把空图槽渲染成**带提示词的设计占位图**（作品集格 = 相机图标+提示词；hero/cta = 一个提示词胶囊）——页面看着是成品、并明确告诉你每处该放什么图。上传真图（`/admin/media`）后占位图自动消失。**生成真图是可选增强**（有 openart 等生成器时，`rebrand` 按 `imagery` 提示词自动出图）。
+
+> **只有这些才需要改代码**：新增一种全新 block 类型（`block_service.py` + `sections.tsx`），或新增主题/行业模板（`design_service.py` 的 `STYLE_PRESETS` / `_RICH_INDUSTRY_SPECS` 加一条）。其余日常操作（设计 / 编排 / 翻译 / 媒体 / 换行业 / 审计）都是聊天即时、无需重部署。
 
 ---
 
@@ -217,6 +227,7 @@
 | 入口 | `website`（`/website`） | 路由到下面各技能 |
 | 基础 | `oracle-site-shared`（先读） | `$ORACLE_SITE_API` + token |
 | 设计 | `oracle-site-design`（`/oracle_site_design`） | `/admin/design*`、`/design` |
+| 换行业 | `oracle-site-rebrand`（`/oracle_site_rebrand`） | `/admin/site/rebrand`、`/admin/consistency`（循环修到 `ok:true`） |
 | 编排 | `oracle-site-compose`（`/oracle_site_compose`） | `/admin/compose/*`、`/blocks`、`/admin/surfaces` |
 | 捕获 | `oracle-site-capture`（`/oracle_site_capture`） | `/admin/compose/*`、`/admin/patterns`、`/patterns` |
 | 内容·博客 | `oracle-site-blog`（`/oracle_site_blog`） | `/admin/blogs*`、`/blogs` |
@@ -228,4 +239,4 @@
 | 运维 | `oracle-site-ops`（`/oracle_site_ops`） | `/health`、docker / 部署 |
 
 ---
-*自检：`backend/api_audit.py`（进程内 62/62，覆盖全部端点 + 鉴权 + 错误分支）。接口契约见 `backend/app/openapi.json`。*
+*自检：`backend/api_audit.py`（进程内 64/64，覆盖全部端点 + 鉴权 + 错误分支）。接口契约见 `backend/app/openapi.json`。*

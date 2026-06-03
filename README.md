@@ -41,9 +41,10 @@ Build a reusable full-stack website framework:
 - Database: PostgreSQL.
 - Auth: Google Sign-In.
 - Content: blog + newsletter + standalone pages.
-- Composition: every page (and the home) is an ordered list of **blocks** (15 types) edited by API — add/move/edit/remove/duplicate, instant, no redeploy.
-- Theming: **18 one-shot style presets** (base + industry + style), all token-driven; switch with one call.
-- Media: **upload-only** image hosting used by gallery/team/blog (`/api/admin/media`).
+- Composition: every page (and the home) is an ordered list of **blocks** (15 types) edited by API — add/move/edit/remove/duplicate, instant, no redeploy. `hero` and `cta` support photos (full-bleed image hero + token-driven scrim), alongside `gallery`/`team`.
+- Theming: **18 one-shot style presets** (base + industry + style), all token-driven; switch with one call. The common industries (beauty · restaurant · healthcare · legal · fitness) are **complete, image-ready templates** (full 9-block home + declared imagery); adding a new one is a single spec entry.
+- Rebrand & audit: **`POST /api/admin/site/rebrand`** switches the whole site's industry in one atomic call (regenerate home · drop stale per-locale blocks · snapshot for one-undo · return the template's declared imagery); **`GET /api/admin/consistency`** audits coherence across every surface×locale (structural drift · missing/wrong-language copy · industry residue) — the machine-checkable "definition of done".
+- Media: **upload-only** image hosting (`/api/admin/media`). Empty template image slots render **prompt-labelled placeholders**, so a fresh site looks intentional with no image generator; replace a slot with a real upload and the placeholder disappears.
 - i18n: path-based `/zh`, the agent is the translator.
 - Capture: rebuild a section from a screenshot into the flexible `section` block + a reusable pattern library.
 - UI/UX: API-driven design profile, not hard-coded theme values.
@@ -205,6 +206,7 @@ Public (no token):
 Admin (`Authorization: Bearer <jwt>`):
 
 - **Design** — `GET|PATCH /api/admin/design` · `POST /api/admin/design/generate` · `POST /api/admin/design/analyze-competitors`
+- **Site** — `POST /api/admin/site/rebrand` (atomic industry switch → returns `imagery` + audit) · `GET /api/admin/consistency` (coherence audit `{ok, findings[]}`)
 - **Blogs** — `POST /api/admin/blogs` · `PATCH /api/admin/blogs/:id` · `POST /api/admin/blogs/generate`
 - **Pages** — `POST /api/admin/pages` · `PATCH|DELETE /api/admin/pages/:id`
 - **Compose** (block-level page editing) — `GET /api/admin/surfaces` · `GET|POST /api/admin/compose/:target/blocks` · `PATCH|DELETE …/blocks/:id` · `POST …/blocks/:id/move` · `…/duplicate` · `POST /api/admin/compose/:target/batch`

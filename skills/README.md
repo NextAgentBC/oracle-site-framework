@@ -14,12 +14,16 @@ edit + `docker compose up -d --build` loop, not a skill.
 | `website` | **control center** — the categorized `/website` menu (content / design / language / ops); routes to the skills below | — |
 | `oracle-site-shared` | base URL, auth/token, conventions, locales, site/health/openapi/login — **read first** | public + admin |
 | `oracle-site-blog` | list/read; generate/create/update posts | public + admin |
-| `oracle-site-design` | read; update/generate/analyze design profile (12 style templates) | public + admin |
+| `oracle-site-design` | read; update/generate/analyze design profile (18 presets + image-ready industry templates) | public + admin |
+| `oracle-site-rebrand` | **switch the whole site to a new industry** in one atomic call, then loop on the consistency audit until coherent (`/admin/site/rebrand` · `/admin/consistency`) | public + admin |
 | `oracle-site-compose` | block-level page editing (add/move/edit/remove/batch), locale-aware | public + admin |
 | `oracle-site-capture` | rebuild a section from a screenshot → flexible `section` block + `/patterns` library | public + admin |
 | `oracle-site-i18n` | translate content + UI chrome (path-based `/zh`) — the agent is the translator | public + admin |
 | `oracle-site-pages` | create/manage content pages (about, services…) — instant, no rebuild | public + admin |
 | `oracle-site-newsletter` | newsletter subscribe, contact form | public |
+| `oracle-site-media` | upload-only image hosting (multipart / url / base64) → absolute URLs for blocks & blog | public + admin |
+| `oracle-site-history` | edit history — list revisions, undo last change, restore a kept snapshot | admin |
+| `oracle-site-chat` | live website chat — list/read conversations, take over and reply | admin |
 | `oracle-site-ops` | status/logs/health; redeploy/restart (confirm first) | server shell |
 
 Plus one thin trigger skill per block type (`oracle-site-block-*`), generated from the

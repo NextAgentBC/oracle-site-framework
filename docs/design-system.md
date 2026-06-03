@@ -38,10 +38,17 @@ A single `<SectionRenderer>` maps `type + variant` → a component variant; the 
 > testimonials, pricing, faq, cta, section, steps, gallery, team, banner). `GET /api/blocks` is the
 > source of truth; the flexible `section` block + pattern library cover novel layouts with no code.
 > The table below is the original Phase-1 seed.
+>
+> ✅ Also shipped: `hero`/`cta` take a photo (`image` + `imageFocal`/`imageAlt`; full-bleed
+> background or split side-image) behind a token-driven scrim; **empty image slots render a
+> prompt-labelled placeholder** (`imagePrompt`) so a site needs no image generator. Industry
+> presets (beauty/restaurant/healthcare/legal/fitness) are complete, image-ready templates.
+> Site-level ops: `POST /admin/site/rebrand` (atomic industry switch → declared imagery +
+> audit) · `GET /admin/consistency` (coherence audit = the "definition of done").
 
 | type | variants | content fields |
 |---|---|---|
-| `hero` | `split` (current) · `centered` (Apple-style, big type + whitespace) · `fullbleed` (Tesla-style, full-width image/overlay, bold) | `kicker, headline, subhead, cta{label,href}, secondaryCta?, image?` |
+| `hero` | `split` (current) · `centered` (Apple-style, big type + whitespace) · `fullbleed` (Tesla-style, full-width image/overlay, bold) | `kicker, headline, subhead, cta{label,href}, secondaryCta?, image?, imageFocal?, imageAlt?, imagePrompt?` |
 | `features` ("what we do") | `cards` (current) · `rows` (alternating text/visual) · `minimal` (icon columns) | `heading, items[]{icon,title,body}` |
 | `cta` | `banner` (full-width) · `boxed` | `headline, subhead?, cta{label,href}` |
 | `blog` | `grid` (current) | `heading, limit` |
