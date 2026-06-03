@@ -349,8 +349,8 @@ h2 { line-height: 1.1; }
 .hero-scrim {
   position: absolute; inset: 0; z-index: 0; pointer-events: none;
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--color-surface-inverse) 32%, transparent), transparent 36%, color-mix(in srgb, var(--color-surface-inverse) 28%, transparent) 64%, color-mix(in srgb, var(--color-surface-inverse) 68%, transparent)),
-    radial-gradient(125% 100% at 50% 0%, transparent 44%, color-mix(in srgb, var(--color-surface-inverse) 44%, transparent));
+    linear-gradient(180deg, color-mix(in srgb, var(--color-surface-inverse) 26%, transparent) 0%, transparent 28%, transparent 46%, color-mix(in srgb, var(--color-surface-inverse) 74%, transparent) 100%),
+    radial-gradient(120% 78% at 50% 118%, color-mix(in srgb, var(--color-surface-inverse) 60%, transparent), transparent 72%);
 }
 .hero-has-image { position: relative; overflow: hidden; color: var(--color-ink-inverse); }
 .hero-has-image .hero-copy { position: relative; z-index: 1; }
@@ -378,8 +378,9 @@ h2 { line-height: 1.1; }
 }
 .hero-centered.hero-has-image::before { display: none; }
 .hero-fullbleed.hero-has-image {
-  display: grid; align-items: center;
-  min-height: clamp(480px, 70vh, 760px);
+  display: grid; align-items: end;
+  min-height: clamp(520px, 78vh, 820px);
+  padding: clamp(48px, 8vw, 120px) clamp(22px, 5vw, 60px) clamp(40px, 6vw, 72px);
   background: var(--color-surface-inverse);
 }
 .hero-fullbleed.hero-has-image::before { display: none; }
