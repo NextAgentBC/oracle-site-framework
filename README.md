@@ -9,6 +9,9 @@
 > idempotent, self-verifying runbook: clone → env → build → Cloudflare tunnel **via API** → verify.
 > No dashboard. The human provides a server + domain + a Cloudflare API token; the agent does the rest.
 
+> 🎒 **Already deployed and want to make it yours?** [`docs/getting-started.zh.md`](docs/getting-started.zh.md)
+> — a 5-step student walkthrough (换行业 → 按提示词换图 → 改文案 → 双语 → 一致性验收), **no image generator needed**.
+
 This README is written for a student's local Codex agent.
 
 Canonical repository:
