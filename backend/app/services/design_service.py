@@ -716,9 +716,14 @@ STYLE_PRESETS = {
             {"type": "cta", "variant": "banner", "content": {"headline": "Your first class is on us.", "subhead": "No pressure. Just show up.", "cta": {"label": "Claim free class", "href": "/contact"}}},
         ],
     },
-    # Lumière — elegant beauty / spa. Blush + mauve, Fraunces serif, soft and airy.
+    # Lumière — elegant beauty / spa / medical-aesthetics. Blush + mauve, Fraunces
+    # serif, soft and airy. A COMPLETE, image-ready industry template: a full-bleed
+    # photo hero, a treatments grid, a studio lookbook gallery, a booking flow, and
+    # a photo CTA — with stable block ids + a declared `images` spec (prompts the
+    # rebrand pipeline generates + attaches). This is the reference shape for adding
+    # any new industry template.
     "beauty": {
-        "name": "Lumière — Beauty & Spa",
+        "name": "Lumière — Beauty & Skincare Studio",
         "personality": "elegant, calming, refined, welcoming",
         "tokens": {
             "colors": {
@@ -730,34 +735,62 @@ STYLE_PRESETS = {
             "radius": {"card": "22px", "control": "16px", "pill": "999px"},
             "layout": {"density": "spacious", "heroMinHeight": "80vh", "sectionGap": "116px", "contentMaxWidth": "1100px", "cardPadding": "28px"},
         },
-        "voice": {"headlineStyle": "elegant, inviting, sensorial", "tone": "refined and welcoming"},
+        "voice": {"headlineStyle": "elegant, inviting, sensorial", "tone": "calm, honest, unhurried — never hype"},
         "sections": [
-            {"type": "hero", "variant": "centered", "content": {
-                "badge": "New guest offer — 20% off",
-                "headline": "Time to glow,", "headlineAccent": "beautifully you.",
-                "subhead": "A calm, modern studio for skin, hair, and the kind of self-care you look forward to.",
-                "cta": {"label": "Book your visit", "href": "/contact"}, "secondaryCta": {"label": "View treatments", "href": "/blog"}}},
-            {"type": "stats", "content": {"items": [
-                {"value": "4.9★", "label": "800+ reviews"}, {"value": "Clean", "label": "Beauty only"},
-                {"value": "10+", "label": "Expert artists"}, {"value": "Est. 2016", "label": "Loved locally"}]}},
-            {"type": "features", "variant": "cards", "content": {"heading": "Treatments", "subhead": "Thoughtful rituals, expert hands.", "items": [
-                {"icon": "sparkles", "title": "Signature facials", "body": "Tailored to your skin with clean, effective products."},
-                {"icon": "layers", "title": "Hair & color", "body": "Lived-in color and cuts that grow out beautifully."},
-                {"icon": "shield", "title": "Spa & massage", "body": "Unwind with restorative bodywork and quiet."}]}},
-            {"type": "testimonials", "content": {"heading": "Guests adore us", "items": [
-                {"quote": "I left glowing and completely relaxed. My new monthly ritual.", "author": "Hannah W.", "role": "Member"},
-                {"quote": "Best color I've ever had — and the studio is gorgeous.", "author": "Sofia D.", "role": "Guest"},
-                {"quote": "Calm, clean, and genuinely caring. I never want to leave.", "author": "Mei L.", "role": "Guest"}]}},
-            {"type": "pricing", "content": {"heading": "The menu", "subhead": "Memberships save on every visit.",
+            {"id": "b_beauty_hero", "type": "hero", "variant": "fullbleed", "content": {
+                "badge": "Beauty & Skincare Studio",
+                "headline": "Skin and self,", "headlineAccent": "glowing together.",
+                "subhead": "Facials, skin coaching, and quiet body rituals — calm, professional, and natural. We take good care of you, without the hype.",
+                "image": "", "imageFocal": "center", "imageAlt": "A calm guest with luminous, glowing skin",
+                "cta": {"label": "Book a consultation", "href": "/contact"}, "secondaryCta": {"label": "View treatments", "href": "/services"}}},
+            {"id": "b_beauty_stats", "type": "stats", "content": {"items": [
+                {"value": "4.9★", "label": "Guest rating"}, {"value": "20+", "label": "Treatments"},
+                {"value": "1:1", "label": "Custom plans"}, {"value": "Clean", "label": "Products only"}]}},
+            {"id": "b_beauty_treat", "type": "features", "variant": "cards", "content": {
+                "heading": "Signature treatments", "subhead": "From the first consult to your at-home routine, every step is built around your skin.", "items": [
+                    {"icon": "sparkles", "title": "Cleanse & glow", "body": "Deep cleansing, hydration, and gentle brightening — an everyday facial for fast, visible results."},
+                    {"icon": "layers", "title": "Skin coaching", "body": "Staged care plans for sensitivity, dullness, dryness, and pores."},
+                    {"icon": "shield", "title": "Relax & restore", "body": "Face, neck and shoulder relief and soothing massage — beauty that's also real rest."}]}},
+            {"id": "b_beauty_gallery", "type": "gallery", "variant": "grid", "content": {
+                "heading": "Inside the studio", "subhead": "A calm, private space — and a few quiet moments from our treatments.", "items": [
+                    {"image": "", "caption": "A treatment in progress"},
+                    {"image": "", "caption": "Our studio"},
+                    {"image": "", "caption": "Gentle, curated products"},
+                    {"image": "", "caption": "Time to truly rest"}]}},
+            {"id": "b_beauty_steps", "type": "steps", "content": {
+                "heading": "How booking works", "subhead": "You don't need to know the treatments — just tell us what you're after.", "items": [
+                    {"title": "Online consult", "body": "Tell us about your skin, budget, and what you'd like to improve."},
+                    {"title": "In-studio assessment", "body": "We confirm the right treatment and what to keep in mind."},
+                    {"title": "Custom treatment", "body": "We adjust products, technique, and timing to your skin on the day."},
+                    {"title": "At-home advice", "body": "Simple, doable aftercare — no over-treating."}]}},
+            {"id": "b_beauty_quotes", "type": "testimonials", "content": {"heading": "What guests say", "items": [
+                {"quote": "It wasn't a dramatic change — I just looked clean, bright, and really comfortable.", "author": "Hannah W.", "role": "Facial guest"},
+                {"quote": "The space is calm and there's no upselling. I felt at ease on my very first visit.", "author": "Sofia D.", "role": "Skin coaching guest"},
+                {"quote": "The at-home advice afterward was genuinely useful — my skin is much more stable now.", "author": "Mei L.", "role": "Member"}]}},
+            {"id": "b_beauty_pricing", "type": "pricing", "content": {"heading": "Featured packages", "subhead": "Prices flex with the treatment and your skin; these work well as a starting point.",
                 "items": [
-                    {"name": "Express", "price": "$60", "period": "/visit", "features": ["30-min facial", "Skin consult", "Product samples"], "cta": {"label": "Book", "href": "/contact"}},
-                    {"name": "Signature", "price": "$120", "period": "/visit", "features": ["75-min facial", "LED + massage", "Take-home regimen"], "featured": True, "cta": {"label": "Book", "href": "/contact"}},
-                    {"name": "Membership", "price": "$99", "period": "/mo", "features": ["One signature / mo", "20% off add-ons", "Priority booking"], "cta": {"label": "Join", "href": "/contact"}}]}},
-            {"type": "faq", "content": {"heading": "Before you visit", "items": [
-                {"q": "Can I come in for a consult first?", "a": "Of course — complimentary consults help us tailor every treatment to you."},
-                {"q": "What products do you use?", "a": "Clean, cruelty-free lines chosen for results and gentleness."}]}},
-            {"type": "cta", "variant": "banner", "content": {"headline": "Treat yourself today.", "subhead": "New guests enjoy 20% off the first visit.", "cta": {"label": "Book your visit", "href": "/contact"}}},
+                    {"name": "Quick glow", "price": "$68", "period": "/visit", "features": ["30-min essential facial", "Cleanse + hydrate", "Great for a lunch break"], "cta": {"label": "Book", "href": "/contact"}},
+                    {"name": "Signature care", "price": "$128", "period": "/visit", "features": ["75-min custom treatment", "Face, neck & shoulder relief", "At-home aftercare advice"], "featured": True, "cta": {"label": "Book", "href": "/contact"}},
+                    {"name": "Monthly plan", "price": "$299", "period": "/mo", "features": ["3 treatments a month", "Staged skin tracking", "Priority booking"], "cta": {"label": "Enquire", "href": "/contact"}}]}},
+            {"id": "b_beauty_faq", "type": "faq", "content": {"heading": "Before you visit", "items": [
+                {"q": "Which treatment should I pick first?", "a": "Book a consultation — we adjust on the day based on your skin, so you don't have to decide alone."},
+                {"q": "Can I come in with sensitive skin?", "a": "Yes. We assess first and start gentle, avoiding over-cleansing and irritation."},
+                {"q": "How far ahead should I book?", "a": "2–3 days ahead is best. Weekends and evenings fill up fast; members get priority."}]}},
+            {"id": "b_beauty_cta", "type": "cta", "variant": "banner", "content": {
+                "headline": "Not sure which treatment fits?", "subhead": "Leave your contact and we'll give you a simple recommendation based on your skin, schedule, and budget.",
+                "image": "", "cta": {"label": "Get in touch", "href": "/contact"}}},
         ],
+        # Imagery this template needs — the rebrand pipeline generates each prompt and
+        # attaches the result to the target block's image field (item = list index).
+        "images": [
+            {"block": "b_beauty_hero", "field": "image", "aspect": "16:9", "prompt": "a serene woman with luminous dewy glowing skin and soft natural makeup, eyes gently closed, calm relaxed expression, wrapped in a soft cream towel, clean minimal background with generous negative space"},
+            {"block": "b_beauty_gallery", "item": 0, "field": "image", "aspect": "1:1", "prompt": "close-up of a gentle facial treatment, esthetician hands applying cream to luminous glowing skin, calm and clean"},
+            {"block": "b_beauty_gallery", "item": 1, "field": "image", "aspect": "1:1", "prompt": "calm minimal beauty studio treatment room, soft draped linen, a few green plants, warm wood and stone accents, diffused daylight"},
+            {"block": "b_beauty_gallery", "item": 2, "field": "image", "aspect": "1:1", "prompt": "minimal flatlay of premium skincare products, amber glass dropper bottles and ceramic cream jars, dried flowers, pale marble surface"},
+            {"block": "b_beauty_gallery", "item": 3, "field": "image", "aspect": "1:1", "prompt": "a woman relaxing during a spa session, soft towel, a lit candle and rolled towels nearby, eyes closed, peaceful"},
+            {"block": "b_beauty_cta", "field": "image", "aspect": "16:9", "prompt": "soft-focus calm spa scene, a gentle facial skincare treatment in progress, esthetician hands, dewy glowing skin, peaceful atmosphere, diffused light"},
+        ],
+        "imageStyle": "warm neutral palette of beige cream and soft blush rose, soft natural window light, editorial beauty photography, shallow depth of field, serene minimal high-end spa aesthetic, photorealistic, no text, no watermark, no logo",
     },
     # Sterling — authoritative law / advisory. Deep navy + gold, serif, conservative.
     "legal": {

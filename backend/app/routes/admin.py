@@ -222,7 +222,8 @@ def generate_design():
     profile.notes = generated.get("notes", "")
     profile.sections = generated.get("sections") or []
     db.session.commit()
-    return {"item": profile.to_dict()}
+    return {"item": profile.to_dict(),
+            "imagery": {"style": generated.get("imageStyle", ""), "images": generated.get("images") or []}}
 
 
 def _audit_now(profile, industry):
@@ -280,10 +281,14 @@ def site_rebrand():
 
     profile = _active_design_profile()
 
+    imagery = {"style": generated.get("imageStyle", ""), "images": generated.get("images") or []}
+
     if data.get("dryRun"):
         return {"item": {"dryRun": True, "wouldApply": {
             "name": generated["name"], "industry": new_industry,
-            "sectionTypes": [s.get("type") for s in (generated.get("sections") or [])]}},
+            "sectionTypes": [s.get("type") for s in (generated.get("sections") or [])],
+            "imageCount": len(imagery["images"])}},
+            "imagery": imagery,
             "audit": _audit_now(profile, profile.industry if profile else "")}
 
     if not profile:
@@ -319,7 +324,7 @@ def site_rebrand():
 
     db.session.commit()
     return {"item": profile.to_dict(), "pagesTouched": pages_touched,
-            "audit": _audit_now(profile, new_industry)}
+            "imagery": imagery, "audit": _audit_now(profile, new_industry)}
 
 
 @bp.post("/design/analyze-competitors")

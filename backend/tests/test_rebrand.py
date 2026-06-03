@@ -54,3 +54,20 @@ def test_rebrand_dryrun_does_not_write(client, auth, app):
 def test_rebrand_requires_industry_or_preset(client, auth):
     res = client.post("/api/admin/site/rebrand", headers=auth, json={})
     assert res.status_code == 400
+
+
+def test_beauty_template_is_complete_and_image_ready(client, auth):
+    """配齐: rebrand to beauty yields the full image-ready home + declared imagery."""
+    res = client.post("/api/admin/site/rebrand", headers=auth, json={"industry": "beauty"})
+    assert res.status_code == 200
+    body = res.get_json()
+    sections = body["item"]["sections"]
+    types = [s["type"] for s in sections]
+    assert len(sections) >= 9
+    assert types[0] == "hero" and "gallery" in types and "steps" in types and "pricing" in types
+    hero = sections[0]
+    assert hero["variant"] == "fullbleed" and "image" in hero["content"]   # image slot present
+    imgs = body["imagery"]["images"]
+    assert len(imgs) == 6
+    assert all(("prompt" in i and "aspect" in i and "block" in i) for i in imgs)
+    assert body["imagery"]["style"]   # shared style string for tonal cohesion

@@ -48,6 +48,34 @@ Body: `{ "industry": "beauty" }` (or `"preset"` for a named style; optional
 to the 18 templates (see `oracle-site-design`). This is a **rebrand, not a tweak** — it
 regenerates the home and resets localized section copy on purpose.
 
+## 2a. Fill the template's declared imagery (it tells you exactly what)
+
+A complete industry template **declares the photos it needs** — the rebrand response
+returns `imagery: { style, images: [ {block, item?, field, aspect, prompt} ] }`. A real
+site lives on imagery, so generate each one and attach it (don't ship empty image slots):
+
+```bash
+RB=$(curl -s -X POST "$ORACLE_SITE_API/admin/site/rebrand" -H "Authorization: Bearer $ORACLE_SITE_TOKEN" \
+       -H "Content-Type: application/json" -d '{"industry":"beauty"}')
+STYLE=$(echo "$RB" | jq -r '.imagery.style')
+echo "$RB" | jq -c '.imagery.images[]' | while read -r spec; do
+  PROMPT="$(echo "$spec" | jq -r .prompt), $STYLE"; ASPECT=$(echo "$spec" | jq -r .aspect)
+  BLOCK=$(echo "$spec" | jq -r .block); FIELD=$(echo "$spec" | jq -r .field); ITEM=$(echo "$spec" | jq -r '.item // empty')
+  # 1) generate (openart-image skill; runs on this host) → 2) upload → absolute URL
+  IMG=$(node ~/.claude/skills/openart-image/cli.js "$PROMPT" --aspect "$ASPECT" --quality low --out /tmp/rb.png | tail -1)
+  URL=$(curl -s -X POST "$ORACLE_SITE_API/admin/media" -H "Authorization: Bearer $ORACLE_SITE_TOKEN" -F "file=@${IMG}" | jq -r .item.url)
+  # 3) PATCH the target block's image field (top-level field, or items[ITEM].field)
+  if [ -n "$ITEM" ]; then BODY=$(jq -nc --arg u "$URL" --argjson i "$ITEM" '{content:{items:({} )}}'); fi
+  curl -s -X PATCH "$ORACLE_SITE_API/admin/compose/home/blocks/$BLOCK" -H "Authorization: Bearer $ORACLE_SITE_TOKEN" \
+    -H "Content-Type: application/json" -d "$(jq -nc --arg u "$URL" --arg f "$FIELD" '{content:{($f):$u}}')"
+done
+```
+
+For list items (`item` set, e.g. gallery), patch that item's image — easiest is to GET the
+block, set `content.items[ITEM].image = URL`, and PATCH the whole `content` back (deep-merge
+replaces the list). See `oracle-site-media` for the media API and `oracle-site-compose` for
+block edits. If `flux-image` is down, `openart-image` is the generator (gpt-image-2).
+
 ## 3. Finish the work the audit lists (this is the real job)
 
 The rebrand sets up clean structure + theme, but the home now carries **template copy**
