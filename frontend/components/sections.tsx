@@ -50,6 +50,8 @@ function SectionHead({ heading, subhead }: { heading?: string; subhead?: string 
 function Hero({ section, site }: { section: Section; site: Site }) {
   const c = section.content ?? {};
   const variant = section.variant || "split";
+  const image = c.image?.trim() ? c.image : "";
+  const focal = c.imageFocal?.trim() ? { objectPosition: c.imageFocal } : undefined;
   const headline = c.headline || site.name;
   const copy = (
     <div className="hero-copy">
@@ -67,12 +69,30 @@ function Hero({ section, site }: { section: Section; site: Site }) {
       <HeroActions cta={c.cta} secondaryCta={c.secondaryCta} />
     </div>
   );
-  if (variant === "centered") return <section className="hero hero-centered">{copy}</section>;
-  if (variant === "fullbleed") return <section className="hero hero-fullbleed">{copy}</section>;
+
+  // split: a real two-column layout (copy beside a portrait image) when an image is set
+  if (variant !== "centered" && variant !== "fullbleed") {
+    return (
+      <section className={`hero hero-split${image ? " hero-split-media" : ""}`}>
+        {copy}
+        <div className="hero-visual" aria-hidden={image ? undefined : "true"}>
+          {image && <img className="hero-side-img" src={image} alt={c.imageAlt || ""} style={focal} />}
+        </div>
+      </section>
+    );
+  }
+
+  // centered / fullbleed: full-bleed background photo + token-driven scrim for legibility
+  const cls = variant === "fullbleed" ? "hero hero-fullbleed" : "hero hero-centered";
   return (
-    <section className="hero hero-split">
+    <section className={`${cls}${image ? " hero-has-image" : ""}`}>
+      {image && (
+        <>
+          <img className="hero-bg-img" src={image} alt={c.imageAlt || ""} style={focal} />
+          <span className="hero-scrim" aria-hidden="true" />
+        </>
+      )}
       {copy}
-      <div className="hero-visual" aria-hidden="true" />
     </section>
   );
 }
@@ -335,8 +355,15 @@ function FlexSection({ section }: { section: Section }) {
 
 function Cta({ section }: { section: Section }) {
   const c = section.content ?? {};
+  const image = c.image?.trim() ? c.image : "";
   return (
-    <section className="cta-banner">
+    <section className={`cta-banner${image ? " cta-banner-media" : ""}`}>
+      {image && (
+        <>
+          <img className="cta-bg-img" src={image} alt="" />
+          <span className="cta-scrim" aria-hidden="true" />
+        </>
+      )}
       <div className="cta-copy">
         {c.headline && <h2>{c.headline}</h2>}
         {c.subhead && <p className="lede">{c.subhead}</p>}

@@ -59,6 +59,9 @@ export type Section = {
     headline?: string;
     headlineAccent?: string;
     subhead?: string;
+    image?: string;
+    imageFocal?: string;
+    imageAlt?: string;
     cta?: SectionCta;
     secondaryCta?: SectionCta;
     heading?: string;

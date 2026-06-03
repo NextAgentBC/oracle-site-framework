@@ -339,6 +339,91 @@ h2 { line-height: 1.1; }
 .hero-fullbleed .hero-badge { color: var(--color-ink-inverse); border-color: color-mix(in srgb, var(--color-ink-inverse) 22%, transparent); background: color-mix(in srgb, var(--color-ink-inverse) 8%, transparent); }
 .hero-fullbleed .button.ghost { color: var(--color-ink-inverse); border-color: color-mix(in srgb, var(--color-ink-inverse) 40%, transparent); background: color-mix(in srgb, var(--color-ink-inverse) 6%, transparent); }
 
+/* hero · photo support — full-bleed bg image (centered/fullbleed) or side image
+   (split). The scrim is built from the inverse/primary tokens, so legibility holds
+   on any theme — the image is decoration, the palette still owns the look. */
+.hero-bg-img {
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%; object-fit: cover; object-position: center;
+}
+.hero-scrim {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--color-surface-inverse) 32%, transparent), transparent 36%, color-mix(in srgb, var(--color-surface-inverse) 28%, transparent) 64%, color-mix(in srgb, var(--color-surface-inverse) 68%, transparent)),
+    radial-gradient(125% 100% at 50% 0%, transparent 44%, color-mix(in srgb, var(--color-surface-inverse) 44%, transparent));
+}
+.hero-has-image { position: relative; overflow: hidden; color: var(--color-ink-inverse); }
+.hero-has-image .hero-copy { position: relative; z-index: 1; }
+.hero-has-image h1 { color: var(--color-ink-inverse); text-shadow: 0 1px 30px color-mix(in srgb, var(--color-surface-inverse) 45%, transparent); }
+.hero-has-image .lede { color: color-mix(in srgb, var(--color-ink-inverse) 88%, transparent); }
+.hero-has-image .kicker, .hero-has-image .eyebrow { color: color-mix(in srgb, var(--color-highlight) 86%, var(--color-ink-inverse)); }
+.hero-has-image .accent-text { -webkit-text-fill-color: var(--color-highlight); color: var(--color-highlight); background: none; }
+.hero-has-image .hero-badge {
+  color: var(--color-ink-inverse);
+  border-color: color-mix(in srgb, var(--color-ink-inverse) 30%, transparent);
+  background: color-mix(in srgb, var(--color-ink-inverse) 14%, transparent);
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+}
+.hero-has-image .button.ghost {
+  color: var(--color-ink-inverse);
+  border-color: color-mix(in srgb, var(--color-ink-inverse) 46%, transparent);
+  background: color-mix(in srgb, var(--color-ink-inverse) 12%, transparent);
+}
+.hero-centered.hero-has-image {
+  display: grid; align-items: center;
+  min-height: clamp(440px, 62vh, 700px);
+  padding: clamp(48px, 8vw, 116px) clamp(22px, 5vw, 60px);
+  border-radius: calc(var(--radius-card) + 10px);
+  box-shadow: var(--shadow-lg);
+}
+.hero-centered.hero-has-image::before { display: none; }
+.hero-fullbleed.hero-has-image {
+  display: grid; align-items: center;
+  min-height: clamp(480px, 70vh, 760px);
+  background: var(--color-surface-inverse);
+}
+.hero-fullbleed.hero-has-image::before { display: none; }
+[data-mode="dark"] .hero-fullbleed.hero-has-image { border-radius: calc(var(--radius-card) + 10px); box-shadow: var(--shadow-lg); }
+
+/* hero · split with a real side image → two columns */
+.hero-split-media {
+  display: grid; grid-template-columns: 1.04fr 0.96fr;
+  gap: clamp(28px, 4vw, 64px); align-items: center;
+  text-align: left; max-width: var(--layout-content-max);
+}
+.hero-split-media .hero-copy { max-width: none; }
+.hero-split-media h1, .hero-split-media .lede, .hero-split-media .hero-badge { margin-inline: 0; }
+.hero-split-media h1 { max-width: 16ch; }
+.hero-split-media .hero-actions { justify-content: flex-start; }
+.hero-split-media::before { display: none; }
+.hero-split-media .hero-visual {
+  display: block; position: relative; overflow: hidden;
+  border-radius: calc(var(--radius-card) + 6px); box-shadow: var(--shadow-lg);
+  aspect-ratio: 4 / 5;
+}
+.hero-split-media .hero-side-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* cta · background photo */
+.cta-bg-img { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; }
+.cta-banner-media { border: 0; color: var(--color-ink-inverse); }
+.cta-banner-media .cta-scrim {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: linear-gradient(120deg, color-mix(in srgb, var(--color-surface-inverse) 84%, transparent), color-mix(in srgb, var(--color-surface-inverse) 50%, transparent) 58%, color-mix(in srgb, var(--color-primary) 52%, transparent));
+}
+.cta-banner-media .cta-copy { position: relative; z-index: 1; }
+.cta-banner-media .cta-copy h2 { color: var(--color-ink-inverse); }
+.cta-banner-media .cta-copy .lede { color: color-mix(in srgb, var(--color-ink-inverse) 84%, transparent); }
+.cta-banner-media .button.secondary { position: relative; z-index: 1; background: var(--color-ink-inverse); color: var(--color-surface-inverse); }
+.cta-banner-media .button.secondary:hover { background: color-mix(in srgb, var(--color-ink-inverse) 90%, var(--color-primary)); }
+
+@media (max-width: 820px) {
+  .hero-split-media { text-align: center; }
+  .hero-split-media h1, .hero-split-media .lede { margin-inline: auto; }
+  .hero-split-media .hero-actions { justify-content: center; }
+  .hero-split-media .hero-visual { aspect-ratio: 16 / 10; }
+  .hero-centered.hero-has-image, .hero-fullbleed.hero-has-image { min-height: clamp(380px, 60vh, 560px); }
+}
+
 /* ---------- Sections ---------- */
 .section { display: grid; gap: 26px; margin-top: var(--layout-section-gap); }
 .section h2 { font-size: clamp(28px, 3.8vw, 46px); margin: 0; }

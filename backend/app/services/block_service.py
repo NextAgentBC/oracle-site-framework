@@ -36,7 +36,12 @@ BLOCK_MANIFEST = [
         "type": "hero",
         "label": "Hero",
         "category": "header",
-        "description": "Top-of-page headline with optional badge/eyebrow, subhead, and up to two CTAs.",
+        "description": (
+            "Top-of-page headline with optional badge/eyebrow, subhead, and up to two CTAs. "
+            "Set 'image' (a /api/media/<file> or public URL) for a photo hero: 'fullbleed'/'centered' "
+            "render it full-bleed behind the copy with a token-driven scrim; 'split' puts it beside "
+            "the copy. 'imageFocal' (e.g. 'center', 'top', '50% 30%') sets the crop focus."
+        ),
         "variants": ["split", "centered", "fullbleed"],
         "fields": [
             {"key": "badge", "type": "text", "label": "Badge pill (optional)"},
@@ -44,6 +49,9 @@ BLOCK_MANIFEST = [
             {"key": "headline", "type": "text", "label": "Headline"},
             {"key": "headlineAccent", "type": "text", "label": "Accent line (gradient)"},
             {"key": "subhead", "type": "textarea", "label": "Subhead"},
+            {"key": "image", "type": "image", "label": "Hero image (full-bleed bg, or side image for 'split')"},
+            {"key": "imageFocal", "type": "text", "label": "Image focal point (center, top, '50% 30%')"},
+            {"key": "imageAlt", "type": "text", "label": "Image alt text (accessibility)"},
             {"key": "cta", "type": "cta", "label": "Primary button"},
             {"key": "secondaryCta", "type": "cta", "label": "Secondary button"},
         ],
@@ -199,11 +207,12 @@ BLOCK_MANIFEST = [
         "type": "cta",
         "label": "Call to action",
         "category": "conversion",
-        "description": "A full-width banner with a headline and a button.",
+        "description": "A full-width banner with a headline and a button. Optional 'image' sets a background photo behind a token-driven scrim.",
         "variants": ["banner"],
         "fields": [
             {"key": "headline", "type": "text", "label": "Headline"},
             {"key": "subhead", "type": "textarea", "label": "Subhead"},
+            {"key": "image", "type": "image", "label": "Background image (optional)"},
             {"key": "cta", "type": "cta", "label": "Button"},
         ],
         "defaultContent": {"headline": "Ready to get started?", "subhead": "", "cta": {"label": "Get in touch", "href": "/contact"}},
