@@ -64,24 +64,30 @@ aspect, prompt} ] }` — generate each and attach it:
 ```bash
 RB=$(curl -s -X POST "$ORACLE_SITE_API/admin/site/rebrand" -H "Authorization: Bearer $ORACLE_SITE_TOKEN" \
        -H "Content-Type: application/json" -d '{"industry":"beauty"}')
-STYLE=$(echo "$RB" | jq -r '.imagery.style')
+STYLE=$(jq -r '.imagery.style' <<<"$RB")
 echo "$RB" | jq -c '.imagery.images[]' | while read -r spec; do
-  PROMPT="$(echo "$spec" | jq -r .prompt), $STYLE"; ASPECT=$(echo "$spec" | jq -r .aspect)
-  BLOCK=$(echo "$spec" | jq -r .block); FIELD=$(echo "$spec" | jq -r .field); ITEM=$(echo "$spec" | jq -r '.item // empty')
-  # 1) generate (openart-image skill; runs on this host) → 2) upload → absolute URL
-  IMG=$(node ~/.claude/skills/openart-image/cli.js "$PROMPT" --aspect "$ASPECT" --quality low --out /tmp/rb.png | tail -1)
+  BLOCK=$(jq -r .block <<<"$spec"); FIELD=$(jq -r .field <<<"$spec")
+  ITEM=$(jq -r '.item // "none"' <<<"$spec"); ASPECT=$(jq -r .aspect <<<"$spec")
+  # 1) generate (openart-image; runs on this host) → 2) upload → absolute URL
+  IMG=$(node ~/.claude/skills/openart-image/cli.js "$(jq -r .prompt <<<"$spec"), $STYLE" --aspect "$ASPECT" --quality low --out /tmp/rb.png | tail -1)
   URL=$(curl -s -X POST "$ORACLE_SITE_API/admin/media" -H "Authorization: Bearer $ORACLE_SITE_TOKEN" -F "file=@${IMG}" | jq -r .item.url)
-  # 3) PATCH the target block's image field (top-level field, or items[ITEM].field)
-  if [ -n "$ITEM" ]; then BODY=$(jq -nc --arg u "$URL" --argjson i "$ITEM" '{content:{items:({} )}}'); fi
+  # 3) build the PATCH body, then attach
+  if [ "$ITEM" = "none" ]; then                       # hero / cta — a top-level field (content deep-merges)
+    BODY=$(jq -nc --arg u "$URL" --arg f "$FIELD" '{content:{($f):$u}}')
+  else                                                 # gallery item — read the block's full items, set one image, send the whole list back
+    ITEMS=$(curl -s "$ORACLE_SITE_API/design" | jq -c --arg id "$BLOCK" --arg u "$URL" --argjson i "$ITEM" \
+              '(.item.sections[]|select(.id==$id)|.content.items) | .[$i].image=$u')
+    BODY=$(jq -nc --argjson items "$ITEMS" '{content:{items:$items}}')
+  fi
   curl -s -X PATCH "$ORACLE_SITE_API/admin/compose/home/blocks/$BLOCK" -H "Authorization: Bearer $ORACLE_SITE_TOKEN" \
-    -H "Content-Type: application/json" -d "$(jq -nc --arg u "$URL" --arg f "$FIELD" '{content:{($f):$u}}')"
+    -H "Content-Type: application/json" -d "$BODY" >/dev/null
 done
 ```
 
-For list items (`item` set, e.g. gallery), patch that item's image — easiest is to GET the
-block, set `content.items[ITEM].image = URL`, and PATCH the whole `content` back (deep-merge
-replaces the list). See `oracle-site-media` for the media API and `oracle-site-compose` for
-block edits. If `flux-image` is down, `openart-image` is the generator (gpt-image-2).
+Why two branches: a top-level field (hero/cta `image`) deep-merges, but a gallery item lives in
+a list — deep-merge replaces lists wholesale, so you must send the **full** `items` array with
+the one image set (read it from `/design`). See `oracle-site-media` (media API) and
+`oracle-site-compose` (block edits). `flux-image` is an alternative generator if available.
 
 ## 3. Finish the work the audit lists (this is the real job)
 
