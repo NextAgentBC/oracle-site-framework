@@ -1107,6 +1107,194 @@ STYLE_PRESETS = {
 }
 
 
+# =====================================================================
+# Bringing every industry up to the "beauty" bar. _industry_home() builds the
+# same complete, image-ready 9-block home (full-bleed photo hero, treatments,
+# lookbook gallery, process steps, testimonials, pricing, faq, photo CTA — stable
+# block ids + a declared `images` spec) from a compact per-industry spec. Adding a
+# new industry template is then just one entry in _RICH_INDUSTRY_SPECS.
+# =====================================================================
+def _industry_home(spec: dict) -> dict:
+    p = spec["prefix"]
+    h, feat, gal, st = spec["hero"], spec["feat"], spec["gallery"], spec["steps"]
+    q, pr, fq, c, im = spec["quotes"], spec["pricing"], spec["faq"], spec["cta"], spec["imgs"]
+    sections = [
+        {"id": f"b_{p}_hero", "type": "hero", "variant": "fullbleed", "content": {
+            "badge": h[0], "headline": h[1], "headlineAccent": h[2], "subhead": h[3],
+            "image": "", "imageFocal": "center",
+            "cta": {"label": h[4], "href": h[5]}, "secondaryCta": {"label": h[6], "href": h[7]}}},
+        {"id": f"b_{p}_stats", "type": "stats", "content": {"items": [{"value": v, "label": l} for v, l in spec["stats"]]}},
+        {"id": f"b_{p}_feat", "type": "features", "variant": "cards", "content": {
+            "heading": feat[0], "subhead": feat[1], "items": [{"icon": i, "title": t, "body": b} for i, t, b in feat[2]]}},
+        {"id": f"b_{p}_gallery", "type": "gallery", "variant": "grid", "content": {
+            "heading": gal[0], "subhead": gal[1], "items": [{"image": "", "caption": cap} for cap in gal[2]]}},
+        {"id": f"b_{p}_steps", "type": "steps", "content": {
+            "heading": st[0], "subhead": st[1], "items": [{"title": t, "body": b} for t, b in st[2]]}},
+        {"id": f"b_{p}_quotes", "type": "testimonials", "content": {
+            "heading": q[0], "items": [{"quote": qq, "author": a, "role": r} for qq, a, r in q[1]]}},
+        {"id": f"b_{p}_pricing", "type": "pricing", "content": {"heading": pr[0], "subhead": pr[1], "items": [
+            {"name": n, "price": pp, "period": per, "features": list(ff), "cta": {"label": "Enquire", "href": "/contact"},
+             **({"featured": True} if ft else {})} for (n, pp, per, ff, ft) in pr[2]]}},
+        {"id": f"b_{p}_faq", "type": "faq", "content": {"heading": fq[0], "items": [{"q": qq, "a": aa} for qq, aa in fq[1]]}},
+        {"id": f"b_{p}_cta", "type": "cta", "variant": "banner", "content": {
+            "headline": c[0], "subhead": c[1], "image": "", "cta": {"label": c[2], "href": "/contact"}}},
+    ]
+    images = [{"block": f"b_{p}_hero", "field": "image", "aspect": "16:9", "prompt": im["hero"]}] + \
+        [{"block": f"b_{p}_gallery", "item": k, "field": "image", "aspect": "1:1", "prompt": im[f"g{k}"]} for k in range(4)] + \
+        [{"block": f"b_{p}_cta", "field": "image", "aspect": "16:9", "prompt": im["cta"]}]
+    return {"sections": sections, "images": images, "imageStyle": spec["imageStyle"]}
+
+
+_RICH_INDUSTRY_SPECS = {
+    "restaurant": {
+        "prefix": "rest",
+        "hero": ["Now taking reservations", "A table worth", "coming back to.",
+                 "Seasonal plates, an easy room, and a short, considered list. Walk-ins welcome; book ahead for weekends.",
+                 "Book a table", "/contact", "See the menu", "/services"],
+        "stats": [("4.8★", "Diner rating"), ("Daily", "Market-fresh"), ("12", "Years open"), ("Local", "Sourced")],
+        "feat": ("What we cook", "Seasonal, simple, done well.", [
+            ("sparkles", "Seasonal plates", "A menu that follows the market — bright, simple, generous."),
+            ("layers", "Natural wine", "A short list chosen to match the food, not show off."),
+            ("shield", "A warm room", "Unfussy service in a room you won't want to leave.")]),
+        "gallery": ("On the table", "A few dishes and the room.", ["Tonight's plates", "The dining room", "From the pass", "A glass to start"]),
+        "steps": ("How to dine", "Reserve, arrive, relax.", [
+            ("Book", "Reserve online, or walk in midweek."), ("Arrive", "Settle into the room with a glass."),
+            ("Eat", "Let the kitchen guide you, or order à la carte."), ("Stay", "Linger over dessert — no rush.")]),
+        "quotes": ("Regulars say", [
+            ("The kind of place you bring everyone you love.", "Dana R.", "Regular"),
+            ("Every plate tasted like someone cared.", "Marco T.", "Guest"),
+            ("Our Friday standing reservation.", "The Lees", "Members")]),
+        "pricing": ("Menus", "Set menus or à la carte.", [
+            ("Lunch prix-fixe", "$32", "/person", ["Two courses", "Seasonal choices", "Mon–Fri"], False),
+            ("Chef's tasting", "$85", "/person", ["Six courses", "Optional pairings", "Best of the season"], True),
+            ("À la carte", "Varies", "", ["Order as you like", "Daily specials", "Bar snacks"], False)]),
+        "faq": ("Good to know", [
+            ("Do you take walk-ins?", "Yes midweek; weekends book up — reserve ahead."),
+            ("Dietary needs?", "Tell us when booking and the kitchen will happily adapt.")]),
+        "cta": ("Hungry yet?", "Book a table or just walk in — we'll take care of the rest.", "Book a table"),
+        "imgs": {"hero": "a warm inviting restaurant dining room at golden hour, candlelit tables, soft bokeh, intimate atmosphere",
+                 "g0": "a beautifully plated seasonal dish on a ceramic plate, overhead, natural light, rustic table",
+                 "g1": "cozy restaurant interior, warm wood, soft pendant lighting, full of atmosphere",
+                 "g2": "a chef's hands plating a dish at the pass, gentle steam, focused, warm kitchen light",
+                 "g3": "two glasses of natural wine on a table, soft evening light, bokeh",
+                 "cta": "a happy table of friends dining together, warm candlelight, laughter, soft focus"},
+        "imageStyle": "warm golden-hour light, rich earthy tones, shallow depth of field, editorial food and restaurant photography, inviting and atmospheric, photorealistic, no text, no watermark, no logo",
+    },
+    "healthcare": {
+        "prefix": "clin",
+        "hero": ["Accepting new patients", "Care that", "listens first.",
+                 "Friendly, modern medicine with same-week appointments and clinicians who take the time to understand you.",
+                 "Book an appointment", "/contact", "Our services", "/services"],
+        "stats": [("Same-week", "Appointments"), ("4.9★", "Patient rating"), ("15k+", "Patients seen"), ("Board", "Certified")],
+        "feat": ("How we help", "Thorough, unhurried, modern.", [
+            ("shield", "Primary care", "Routine visits, screenings, and the everyday things, done properly."),
+            ("sparkles", "Same-week visits", "Get seen quickly when something's wrong — no long waits."),
+            ("layers", "Clear plans", "You leave knowing exactly what's next, in plain language.")]),
+        "gallery": ("Our clinic", "Calm, clean, and welcoming.", ["The waiting room", "A consult room", "Our team at work", "Modern equipment"]),
+        "steps": ("Your visit", "Simple from start to finish.", [
+            ("Book", "Request a time online or call us."), ("Check in", "Quick paperwork, then you're seen on time."),
+            ("Consult", "An unhurried visit — questions always welcome."), ("Follow-up", "A clear plan and easy follow-up.")]),
+        "quotes": ("Patients say", [
+            ("They actually listened and didn't rush me.", "Karen P.", "Patient"),
+            ("Got an appointment the same week. A lifesaver.", "Tom B.", "Patient"),
+            ("Everything was explained clearly and kindly.", "Aisha M.", "Patient")]),
+        "pricing": ("Visit types", "Transparent, up front.", [
+            ("New patient", "$120", "/visit", ["45-min consult", "Full history", "Care plan"], False),
+            ("Follow-up", "$80", "/visit", ["Focused check-in", "Adjust the plan", "Quick & easy"], True),
+            ("Annual physical", "$180", "/visit", ["Comprehensive exam", "Screenings", "Wellness plan"], False)]),
+        "faq": ("Before you come", [
+            ("Do you take my insurance?", "We work with most major plans — ask us and we'll confirm."),
+            ("How soon can I be seen?", "Most patients get a same-week appointment.")]),
+        "cta": ("Feeling unwell?", "Book an appointment and get seen by someone who listens.", "Book an appointment"),
+        "imgs": {"hero": "a warm reassuring doctor talking with a patient in a bright modern clinic, natural light, calm and professional",
+                 "g0": "a clean modern medical waiting room, soft natural light, plants, welcoming",
+                 "g1": "a bright tidy consultation room, modern and calm",
+                 "g2": "a friendly healthcare team in a modern clinic, approachable and professional",
+                 "g3": "clean modern medical equipment detail, soft light, reassuring",
+                 "cta": "a patient and clinician shaking hands warmly in a bright clinic, trust, soft focus"},
+        "imageStyle": "bright clean natural light, soft blue and warm neutral tones, reassuring and professional, modern healthcare photography, photorealistic, no text, no watermark, no logo",
+    },
+    "legal": {
+        "prefix": "law",
+        "hero": ["Trusted counsel", "Steady counsel", "when it matters.",
+                 "Clear advice and careful advocacy — for the moments that shape your business and your life.",
+                 "Request a consultation", "/contact", "Practice areas", "/services"],
+        "stats": [("25+", "Years"), ("Fixed", "Fees where possible"), ("500+", "Matters handled"), ("Discreet", "Always")],
+        "feat": ("Practice areas", "Where we help most.", [
+            ("shield", "Business & contracts", "Formation, agreements, and the fine print that protects you."),
+            ("layers", "Real estate", "Purchases, leases, and closings handled cleanly."),
+            ("sparkles", "Estates & wills", "Plan ahead and protect the people who matter.")]),
+        "gallery": ("The firm", "Considered and calm.", ["Our office", "The library", "A working session", "Meeting room"]),
+        "steps": ("How we work", "Clear from day one.", [
+            ("Consult", "A frank first conversation about your situation."),
+            ("Plan", "A clear strategy and a fee you agree to up front."),
+            ("Act", "Careful, timely work with no surprises."), ("Resolve", "We see it through and keep you informed.")]),
+        "quotes": ("Clients say", [
+            ("Calm, clear, and always a step ahead.", "R. Halloran", "Client"),
+            ("Explained my options without the jargon.", "S. Okafor", "Client"),
+            ("Fees agreed up front — no surprises.", "M. & J. Reyes", "Clients")]),
+        "pricing": ("Fees", "Transparent and agreed up front.", [
+            ("Consultation", "$200", "/hour", ["Frank assessment", "Clear options", "No obligation"], False),
+            ("Fixed-fee matter", "Quoted", "", ["Agreed up front", "No hourly surprises", "Defined scope"], True),
+            ("Retainer", "Custom", "", ["Ongoing counsel", "Priority access", "Predictable cost"], False)]),
+        "faq": ("Good to know", [
+            ("How are fees structured?", "Fixed fees wherever possible, agreed in writing before we start."),
+            ("Is a first call confidential?", "Always — your first conversation is private and without obligation.")]),
+        "cta": ("Need advice you can trust?", "Request a consultation — the first conversation is confidential.", "Request a consultation"),
+        "imgs": {"hero": "a distinguished law office interior with floor-to-ceiling bookshelves, warm directional light, leather and wood, authoritative and calm",
+                 "g0": "an elegant law firm office, deep wood, brass details, refined",
+                 "g1": "a wall of law books in a warm library, soft light",
+                 "g2": "two professionals in a calm meeting, a document on the table, trust, muted tones",
+                 "g3": "a refined boardroom with a long table, soft daylight",
+                 "cta": "a confident, warm handshake in a refined office, soft light, trust, soft focus"},
+        "imageStyle": "deep navy and warm gold tones, refined directional light, authoritative and timeless, editorial corporate photography, photorealistic, no text, no watermark, no logo",
+    },
+    "fitness": {
+        "prefix": "fit",
+        "hero": ["First class free", "Stronger,", "every week.",
+                 "Coaching that meets you where you are — small classes, real progress, and a room that actually feels good to walk into.",
+                 "Start free", "/contact", "See classes", "/services"],
+        "stats": [("4.9★", "Member rating"), ("First", "Class free"), ("20+", "Classes / week"), ("Small", "Group sizes")],
+        "feat": ("Train with us", "Coached, not crowded.", [
+            ("zap", "Strength", "Build real strength with proper coaching and progression."),
+            ("gauge", "Conditioning", "Heart-pumping sessions that scale to any level."),
+            ("sparkles", "Mobility", "Move better and feel good — recovery matters.")]),
+        "gallery": ("Inside the gym", "Bright, clean, and motivating.", ["The training floor", "A class in motion", "Free weights", "Recovery space"]),
+        "steps": ("Getting started", "From first visit to first win.", [
+            ("Book free", "Claim your first class — no commitment."), ("Assess", "A quick chat about your goals and starting point."),
+            ("Train", "Small classes with a coach who knows your name."), ("Progress", "Track real gains and keep showing up.")]),
+        "quotes": ("Members say", [
+            ("Strongest I've been in years — and I actually enjoy it.", "Priya N.", "Member"),
+            ("Coaches who care and a room with zero ego.", "Dev S.", "Member"),
+            ("Lost 20lb and gained a community.", "Ben K.", "Member")]),
+        "pricing": ("Memberships", "Simple, no lock-in.", [
+            ("Drop-in", "$22", "/class", ["Any class", "No commitment", "Great to start"], False),
+            ("Unlimited", "$149", "/mo", ["All classes", "Free first class", "Cancel anytime"], True),
+            ("Coaching", "$249", "/mo", ["Unlimited classes", "Monthly check-ins", "Custom programming"], False)]),
+        "faq": ("Good to know", [
+            ("I'm a total beginner — is that ok?", "Absolutely. Every class scales, and your first one is free."),
+            ("Do I need to book classes?", "Yes — small group sizes mean a spot is always yours.")]),
+        "cta": ("Ready to start?", "Your first class is on us — come see how it feels.", "Start free"),
+        "imgs": {"hero": "a bright modern gym with people training in a small group class, energetic but clean, natural light, motivating",
+                 "g0": "a clean modern gym training floor with equipment, bright daylight, inviting",
+                 "g1": "people mid-workout in a group fitness class, motion and energy, natural light",
+                 "g2": "free weights neatly racked in a modern gym, soft light, detail",
+                 "g3": "a calm stretching and recovery area in a gym, plants, natural light",
+                 "cta": "a coach high-fiving a member after a workout, genuine, bright gym, soft focus"},
+        "imageStyle": "bright energetic natural light, clean modern tones with a bold accent, dynamic but premium fitness photography, photorealistic, no text, no watermark, no logo",
+    },
+}
+
+# Upgrade those industry presets in place to the complete, image-ready home (keeps
+# each preset's own tokens / voice / name; only the composition + imagery are leveled up).
+for _ind, _spec in _RICH_INDUSTRY_SPECS.items():
+    if _ind in STYLE_PRESETS:
+        _built = _industry_home(_spec)
+        STYLE_PRESETS[_ind]["sections"] = _built["sections"]
+        STYLE_PRESETS[_ind]["images"] = _built["images"]
+        STYLE_PRESETS[_ind]["imageStyle"] = _built["imageStyle"]
+
+
 def apply_style(name: str) -> dict:
     """Return a full design-profile dict for a named style preset (empty dict if unknown)."""
     preset = STYLE_PRESETS.get((name or "").strip().lower())

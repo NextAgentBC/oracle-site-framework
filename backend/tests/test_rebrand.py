@@ -1,4 +1,6 @@
 """Tests for POST /api/admin/site/rebrand — the atomic industry switch."""
+import pytest
+
 from app.extensions import db
 from app.models import DesignProfile, Page
 
@@ -71,3 +73,20 @@ def test_beauty_template_is_complete_and_image_ready(client, auth):
     assert len(imgs) == 6
     assert all(("prompt" in i and "aspect" in i and "block" in i) for i in imgs)
     assert body["imagery"]["style"]   # shared style string for tonal cohesion
+
+
+@pytest.mark.parametrize("industry,prefix", [
+    ("restaurant", "rest"), ("healthcare", "clin"), ("legal", "law"), ("fitness", "fit")])
+def test_other_industry_templates_are_complete_and_image_ready(client, auth, industry, prefix):
+    """配齐: the common industries match the beauty bar — full image-ready home + imagery."""
+    res = client.post("/api/admin/site/rebrand", headers=auth, json={"industry": industry})
+    assert res.status_code == 200
+    body = res.get_json()
+    sections = body["item"]["sections"]
+    assert [s["type"] for s in sections] == [
+        "hero", "stats", "features", "gallery", "steps", "testimonials", "pricing", "faq", "cta"]
+    assert sections[0]["variant"] == "fullbleed" and sections[0]["id"] == f"b_{prefix}_hero"
+    imgs = body["imagery"]["images"]
+    assert len(imgs) == 6 and body["imagery"]["style"]
+    ids = {s["id"] for s in sections}
+    assert all(i["block"] in ids for i in imgs)   # every image targets a real block
