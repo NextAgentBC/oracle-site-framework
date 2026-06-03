@@ -71,6 +71,16 @@ def test_trivial_strings_not_flagged_as_untranslated():
     assert all("$68" not in f["detail"] and "4.9" not in f["detail"] for f in res["findings"])
 
 
+def test_proper_noun_author_not_flagged():
+    block = {"id": "b1", "type": "testimonials", "content": {"items": [
+        {"quote": "It was lovely and calm", "author": "Jenny Z.", "role": "Member"}]}}
+    zh = {"id": "b1", "type": "testimonials", "content": {"items": [
+        {"quote": "很舒服，很安静的一次体验", "author": "Jenny Z.", "role": "会员"}]}}
+    res = run_audit([_home([block], [zh])], "en", ["en", "zh"], "beauty")
+    assert all(f.get("blockId") != "b1.author" for f in res["findings"])
+    assert res["ok"] is True
+
+
 def test_endpoint_returns_audit(client, auth, app):
     with app.app_context():
         db.session.add(DesignProfile(

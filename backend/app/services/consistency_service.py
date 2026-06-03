@@ -30,6 +30,10 @@ _RESIDUE = (
 )
 # Content keys that hold URLs / icon names / machine values, not human copy.
 _NON_TEXT_KEYS = {"image", "icon", "href", "imageFocal", "imageAlt", "id", "type", "variant"}
+# Proper-noun fields that are legitimately identical across locales (a client's
+# name in a testimonial stays "Jenny Z." in both en and zh) — never flagged as
+# untranslated. (Role/quote/etc. ARE expected to be translated.)
+_KEEP_SAME_KEYS = {"author"}
 _MAX_PER_SURFACE = 25  # bound the report so one broken surface can't flood it
 
 
@@ -122,7 +126,7 @@ def _audit_surface(surface, default_locale, locales, latin_default, finding):
                         base_fields = {k: v for k, v in _texts(bb.get("content") or {})}
                         tr_fields = {k: v for k, v in _texts((tr_blocks.get(bid) or {}).get("content") or {})}
                         for key, s in base_fields.items():
-                            if _is_trivial(s):
+                            if _is_trivial(s) or key in _KEEP_SAME_KEYS:
                                 continue
                             tv = tr_fields.get(key)
                             if not tv or tv == s:
