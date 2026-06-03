@@ -39,6 +39,7 @@
       "patch": { "summary": "Update active design profile tokens" }
     },
     "/admin/design/generate": { "post": { "summary": "Generate design profile from industry and competitor URLs, or apply a style preset" } },
+    "/admin/site/rebrand": { "post": { "summary": "Switch the whole site's industry in one atomic call: regenerate home design+sections, drop stale per-locale section overrides (home + pages) so nothing old survives, snapshot each surface (one undo reverts it), and return the consistency audit. Body {industry|preset, competitorUrls?, brandName?, dryRun?}. A rebrand, not a tweak — regenerates home + resets localized copy" } },
     "/admin/design/analyze-competitors": {
       "post": { "summary": "Analyze competitor websites and update active design profile" }
     },

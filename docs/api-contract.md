@@ -35,6 +35,7 @@ The backend is intentionally OpenClaw-friendly: resources are grouped by domain,
 | `POST` `PATCH` `DELETE` | `/api/admin/pages` · `…/:id` | Create / update / delete a content page |
 | `GET` `PATCH` | `/api/admin/design` | Read / update tokens, sections, voice |
 | `POST` | `/api/admin/design/generate` | Apply a preset/industry, or generate from competitors |
+| `POST` | `/api/admin/site/rebrand` | **Atomic industry switch**: regenerate home, drop stale per-locale section overrides (home + pages), snapshot each surface, return the consistency audit. `{industry\|preset, competitorUrls?, brandName?, dryRun?}`. A rebrand, not a tweak |
 | `POST` | `/api/admin/design/analyze-competitors` | Fetch competitor signals → update design |
 | `GET` | `/api/admin/surfaces` | List every editable surface (home + pages) + locales |
 | `GET` | `/api/admin/consistency` | Audit coherence across every surface×locale (structural drift · missing/untranslated copy · wrong-language text · industry residue) → `{ok, findings[], summary}` |

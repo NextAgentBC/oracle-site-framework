@@ -225,6 +225,103 @@ def generate_design():
     return {"item": profile.to_dict()}
 
 
+def _audit_now(profile, industry):
+    """Build the consistency report for the current home + pages state."""
+    locales = current_app.config["SITE_LOCALES"]
+    default_locale = current_app.config["SITE_DEFAULT_LOCALE"]
+    surfaces = []
+    if profile:
+        surfaces.append({"name": "home", "kind": "home",
+                         "base": {"sections": profile.sections or [], "text": {}},
+                         "i18n": profile.i18n or {}})
+    for page in Page.query.order_by(Page.nav_order.asc()).all():
+        surfaces.append({"name": page.slug, "kind": "page",
+                         "base": {"sections": page.sections or [], "text": {
+                             "title": page.title, "nav_label": page.nav_label,
+                             "body_markdown": page.body_markdown,
+                             "meta_title": page.meta_title, "meta_description": page.meta_description}},
+                         "i18n": page.i18n or {}})
+    return consistency_service.run_audit(surfaces, default_locale, locales, industry)
+
+
+def _drop_locale_sections(i18n: dict) -> dict:
+    """Return i18n with every locale's stale `sections` override removed (keep
+    other localized fields). A rebrand changes the base structure, so a frozen
+    old-industry localized section list must NOT survive — locales fall back to
+    the new base until re-translated (the audit then flags them)."""
+    return {loc: {k: v for k, v in (entry or {}).items() if k != "sections"}
+            for loc, entry in (i18n or {}).items()}
+
+
+@bp.post("/site/rebrand")
+@require_auth(admin=True)
+def site_rebrand():
+    """Switch the WHOLE site's industry in one atomic call — the high-level op the
+    block-level API lacked. Regenerates the home design + sections, drops every
+    stale per-locale section override (home + pages) so nothing from the old
+    industry/structure survives, bumps the profile industry, snapshots each
+    surface (one `undo` reverts the rebrand), and returns the consistency audit so
+    the caller knows the remaining copy/translation work. `dryRun` previews only.
+
+    NOTE: this is a rebrand, not a tweak — it regenerates the home and resets
+    localized section copy. Intended for actually changing industry."""
+    data = request.get_json(silent=True) or {}
+    preset = data.get("preset") or data.get("style")
+    industry = data.get("industry")
+    if not preset and not industry:
+        return jsonify({"error": {"code": "bad_request", "message": "industry or preset is required"}}), 400
+
+    generated = apply_style(preset) if preset else None
+    if not generated:
+        generated = profile_for_industry(industry or current_app.config["SITE_INDUSTRY"],
+                                         data.get("competitorUrls") or [])
+        generated["source"] = "rebrand-from-industry"
+    new_industry = generated.get("industry") or industry or current_app.config["SITE_INDUSTRY"]
+
+    profile = _active_design_profile()
+
+    if data.get("dryRun"):
+        return {"item": {"dryRun": True, "wouldApply": {
+            "name": generated["name"], "industry": new_industry,
+            "sectionTypes": [s.get("type") for s in (generated.get("sections") or [])]}},
+            "audit": _audit_now(profile, profile.industry if profile else "")}
+
+    if not profile:
+        profile = DesignProfile(status="active")
+        db.session.add(profile)
+    else:
+        revision_service.record("design", "", "design", profile.to_dict(), f"rebrand → {generated['name']}")
+
+    profile.name = data.get("brandName") or generated["name"]
+    profile.source = generated.get("source", "rebrand")
+    profile.industry = new_industry
+    profile.personality = generated.get("personality", "")
+    profile.competitor_urls = generated.get("competitorUrls", [])
+    # content width is a global preference — keep it across the rebrand
+    _prev_w = ((profile.tokens or {}).get("layout") or {}).get("contentMaxWidth")
+    _tokens = generated["tokens"]
+    if _prev_w:
+        _tokens.setdefault("layout", {})["contentMaxWidth"] = _prev_w
+    profile.tokens = _tokens
+    profile.voice = generated["voice"]
+    profile.notes = generated.get("notes", "")
+    profile.sections = generated.get("sections") or []
+    profile.i18n = _drop_locale_sections(profile.i18n)
+    flag_modified(profile, "i18n")
+
+    pages_touched = 0
+    for page in Page.query.all():
+        if any("sections" in (e or {}) for e in (page.i18n or {}).values()):
+            revision_service.record(f"page:{page.slug}", "", "sections", page.sections or [], f"rebrand → {generated['name']}")
+            page.i18n = _drop_locale_sections(page.i18n)
+            flag_modified(page, "i18n")
+            pages_touched += 1
+
+    db.session.commit()
+    return {"item": profile.to_dict(), "pagesTouched": pages_touched,
+            "audit": _audit_now(profile, new_industry)}
+
+
 @bp.post("/design/analyze-competitors")
 @require_auth(admin=True)
 def analyze_design_competitors():
@@ -560,24 +657,8 @@ def consistency_audit():
     Returns {ok, findings:[...], summary}. This is the 'definition of done' for a
     rebrand/translation pass: keep fixing until `ok` is true."""
     profile = _active_design_profile()
-    locales = current_app.config["SITE_LOCALES"]
-    default_locale = current_app.config["SITE_DEFAULT_LOCALE"]
     industry = (profile.industry if profile else "") or current_app.config["SITE_INDUSTRY"]
-
-    surfaces = []
-    if profile:
-        surfaces.append({"name": "home", "kind": "home",
-                         "base": {"sections": profile.sections or [], "text": {}},
-                         "i18n": profile.i18n or {}})
-    for page in Page.query.order_by(Page.nav_order.asc()).all():
-        surfaces.append({"name": page.slug, "kind": "page",
-                         "base": {"sections": page.sections or [], "text": {
-                             "title": page.title, "nav_label": page.nav_label,
-                             "body_markdown": page.body_markdown,
-                             "meta_title": page.meta_title, "meta_description": page.meta_description}},
-                         "i18n": page.i18n or {}})
-
-    return {"item": consistency_service.run_audit(surfaces, default_locale, locales, industry)}
+    return {"item": _audit_now(profile, industry)}
 
 
 # --- Revisions: list history · undo the last change · restore a kept point ---
