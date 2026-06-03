@@ -48,12 +48,13 @@ function deriveThemeFamily(design: DesignProfile): string {
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const site = await getSite();
-  const article = /^[aeiou]/i.test(site.industry) ? "an" : "a";
+  const tagline = [site.industry, site.region].filter(Boolean).join(" · ");
+  const description = tagline ? `${site.name} — ${tagline}.` : site.name;
   return {
     title: { default: site.name, template: `%s | ${site.name}` },
-    description: `${article[0].toUpperCase()}${article.slice(1)} ${site.industry} website framework with daily blogs, newsletter, Google login, SEO, and GEO.`,
+    description,
     metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || site.url),
-    openGraph: { title: site.name, description: `Daily ${site.industry} insights for ${site.audience}.`, url: `${site.url}/${locale}`, siteName: site.name, type: "website" }
+    openGraph: { title: site.name, description, url: `${site.url}/${locale}`, siteName: site.name, type: "website" }
   };
 }
 
