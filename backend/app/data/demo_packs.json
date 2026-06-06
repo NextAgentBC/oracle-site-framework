@@ -1,0 +1,3043 @@
+{
+ "beauty": {
+  "brand": {
+   "en": "Glow Haven",
+   "zh": "光羽美肌"
+  },
+  "audience": {
+   "en": "Women 25–45 seeking premium skincare",
+   "zh": "25–45岁追求高端护肤的女性"
+  },
+  "home": {
+   "zh": [
+    {
+     "id": "b_beauty_hero",
+     "type": "hero",
+     "variant": "fullbleed",
+     "content": {
+      "badge": "美容与护肤工作室",
+      "headline": "肌肤与自我，",
+      "headlineAccent": "共同焕发光彩。",
+      "subhead": "面部护理、肌肤指导以及静谧的身体仪式——宁静、专业、自然。我们用心呵护您，无浮夸宣传。",
+      "image": "/demo/beauty-hero.jpg",
+      "imageFocal": "center",
+      "imageAlt": "A calm guest with luminous, glowing skin",
+      "imagePrompt": "a serene woman with luminous dewy glowing skin and soft natural makeup, eyes gently closed, calm relaxed expression, wrapped in a soft cream towel, clean minimal background with generous negative space",
+      "cta": {
+       "label": "预约咨询",
+       "href": "/contact"
+      },
+      "secondaryCta": {
+       "label": "查看护理项目",
+       "href": "/services"
+      }
+     }
+    },
+    {
+     "id": "b_beauty_stats",
+     "type": "stats",
+     "content": {
+      "items": [
+       {
+        "value": "4.9★",
+        "label": "顾客评分"
+       },
+       {
+        "value": "20+",
+        "label": "护理项目"
+       },
+       {
+        "value": "1:1",
+        "label": "定制方案"
+       },
+       {
+        "value": "纯净",
+        "label": "仅产品"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_beauty_treat",
+     "type": "features",
+     "variant": "cards",
+     "content": {
+      "heading": "招牌护理",
+      "subhead": "从首次咨询到您的居家护理，每一步都围绕您的肌肤量身定制。",
+      "items": [
+       {
+        "icon": "sparkles",
+        "title": "清洁与焕亮",
+        "body": "深层清洁、补水保湿与温和提亮——一款适合日常的面部护理，快速见效。"
+       },
+       {
+        "icon": "layers",
+        "title": "肌肤指导",
+        "body": "针对敏感、暗沉、干燥和毛孔问题的分阶段护理方案。"
+       },
+       {
+        "icon": "shield",
+        "title": "放松与修复",
+        "body": "面部、颈部和肩部舒缓及放松按摩——美丽也是真正的休息。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_beauty_gallery",
+     "type": "gallery",
+     "variant": "grid",
+     "content": {
+      "heading": "工作室内部",
+      "subhead": "宁静私密的空间——来自我们护理中的片刻静谧。",
+      "items": [
+       {
+        "image": "",
+        "caption": "进行中的护理",
+        "imagePrompt": "close-up of a gentle facial treatment, esthetician hands applying cream to luminous glowing skin, calm and clean"
+       },
+       {
+        "image": "",
+        "caption": "我们的工作室",
+        "imagePrompt": "calm minimal beauty studio treatment room, soft draped linen, a few green plants, warm wood and stone accents, diffused daylight"
+       },
+       {
+        "image": "",
+        "caption": "温和精选产品",
+        "imagePrompt": "minimal flatlay of premium skincare products, amber glass dropper bottles and ceramic cream jars, dried flowers, pale marble surface"
+       },
+       {
+        "image": "",
+        "caption": "真正休息的时间",
+        "imagePrompt": "a woman relaxing during a spa session, soft towel, a lit candle and rolled towels nearby, eyes closed, peaceful"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_beauty_steps",
+     "type": "steps",
+     "content": {
+      "heading": "预约流程",
+      "subhead": "您无需了解护理项目——只需告诉我们您的需求。",
+      "items": [
+       {
+        "title": "在线咨询",
+        "body": "告诉我们您的肤质、预算以及想改善的问题。"
+       },
+       {
+        "title": "店内评估",
+        "body": "我们确认合适的护理方案及注意事项。"
+       },
+       {
+        "title": "定制护理",
+        "body": "我们根据您当天的肌肤状况调整产品、手法和时间。"
+       },
+       {
+        "title": "居家建议",
+        "body": "简单可行的后续护理——不过度治疗。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_beauty_quotes",
+     "type": "testimonials",
+     "content": {
+      "heading": "顾客评价",
+      "items": [
+       {
+        "quote": "不是戏剧性的变化——只是看起来干净、明亮，非常舒适。",
+        "author": "Hannah W.",
+        "role": "面部护理顾客"
+       },
+       {
+        "quote": "环境宁静，没有推销。第一次去就感到很放松。",
+        "author": "Sofia D.",
+        "role": "肌肤指导顾客"
+       },
+       {
+        "quote": "之后的居家建议非常实用——我的皮肤现在稳定多了。",
+        "author": "Mei L.",
+        "role": "会员"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_beauty_pricing",
+     "type": "pricing",
+     "content": {
+      "heading": "精选套餐",
+      "subhead": "价格根据护理项目和您的肌肤状况灵活调整；以下可作为参考起点。",
+      "items": [
+       {
+        "name": "快速焕亮",
+        "price": "$68",
+        "period": "/visit",
+        "features": [
+         "30分钟基础面部护理",
+         "清洁 + 补水",
+         "适合午休时间"
+        ],
+        "cta": {
+         "label": "Book",
+         "href": "/contact"
+        }
+       },
+       {
+        "name": "招牌护理",
+        "price": "$128",
+        "period": "/visit",
+        "features": [
+         "75分钟定制护理",
+         "面部、颈部及肩部放松",
+         "居家后续护理建议"
+        ],
+        "featured": true,
+        "cta": {
+         "label": "Book",
+         "href": "/contact"
+        }
+       },
+       {
+        "name": "月度计划",
+        "price": "$299",
+        "period": "/mo",
+        "features": [
+         "每月3次护理",
+         "分阶段肌肤追踪",
+         "优先预约"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_beauty_faq",
+     "type": "faq",
+     "content": {
+      "heading": "到店前须知",
+      "items": [
+       {
+        "q": "我应该先选哪个护理？",
+        "a": "预约咨询——我们会根据您当天的肌肤状况进行调整，您无需独自决定。"
+       },
+       {
+        "q": "敏感肌可以来吗？",
+        "a": "可以。我们会先评估，从温和开始，避免过度清洁和刺激。"
+       },
+       {
+        "q": "需要提前多久预约？",
+        "a": "最好提前2-3天。周末和晚上时段通常很快约满；会员享有优先权。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_beauty_cta",
+     "type": "cta",
+     "variant": "banner",
+     "content": {
+      "headline": "不确定哪种护理适合？",
+      "subhead": "留下您的联系方式，我们会根据您的肤质、日程和预算提供简单推荐。",
+      "image": "/demo/beauty-cta.jpg",
+      "imagePrompt": "soft-focus calm spa scene, a gentle facial skincare treatment in progress, esthetician hands, dewy glowing skin, peaceful atmosphere, diffused light",
+      "cta": {
+       "label": "联系我们",
+       "href": "/contact"
+      }
+     }
+    }
+   ]
+  },
+  "pages": [
+   {
+    "slug": "about",
+    "navLabel": {
+     "en": "About Us",
+     "zh": "关于我们"
+    },
+    "body": {
+     "en": "At Glow Haven, we believe that true beauty begins with healthy, radiant skin. Founded by a team of certified aestheticians with over a decade of experience, our studio combines advanced skincare technology with holistic wellness practices. Every treatment is tailored to your unique skin needs, using only clean, cruelty-free products.\n\nOur philosophy is simple: education before treatment. We take the time to understand your skin concerns—whether it's aging, hyperpigmentation, or sensitivity—and create a personalized roadmap to your glow. Our serene studio in downtown offers a sanctuary where you can unwind while experts work to reveal your natural luminosity.\n\n- Customized facials & chemical peels\n- LED light therapy & microcurrent treatments\n- Professional-grade home-care recommendations\n- Ongoing skin health monitoring",
+     "zh": "在光羽美肌，我们相信真正的美丽始于健康、光彩照人的肌肤。我们的团队由持有认证的美容师组成，拥有超过十年的行业经验，将先进护肤科技与整体健康理念相结合。每一项护理都根据您的独特肤质量身定制，只使用纯净、无残忍的护肤产品。\n\n我们的理念很简单：先教育，后治疗。我们会花时间了解您的肌肤问题——无论是衰老、色素沉着还是敏感——并为您制定通往光泽肌的个性化方案。位于市中心的宁静空间是您放松身心的庇护所，专家将在此揭示您的自然光彩。\n\n- 定制面部护理与化学焕肤\n- LED光疗与微电流护理\n- 专业级居家护理建议\n- 持续肌肤健康追踪"
+    }
+   },
+   {
+    "slug": "services",
+    "navLabel": {
+     "en": "Our Services",
+     "zh": "服务项目"
+    },
+    "body": {
+     "en": "We offer a comprehensive menu of advanced skincare treatments designed to address every concern. Each service begins with a detailed consultation and skin analysis using our Visia® imaging system.\n\n**Signature Glow Facial (75 min)** – A deep-cleansing, exfoliating experience with medical-grade serums, LED therapy, and lymphatic drainage massage. Perfect for dullness or congestion.\n\n**Advanced Peel Series** – From gentle lactic to deep TCA peels, we target fine lines, sun damage, and uneven texture. Each peel is paired with a soothing post-care protocol.\n\n**Microcurrent Lift (60 min)** – Non-invasive facial toning using low-level electrical currents to firm and sculpt. Noticeable results after one session.\n\n- HydraFacial MD® (medical-grade hydradermabrasion)\n- Dermaplaning & enzyme treatments\n- Custom chemical peels (5+ types)\n- LED red/blue light therapy\n- Hand & foot rejuvenation treatments",
+     "zh": "我们提供全面的高级护肤项目，旨在解决每一种肌肤问题。每项服务均以详细咨询开始，并使用Visia®皮肤分析系统进行诊断。\n\n**光耀焕肤面部护理（75分钟）** – 深层清洁与去角质，配合医用级精华、LED光疗和淋巴引流按摩。特别适合肤色暗沉或毛孔堵塞。\n\n**进阶焕肤系列** – 从温和乳酸焕肤到深度TCA焕肤，针对细纹、光损伤和皮肤质地不均。每次焕肤后配有舒缓修复方案。\n\n**微电流紧颜提升（60分钟）** – 利用低电平电流非侵入式提拉面部肌肉，即刻可见紧致效果。\n\n- 海菲秀®（医用级水动力焕肤）\n- 面部刮痧与酵素护理\n- 定制化学焕肤（5种以上）\n- LED红蓝光疗法\n- 手足焕新护理"
+    }
+   }
+  ]
+ },
+ "education": {
+  "brand": {
+   "en": "Scholar",
+   "zh": "学者教育"
+  },
+  "audience": {
+   "en": "K-12 students & parents",
+   "zh": "K-12学生与家长"
+  },
+  "home": {
+   "zh": [
+    {
+     "id": "b_edu_hero",
+     "type": "hero",
+     "variant": "fullbleed",
+     "content": {
+      "badge": "现在招生",
+      "headline": "学习，",
+      "headlineAccent": "真正掌握。",
+      "subhead": "清晰的课程、真实的进步，以及一位能适应每个学生需求的老师——线上或线下。",
+      "image": "/demo/education-hero.jpg",
+      "imageFocal": "center",
+      "imagePrompt": "a warm encouraging tutor helping a happy student at a bright study table with books and a laptop, natural light, focused and positive",
+      "cta": {
+       "label": "预约免费试听课",
+       "href": "/contact"
+      },
+      "secondaryCta": {
+       "label": "查看课程",
+       "href": "/services"
+      }
+     }
+    },
+    {
+     "id": "b_edu_stats",
+     "type": "stats",
+     "content": {
+      "items": [
+       {
+        "value": "1,200+",
+        "label": "学生人数"
+       },
+       {
+        "value": "4.9★",
+        "label": "家长评分"
+       },
+       {
+        "value": "10+年",
+        "label": "教学经验"
+       },
+       {
+        "value": "1:1",
+        "label": "关注度"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_edu_feat",
+     "type": "features",
+     "variant": "cards",
+     "content": {
+      "heading": "我们的教学方式",
+      "subhead": "结构清晰，充满鼓励。",
+      "items": [
+       {
+        "icon": "book",
+        "title": "清晰的课程大纲",
+        "body": "可遵循的计划，一步步完成里程碑，不留缺口。"
+       },
+       {
+        "icon": "gauge",
+        "title": "真实的进步",
+        "body": "定期检查与报告，让你随时了解进展。"
+       },
+       {
+        "icon": "shield",
+        "title": "关怀的老师",
+        "body": "耐心、鼓励的导师，让难题最终迎刃而解。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_edu_gallery",
+     "type": "gallery",
+     "variant": "grid",
+     "content": {
+      "heading": "教室内",
+      "subhead": "学习发生的场所。",
+      "items": [
+       {
+        "image": "",
+        "caption": "进行中的课程",
+        "imagePrompt": "a tutor and student working together at a desk, engaged, bright classroom, natural light"
+       },
+       {
+        "image": "",
+        "caption": "我们的学习空间",
+        "imagePrompt": "a calm modern study space with bookshelves and a big table, warm daylight"
+       },
+       {
+        "image": "",
+        "caption": "一对一辅导",
+        "imagePrompt": "close-up of a student writing in a workbook while a teacher points and explains, encouraging"
+       },
+       {
+        "image": "",
+        "caption": "快乐成果",
+        "imagePrompt": "a smiling student holding a graded test with a thumbs up, bright and hopeful"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_edu_steps",
+     "type": "steps",
+     "content": {
+      "heading": "如何开始",
+      "subhead": "从第一次通话到第一次成功。",
+      "items": [
+       {
+        "title": "免费试听",
+        "body": "预约无压力的试听课，看看是否合适。"
+       },
+       {
+        "title": "评估",
+        "body": "我们找到水平并共同设定明确目标。"
+       },
+       {
+        "title": "学习",
+        "body": "每周课程根据学生进度定制。"
+       },
+       {
+        "title": "追踪",
+        "body": "进度报告让所有人同步信息。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_edu_quotes",
+     "type": "testimonials",
+     "content": {
+      "heading": "家长反馈",
+      "items": [
+       {
+        "quote": "她的成绩一学期提升了一个等级——而且她现在很喜欢学习。",
+        "author": "A parent",
+        "role": "九年级"
+       },
+       {
+        "quote": "耐心、清晰、真诚。正是我们期望的。",
+        "author": "A parent",
+        "role": "十一年级"
+       },
+       {
+        "quote": "预约了试听课，从此没有回头。",
+        "author": "A parent",
+        "role": "七年级"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_edu_pricing",
+     "type": "pricing",
+     "content": {
+      "heading": "课程方案",
+      "subhead": "简单、灵活的方案。",
+      "items": [
+       {
+        "name": "单次课程",
+        "price": "$60",
+        "period": "/hour",
+        "features": [
+         "一对一辅导",
+         "任何科目",
+         "灵活安排时间"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        }
+       },
+       {
+        "name": "学期计划",
+        "price": "$540",
+        "period": "/10 lessons",
+        "features": [
+         "每节课更省钱",
+         "进度报告",
+         "优先预约"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        },
+        "featured": true
+       },
+       {
+        "name": "小组课",
+        "price": "$35",
+        "period": "/seat",
+        "features": [
+         "2–4名学生",
+         "同水平",
+         "合作学习"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_edu_faq",
+     "type": "faq",
+     "content": {
+      "heading": "常见问题",
+      "items": [
+       {
+        "q": "你们提供线上还是线下教学？",
+        "a": "两者都有——根据学生和家庭最适合的方式。"
+       },
+       {
+        "q": "可以先试听吗？",
+        "a": "可以——免费的第一节课，确保适合。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_edu_cta",
+     "type": "cta",
+     "variant": "banner",
+     "content": {
+      "headline": "准备好看到进步了吗？",
+      "subhead": "预约免费试听课——无压力，无承诺。",
+      "image": "/demo/education-cta.jpg",
+      "imagePrompt": "a teacher and student sharing a high-five at a study desk, genuine joy, warm light, soft focus",
+      "cta": {
+       "label": "预约免费试听课",
+       "href": "/contact"
+      }
+     }
+    }
+   ]
+  },
+  "pages": [
+   {
+    "slug": "about",
+    "navLabel": {
+     "en": "About Scholar",
+     "zh": "关于学者教育"
+    },
+    "body": {
+     "en": "Scholar Education is a leading online tutoring platform dedicated to empowering K-12 students with personalized learning experiences. Founded by a team of veteran educators and technologists, we blend proven teaching methodologies with cutting-edge AI to help every child reach their full potential.\n\nOur approach is simple: identify each student's unique strengths and weaknesses, then craft a custom learning path that adapts in real time. With over 5,000 qualified tutors covering all core subjects from math to language arts, we provide one-on-one sessions that fit your schedule.\n\n- **Personalized Learning Plans** tailored to each student's pace\n- **Certified Tutors** with degrees in education or their subject field\n- **Real-time Progress Analytics** for parents and students\n- **Flexible Scheduling** – learn anytime, anywhere",
+     "zh": "学而思教育是一家领先的在线辅导平台，致力于为K-12学生提供个性化学习体验。由资深教育者和技术专家团队创立，我们将经过验证的教学方法与尖端人工智能相结合，帮助每个孩子充分发挥潜能。\n\n我们的方法很简单：识别每个学生的独特优势和薄弱环节，然后制定实时调整的定制学习路径。拥有超过5000名合格导师，涵盖从数学到语言艺术的所有核心科目，我们提供符合您时间安排的一对一课程。\n\n- **个性化学习计划** 根据每个学生的学习进度量身定制\n- **认证导师** 拥有教育或学科领域的学位\n- **实时进度分析** 供家长和学生查看\n- **灵活安排** – 随时随地学习"
+    }
+   },
+   {
+    "slug": "services",
+    "navLabel": {
+     "en": "Our Services",
+     "zh": "服务项目"
+    },
+    "body": {
+     "en": "Scholar offers comprehensive academic support designed to boost confidence and grades. Our services span all grade levels and subjects, ensuring every learner finds the right help.\n\n**One-on-One Tutoring** – Expert tutors provide individualized attention in math, science, English, history, and more. Sessions are interactive, using our virtual whiteboard and shared resources to make concepts click.\n\n**Homework Help & Test Prep** – Stuck on a tough problem? Get instant assistance. Our test prep programs cover SAT, ACT, and state exams with strategies that maximize scores.\n\n- **STEM Programs**: Coding, robotics, advanced math\n- **Language Arts**: Reading comprehension, essay writing, grammar\n- **Academic Coaching**: Study skills, time management, goal setting\n- **Parent Workshops**: Tips to support learning at home",
+     "zh": "学优提供全面的学业支持，旨在提升自信与成绩。我们的服务覆盖所有年级和科目，确保每位学习者都能找到合适的帮助。\n\n**一对一辅导** – 专业导师在数学、科学、英语、历史等学科提供个性化指导。课程采用互动模式，通过虚拟白板和共享资源让知识点变得易懂。\n\n**作业辅导与备考** – 遇到难题？即时获得帮助。我们的备考课程涵盖SAT、ACT及州考，提供提分策略。\n\n- **STEM课程**：编程、机器人、高等数学\n- **语言艺术**：阅读理解、写作、语法\n- **学业指导**：学习技巧、时间管理、目标设定\n- **家长工作坊**：支持家庭学习的技巧"
+    }
+   }
+  ]
+ },
+ "restaurant": {
+  "brand": {
+   "en": "Ember & Vine",
+   "zh": "烬藤餐厅"
+  },
+  "audience": {
+   "en": "Food Lovers & Social Diners",
+   "zh": "美食爱好者和社交就餐者"
+  },
+  "home": {
+   "zh": [
+    {
+     "id": "b_rest_hero",
+     "type": "hero",
+     "variant": "fullbleed",
+     "content": {
+      "badge": "正在接受预订",
+      "headline": "一张值得",
+      "headlineAccent": "再来的餐桌。",
+      "subhead": "应季菜肴，舒适环境，简短精选的菜单。欢迎直接到店；周末请提前预订。",
+      "image": "/demo/restaurant-hero.jpg",
+      "imageFocal": "center",
+      "imagePrompt": "a warm inviting restaurant dining room at golden hour, candlelit tables, soft bokeh, intimate atmosphere",
+      "cta": {
+       "label": "预订餐桌",
+       "href": "/contact"
+      },
+      "secondaryCta": {
+       "label": "查看菜单",
+       "href": "/services"
+      }
+     }
+    },
+    {
+     "id": "b_rest_stats",
+     "type": "stats",
+     "content": {
+      "items": [
+       {
+        "value": "4.8★",
+        "label": "食客评分"
+       },
+       {
+        "value": "每日",
+        "label": "市场新鲜"
+       },
+       {
+        "value": "12",
+        "label": "开业年限"
+       },
+       {
+        "value": "本地",
+        "label": "采购"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_rest_feat",
+     "type": "features",
+     "variant": "cards",
+     "content": {
+      "heading": "我们的烹饪",
+      "subhead": "应季，简单，做到极致。",
+      "items": [
+       {
+        "icon": "sparkles",
+        "title": "应季菜肴",
+        "body": "跟随市场的菜单——明亮、简单、丰盛。"
+       },
+       {
+        "icon": "layers",
+        "title": "自然酒",
+        "body": "精选酒单，只为搭配食物，而非炫耀。"
+       },
+       {
+        "icon": "shield",
+        "title": "温馨环境",
+        "body": "朴实无华的服务，令人流连忘返的空间。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_rest_gallery",
+     "type": "gallery",
+     "variant": "grid",
+     "content": {
+      "heading": "餐桌上",
+      "subhead": "几道菜和这个空间。",
+      "items": [
+       {
+        "image": "",
+        "caption": "今晚的餐盘",
+        "imagePrompt": "a beautifully plated seasonal dish on a ceramic plate, overhead, natural light, rustic table"
+       },
+       {
+        "image": "",
+        "caption": "餐厅",
+        "imagePrompt": "cozy restaurant interior, warm wood, soft pendant lighting, full of atmosphere"
+       },
+       {
+        "image": "",
+        "caption": "从出餐口",
+        "imagePrompt": "a chef's hands plating a dish at the pass, gentle steam, focused, warm kitchen light"
+       },
+       {
+        "image": "",
+        "caption": "一杯开胃酒",
+        "imagePrompt": "two glasses of natural wine on a table, soft evening light, bokeh"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_rest_steps",
+     "type": "steps",
+     "content": {
+      "heading": "如何就餐",
+      "subhead": "预订，到达，放松。",
+      "items": [
+       {
+        "title": "预订",
+        "body": "在线预订，或周中直接到店。"
+       },
+       {
+        "title": "到达",
+        "body": "先来一杯酒，融入氛围。"
+       },
+       {
+        "title": "用餐",
+        "body": "跟随厨房推荐，或单点。"
+       },
+       {
+        "title": "停留",
+        "body": "慢慢享用甜点——无需匆忙。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_rest_quotes",
+     "type": "testimonials",
+     "content": {
+      "heading": "常客说",
+      "items": [
+       {
+        "quote": "一个你会带所有爱的人来的地方。",
+        "author": "Dana R.",
+        "role": "常客"
+       },
+       {
+        "quote": "每一道菜都尝得出用心。",
+        "author": "Marco T.",
+        "role": "客人"
+       },
+       {
+        "quote": "我们周五的固定预订。",
+        "author": "The Lees",
+        "role": "会员"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_rest_pricing",
+     "type": "pricing",
+     "content": {
+      "heading": "菜单",
+      "subhead": "套餐或单点。",
+      "items": [
+       {
+        "name": "午餐套餐",
+        "price": "$32",
+        "period": "/person",
+        "features": [
+         "两道菜",
+         "应季选择",
+         "周一至周五"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        }
+       },
+       {
+        "name": "主厨品尝",
+        "price": "$85",
+        "period": "/person",
+        "features": [
+         "六道菜",
+         "可选搭配",
+         "当季最佳"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        },
+        "featured": true
+       },
+       {
+        "name": "单点",
+        "price": "Varies",
+        "period": "",
+        "features": [
+         "随心点餐",
+         "每日特色",
+         "酒吧小食"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_rest_faq",
+     "type": "faq",
+     "content": {
+      "heading": "温馨提示",
+      "items": [
+       {
+        "q": "接受直接到店吗？",
+        "a": "周中可以；周末需预订——请提前预约。"
+       },
+       {
+        "q": "有饮食需求？",
+        "a": "预订时告知，厨房会乐意调整。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_rest_cta",
+     "type": "cta",
+     "variant": "banner",
+     "content": {
+      "headline": "饿了吗？",
+      "subhead": "预订餐桌或直接到店——其余的交给我们。",
+      "image": "/demo/restaurant-cta.jpg",
+      "imagePrompt": "a happy table of friends dining together, warm candlelight, laughter, soft focus",
+      "cta": {
+       "label": "预订餐桌",
+       "href": "/contact"
+      }
+     }
+    }
+   ]
+  },
+  "pages": [
+   {
+    "slug": "about",
+    "navLabel": {
+     "en": "About Us",
+     "zh": "关于我们"
+    },
+    "body": {
+     "en": "Nestled in the heart of the city, Ember & Vine brings the warmth of wood-fired cooking to your table. Our chefs source the freshest seasonal ingredients from local farms to craft dishes that celebrate rustic flavors with a modern twist.\n\nFrom our open kitchen, you can watch as flames dance and ingredients transform into artful plates. We believe dining is an experience—one that should excite all your senses.\n\n- **Farm-to-table ethos** with a focus on sustainability\n- **Hand-selected wine list** featuring boutique vineyards\n- **Intimate ambiance** perfect for special occasions or casual evenings",
+     "zh": "烬藤餐厅坐落于城市中心，将木火烹饪的温暖带到您的餐桌。我们的厨师从当地农场采购最新鲜的时令食材，打造出融合乡村风味与现代灵感的佳肴。\n\n透过开放式厨房，您可以看到火焰舞动，食材变为精美的盘中艺术品。我们相信用餐是一种体验——一种能够激发所有感官的体验。\n\n- **从农场到餐桌的理念**，注重可持续性\n- **精选酒单**，收录小众精品酒庄\n- **私密氛围**，适合特别场合或休闲夜晚"
+    }
+   },
+   {
+    "slug": "services",
+    "navLabel": {
+     "en": "Our Offerings",
+     "zh": "服务项目"
+    },
+    "body": {
+     "en": "We offer more than just dinner. Our menu evolves with the seasons, featuring wood-fired grills, hand-rolled pastas, and decadent desserts.\n\n- **A La Carte Dining**: Enjoy signature dishes like our herb-crusted lamb rack or truffle risotto.\n- **Chef's Tasting Menu**: A curated 6-course journey through our chef's latest inspirations.\n- **Private Events**: Host your celebration in our elegant private room for up to 20 guests.\n- **Wine Pairings**: Let our sommelier select the perfect glass for every course.\n\nJoin us for weekend brunch or a late-night dessert—every visit is an occasion.",
+     "zh": "我们提供的远不止晚餐。菜单随季节更迭，主打木火烧烤、手工意面和精致甜点。\n\n- **单点用餐**：享用意式香草烤羊排或松露烩饭等招牌菜。\n- **主厨品鉴菜单**：精心设计的六道菜之旅，展现主厨最新灵感。\n- **私人活动**：在我们的优雅私人包间举办庆典，可容纳20位宾客。\n- **葡萄酒搭配**：让侍酒师为每道菜挑选完美酒款。\n\n加入我们的周末早午餐或深夜甜品时段——每一次光临都是一场盛宴。"
+    }
+   }
+  ]
+ },
+ "healthcare": {
+  "brand": {
+   "en": "Vitalis Health",
+   "zh": "维特健康"
+  },
+  "audience": {
+   "en": "Hospitals & clinics",
+   "zh": "医院与诊所"
+  },
+  "home": {
+   "zh": [
+    {
+     "id": "b_clin_hero",
+     "type": "hero",
+     "variant": "fullbleed",
+     "content": {
+      "badge": "接收新患者",
+      "headline": "关怀，",
+      "headlineAccent": "先倾听。",
+      "subhead": "友好现代的医疗，当周可约，医生用心了解您。",
+      "image": "/demo/healthcare-hero.jpg",
+      "imageFocal": "center",
+      "imagePrompt": "a warm reassuring doctor talking with a patient in a bright modern clinic, natural light, calm and professional",
+      "cta": {
+       "label": "预约",
+       "href": "/contact"
+      },
+      "secondaryCta": {
+       "label": "我们的服务",
+       "href": "/services"
+      }
+     }
+    },
+    {
+     "id": "b_clin_stats",
+     "type": "stats",
+     "content": {
+      "items": [
+       {
+        "value": "当周",
+        "label": "预约"
+       },
+       {
+        "value": "4.9★",
+        "label": "患者评分"
+       },
+       {
+        "value": "15k+",
+        "label": "就诊患者"
+       },
+       {
+        "value": "委员会",
+        "label": "认证"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_clin_feat",
+     "type": "features",
+     "variant": "cards",
+     "content": {
+      "heading": "我们如何帮助",
+      "subhead": "全面、从容、现代。",
+      "items": [
+       {
+        "icon": "shield",
+        "title": "基础医疗",
+        "body": "常规就诊、筛查及日常事务，妥善处理。"
+       },
+       {
+        "icon": "sparkles",
+        "title": "当周就诊",
+        "body": "出现问题快速就诊——无需长时间等待。"
+       },
+       {
+        "icon": "layers",
+        "title": "清晰方案",
+        "body": "离开时清楚知道下一步，用通俗语言说明。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_clin_gallery",
+     "type": "gallery",
+     "variant": "grid",
+     "content": {
+      "heading": "我们的诊所",
+      "subhead": "安静、整洁、温馨。",
+      "items": [
+       {
+        "image": "",
+        "caption": "候诊室",
+        "imagePrompt": "a clean modern medical waiting room, soft natural light, plants, welcoming"
+       },
+       {
+        "image": "",
+        "caption": "诊室",
+        "imagePrompt": "a bright tidy consultation room, modern and calm"
+       },
+       {
+        "image": "",
+        "caption": "团队工作中",
+        "imagePrompt": "a friendly healthcare team in a modern clinic, approachable and professional"
+       },
+       {
+        "image": "",
+        "caption": "现代设备",
+        "imagePrompt": "clean modern medical equipment detail, soft light, reassuring"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_clin_steps",
+     "type": "steps",
+     "content": {
+      "heading": "您的就诊",
+      "subhead": "从头到尾简单明了。",
+      "items": [
+       {
+        "title": "预约",
+        "body": "在线预约或致电我们。"
+       },
+       {
+        "title": "登记",
+        "body": "快速手续，然后准时就诊。"
+       },
+       {
+        "title": "咨询",
+        "body": "不匆忙的就诊——欢迎随时提问。"
+       },
+       {
+        "title": "随访",
+        "body": "清晰的方案和便捷的随访。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_clin_quotes",
+     "type": "testimonials",
+     "content": {
+      "heading": "患者说",
+      "items": [
+       {
+        "quote": "他们真的在听，没有催促我。",
+        "author": "Karen P.",
+        "role": "患者"
+       },
+       {
+        "quote": "当周就约上了。救命稻草。",
+        "author": "Tom B.",
+        "role": "患者"
+       },
+       {
+        "quote": "所有事情都解释得清晰友善。",
+        "author": "Aisha M.",
+        "role": "患者"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_clin_pricing",
+     "type": "pricing",
+     "content": {
+      "heading": "就诊类型",
+      "subhead": "透明，坦诚。",
+      "items": [
+       {
+        "name": "新患者",
+        "price": "$120",
+        "period": "/visit",
+        "features": [
+         "45分钟咨询",
+         "完整病史",
+         "护理方案"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        }
+       },
+       {
+        "name": "随访",
+        "price": "$80",
+        "period": "/visit",
+        "features": [
+         "重点复查",
+         "调整方案",
+         "快速便捷"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        },
+        "featured": true
+       },
+       {
+        "name": "年度体检",
+        "price": "$180",
+        "period": "/visit",
+        "features": [
+         "全面检查",
+         "筛查",
+         "健康计划"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_clin_faq",
+     "type": "faq",
+     "content": {
+      "heading": "来之前",
+      "items": [
+       {
+        "q": "你们接受我的保险吗？",
+        "a": "我们接受大多数主要保险——请咨询我们确认。"
+       },
+       {
+        "q": "多久能就诊？",
+        "a": "大多数患者可获当周预约。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_clin_cta",
+     "type": "cta",
+     "variant": "banner",
+     "content": {
+      "headline": "感觉不适？",
+      "subhead": "预约就诊，让倾听您的人为您看病。",
+      "image": "/demo/healthcare-cta.jpg",
+      "imagePrompt": "a patient and clinician shaking hands warmly in a bright clinic, trust, soft focus",
+      "cta": {
+       "label": "预约",
+       "href": "/contact"
+      }
+     }
+    }
+   ]
+  },
+  "pages": [
+   {
+    "slug": "about",
+    "navLabel": {
+     "en": "About Vitalis Health",
+     "zh": "关于维特健康"
+    },
+    "body": {
+     "en": "Vitalis Health partners with healthcare providers to modernize patient care. Our integrated platform streamlines clinical workflows, reduces administrative burden, and enhances patient outcomes.\n\n**Our Mission**\n- Empower clinicians with real-time data at the point of care.\n- Improve patient safety through automated medication reconciliation.\n- Enable seamless communication across care teams.\n\nWith over 200 hospital deployments, Vitalis Health delivers HIPAA-compliant solutions trusted by leading medical institutions.",
+     "zh": "维特健康与医疗机构合作，推动患者护理现代化。我们的集成平台简化临床工作流程，减轻行政负担，提升患者治疗效果。\n\n**我们的使命**\n- 为临床医生提供实时数据，支持诊疗决策。\n- 通过自动化药物核对，提高患者安全。\n- 促进护理团队间的无缝沟通。\n\n维特健康已部署超过200家医院，提供符合HIPAA标准的解决方案，深受顶尖医疗机构信赖。"
+    }
+   },
+   {
+    "slug": "services",
+    "navLabel": {
+     "en": "Our Services",
+     "zh": "服务项目"
+    },
+    "body": {
+     "en": "Vitalis Health offers a suite of digital health solutions designed for modern healthcare.\n\n1. **Clinical Decision Support** – AI-powered alerts for drug interactions, allergies, and evidence-based guidelines.\n2. **Patient Portal** – Secure access to medical records, appointment scheduling, and telemedicine.\n3. **Population Health Management** – Analytics dashboards to identify at-risk patients and track outcomes.\n\n*Our services integrate with existing EHR systems, ensuring minimal disruption and rapid deployment.* Healthcare organizations using Vitalis report 30% fewer medication errors and 20% improvement in chronic disease management.",
+     "zh": "维特健康提供一系列数字化健康解决方案，专为现代医疗设计。\n\n1. **临床决策支持** – 基于AI的药物相互作用、过敏及循证指南提醒。\n2. **患者门户** – 安全访问医疗记录、在线预约及远程诊疗。\n3. **人群健康管理** – 分析仪表盘，识别高风险患者并跟踪治疗效果。\n\n*我们的服务与现有电子病历系统集成，实施快速、干扰小。* 使用维特健康的医疗机构报告药物错误减少30%，慢性病管理效果提升20%。"
+    }
+   }
+  ]
+ },
+ "fitness": {
+  "brand": {
+   "en": "Ignite Fitness",
+   "zh": "启燃健身"
+  },
+  "audience": {
+   "en": "Busy Professionals",
+   "zh": "忙碌职场人"
+  },
+  "home": {
+   "zh": [
+    {
+     "id": "b_fit_hero",
+     "type": "hero",
+     "variant": "fullbleed",
+     "content": {
+      "badge": "首节课免费",
+      "headline": "更强壮，",
+      "headlineAccent": "每周更强。",
+      "subhead": "适合你的教练——小班教学，真实进步，走进教室就感觉舒适。",
+      "image": "/demo/fitness-hero.jpg",
+      "imageFocal": "center",
+      "imagePrompt": "a bright modern gym with people training in a small group class, energetic but clean, natural light, motivating",
+      "cta": {
+       "label": "免费开始",
+       "href": "/contact"
+      },
+      "secondaryCta": {
+       "label": "查看课程",
+       "href": "/services"
+      }
+     }
+    },
+    {
+     "id": "b_fit_stats",
+     "type": "stats",
+     "content": {
+      "items": [
+       {
+        "value": "4.9★",
+        "label": "会员评分"
+       },
+       {
+        "value": "首次",
+        "label": "免费课程"
+       },
+       {
+        "value": "20+",
+        "label": "每周课程数"
+       },
+       {
+        "value": "小班",
+        "label": "班级规模"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_fit_feat",
+     "type": "features",
+     "variant": "cards",
+     "content": {
+      "heading": "加入我们",
+      "subhead": "有指导，不拥挤。",
+      "items": [
+       {
+        "icon": "zap",
+        "title": "力量训练",
+        "body": "通过专业指导和进阶，建立真正的力量。"
+       },
+       {
+        "icon": "gauge",
+        "title": "体能训练",
+        "body": "心跳加速的训练，适合任何水平。"
+       },
+       {
+        "icon": "sparkles",
+        "title": "灵活性训练",
+        "body": "活动更自如，感觉更好——恢复很重要。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_fit_gallery",
+     "type": "gallery",
+     "variant": "grid",
+     "content": {
+      "heading": "健身房内",
+      "subhead": "明亮、干净、激励人心。",
+      "items": [
+       {
+        "image": "",
+        "caption": "训练区",
+        "imagePrompt": "a clean modern gym training floor with equipment, bright daylight, inviting"
+       },
+       {
+        "image": "",
+        "caption": "进行中的课堂",
+        "imagePrompt": "people mid-workout in a group fitness class, motion and energy, natural light"
+       },
+       {
+        "image": "",
+        "caption": "自由重量区",
+        "imagePrompt": "free weights neatly racked in a modern gym, soft light, detail"
+       },
+       {
+        "image": "",
+        "caption": "恢复空间",
+        "imagePrompt": "a calm stretching and recovery area in a gym, plants, natural light"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_fit_steps",
+     "type": "steps",
+     "content": {
+      "heading": "开始准备",
+      "subhead": "从首次拜访到首次胜利。",
+      "items": [
+       {
+        "title": "免费预约",
+        "body": "领取你的首节课——无需承诺。"
+       },
+       {
+        "title": "评估",
+        "body": "快速沟通你的目标和起点。"
+       },
+       {
+        "title": "训练",
+        "body": "小班授课，教练知道你的名字。"
+       },
+       {
+        "title": "进步",
+        "body": "追踪真实进步，持续锻炼。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_fit_quotes",
+     "type": "testimonials",
+     "content": {
+      "heading": "会员反馈",
+      "items": [
+       {
+        "quote": "多年来最强壮——而且我真的很享受。",
+        "author": "Priya N.",
+        "role": "会员"
+       },
+       {
+        "quote": "教练关心你，氛围零自我。",
+        "author": "Dev S.",
+        "role": "会员"
+       },
+       {
+        "quote": "减重20磅，收获一个社区。",
+        "author": "Ben K.",
+        "role": "会员"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_fit_pricing",
+     "type": "pricing",
+     "content": {
+      "heading": "会员计划",
+      "subhead": "简单，无强制合约。",
+      "items": [
+       {
+        "name": "单次课程",
+        "price": "$22",
+        "period": "/class",
+        "features": [
+         "任意课程",
+         "无承诺",
+         "适合开始"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        }
+       },
+       {
+        "name": "无限课程",
+        "price": "$149",
+        "period": "/mo",
+        "features": [
+         "所有课程",
+         "首节免费",
+         "随时取消"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        },
+        "featured": true
+       },
+       {
+        "name": "指导训练",
+        "price": "$249",
+        "period": "/mo",
+        "features": [
+         "无限课程",
+         "月度检查",
+         "定制计划"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_fit_faq",
+     "type": "faq",
+     "content": {
+      "heading": "须知事项",
+      "items": [
+       {
+        "q": "我是完全新手，没问题吗？",
+        "a": "当然。每节课都可调整，首节免费。"
+       },
+       {
+        "q": "需要预约课程吗？",
+        "a": "是的——小班制确保总有你的位置。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_fit_cta",
+     "type": "cta",
+     "variant": "banner",
+     "content": {
+      "headline": "准备好了吗？",
+      "subhead": "你的首节课我们请客——来感受一下。",
+      "image": "/demo/fitness-cta.jpg",
+      "imagePrompt": "a coach high-fiving a member after a workout, genuine, bright gym, soft focus",
+      "cta": {
+       "label": "免费开始",
+       "href": "/contact"
+      }
+     }
+    }
+   ]
+  },
+  "pages": [
+   {
+    "slug": "about",
+    "navLabel": {
+     "en": "About Us",
+     "zh": "关于我们"
+    },
+    "body": {
+     "en": "Ignite Fitness is redefining what it means to be fit in the modern world. We built a 45-minute high-intensity training system specifically for busy professionals who can't afford to spend hours at the gym.\n\nOur approach combines science-backed workout protocols, precision nutrition guidance, and habit-based coaching. Every session is designed to maximize results in minimal time. No fluff, no wasted sets, no hour-long cardio.\n\n**Why Ignite?**\n- 45-minute complete training sessions\n- Focus on compound lifts and metabolic conditioning\n- Real-time heart rate monitoring for optimal intensity\n- Personalized adjustment for injuries and goals\n\nSince 2018, we've helped over 2,000 professionals lose fat, build muscle, and reclaim their energy—all while working 50+ hour weeks.",
+     "zh": "启燃健身重新定义现代健身方式。我们专为忙碌的职场人设计了45分钟的高强度训练体系，无需耗时数小时在健身房就能获得显著效果。\n\n我们的方法结合科学验证的训练方案、精准营养指导以及习惯养成教练。每节课都力求在最短时间内实现最大成果——没有冗余动作，没有无效组数，没有长时间有氧。\n\n**为何选择启燃？**\n- 45分钟完整训练\n- 聚焦复合动作与代谢训练\n- 实时心率监测确保最佳强度\n- 针对伤病史和目标个性化调整\n\n自2018年以来，我们已帮助超过2000名职场人在每周工作50小时以上的情况下，成功减脂、增肌、重获活力。"
+    }
+   },
+   {
+    "slug": "services",
+    "navLabel": {
+     "en": "Our Programs",
+     "zh": "服务项目"
+    },
+    "body": {
+     "en": "We offer three flagship programs tailored to your lifestyle and fitness level.\n\n**Ignite Core** — Our signature 45-minute small group training. With no more than 8 people per class, you get personal coaching in a team atmosphere. Includes initial fitness assessment, program design, and monthly re-evaluation.\n\n**Ignite One-on-One** — Private training for those who want undivided attention. Your coach designs every session around your specific goals, schedules, and limitations. Perfect for beginners or those returning from injury.\n\n**Ignite Remote** — Train from anywhere. We provide weekly programmed workouts, video coaching, and daily check-ins via our app. All sessions are scalable to your equipment.\n\n**All programs include:**\n- Initial body composition analysis\n- Custom nutrition framework\n- Access to our recovery protocols\n- Weekly progress tracking",
+     "zh": "我们提供三种旗舰项目，贴合你的生活方式和健身水平。\n\n**启燃核心** — 45分钟精品小团体训练，每班不超过8人，在团队氛围中获得个性化指导。包含初始体测、训练方案设计及月度复评。\n\n**启燃一对一** — 专注私教服务，教练围绕你的具体目标、时间安排和身体状况量身设计每节课。适合初学者或伤后恢复人群。\n\n**启燃远程** — 随时随地开练。我们通过App提供每周训练计划、视频指导和每日打卡，所有动作均可根据你的器械条件调整。\n\n**所有项目包含：**\n- 初始体成分分析\n- 定制营养框架\n- 恢复方案指导\n- 每周进度追踪"
+    }
+   }
+  ]
+ },
+ "legal": {
+  "brand": {
+   "en": "Sterling Legal",
+   "zh": "斯特林法律"
+  },
+  "audience": {
+   "en": "Corporations & Financial Institutions",
+   "zh": "企业与金融机构"
+  },
+  "home": {
+   "zh": [
+    {
+     "id": "b_law_hero",
+     "type": "hero",
+     "variant": "fullbleed",
+     "content": {
+      "badge": "值得信赖的法律顾问",
+      "headline": "稳健的法律顾问",
+      "headlineAccent": "在关键时刻",
+      "subhead": "清晰的建议与审慎的辩护——在塑造您业务与生活的每一个时刻。",
+      "image": "/demo/legal-hero.jpg",
+      "imageFocal": "center",
+      "imagePrompt": "a distinguished law office interior with floor-to-ceiling bookshelves, warm directional light, leather and wood, authoritative and calm",
+      "cta": {
+       "label": "预约咨询",
+       "href": "/contact"
+      },
+      "secondaryCta": {
+       "label": "业务领域",
+       "href": "/services"
+      }
+     }
+    },
+    {
+     "id": "b_law_stats",
+     "type": "stats",
+     "content": {
+      "items": [
+       {
+        "value": "25+",
+        "label": "从业年限"
+       },
+       {
+        "value": "固定",
+        "label": "可行时的费用"
+       },
+       {
+        "value": "500+",
+        "label": "处理案件"
+       },
+       {
+        "value": "谨慎",
+        "label": "始终"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_law_feat",
+     "type": "features",
+     "variant": "cards",
+     "content": {
+      "heading": "业务领域",
+      "subhead": "我们最擅长之处。",
+      "items": [
+       {
+        "icon": "shield",
+        "title": "商业与合同",
+        "body": "公司设立、协议以及保护您的细则。"
+       },
+       {
+        "icon": "layers",
+        "title": "房地产",
+        "body": "干净利落地处理购买、租赁及交割。"
+       },
+       {
+        "icon": "sparkles",
+        "title": "遗产与遗嘱",
+        "body": "提前规划，保护您所关爱的人。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_law_gallery",
+     "type": "gallery",
+     "variant": "grid",
+     "content": {
+      "heading": "律所",
+      "subhead": "深思熟虑且冷静。",
+      "items": [
+       {
+        "image": "",
+        "caption": "我们的办公室",
+        "imagePrompt": "an elegant law firm office, deep wood, brass details, refined"
+       },
+       {
+        "image": "",
+        "caption": "图书馆",
+        "imagePrompt": "a wall of law books in a warm library, soft light"
+       },
+       {
+        "image": "",
+        "caption": "工作洽谈室",
+        "imagePrompt": "two professionals in a calm meeting, a document on the table, trust, muted tones"
+       },
+       {
+        "image": "",
+        "caption": "会议室",
+        "imagePrompt": "a refined boardroom with a long table, soft daylight"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_law_steps",
+     "type": "steps",
+     "content": {
+      "heading": "工作方式",
+      "subhead": "从第一天起就清晰明了。",
+      "items": [
+       {
+        "title": "咨询",
+        "body": "坦诚地首次谈话，了解您的情况。"
+       },
+       {
+        "title": "计划",
+        "body": "明确的策略和您事先同意的费用。"
+       },
+       {
+        "title": "行动",
+        "body": "细致、及时的工作，没有意外。"
+       },
+       {
+        "title": "解决",
+        "body": "我们全程跟进并随时告知您进展。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_law_quotes",
+     "type": "testimonials",
+     "content": {
+      "heading": "客户评价",
+      "items": [
+       {
+        "quote": "冷静、清晰，始终领先一步。",
+        "author": "R. Halloran",
+        "role": "客户"
+       },
+       {
+        "quote": "用通俗易懂的语言解释了我的选择，没有术语。",
+        "author": "S. Okafor",
+        "role": "客户"
+       },
+       {
+        "quote": "费用事先商定——没有意外。",
+        "author": "M. & J. Reyes",
+        "role": "客户"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_law_pricing",
+     "type": "pricing",
+     "content": {
+      "heading": "费用",
+      "subhead": "透明且事先达成一致。",
+      "items": [
+       {
+        "name": "咨询",
+        "price": "$200",
+        "period": "/hour",
+        "features": [
+         "坦诚评估",
+         "明确选项",
+         "无义务"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        }
+       },
+       {
+        "name": "固定费用案件",
+        "price": "Quoted",
+        "period": "",
+        "features": [
+         "事先商定",
+         "无按小时计费的意外",
+         "确定范围"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        },
+        "featured": true
+       },
+       {
+        "name": "聘用协议",
+        "price": "Custom",
+        "period": "",
+        "features": [
+         "持续法律顾问",
+         "优先响应",
+         "可预测的成本"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_law_faq",
+     "type": "faq",
+     "content": {
+      "heading": "须知",
+      "items": [
+       {
+        "q": "费用如何构成？",
+        "a": "尽可能采用固定费用，并在开始前书面确认。"
+       },
+       {
+        "q": "首次通话是否保密？",
+        "a": "始终保密——您的首次谈话是私密的且无义务。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_law_cta",
+     "type": "cta",
+     "variant": "banner",
+     "content": {
+      "headline": "需要值得信赖的建议？",
+      "subhead": "预约咨询——首次谈话保密。",
+      "image": "/demo/legal-cta.jpg",
+      "imagePrompt": "a confident, warm handshake in a refined office, soft light, trust, soft focus",
+      "cta": {
+       "label": "预约咨询",
+       "href": "/contact"
+      }
+     }
+    }
+   ]
+  },
+  "pages": [
+   {
+    "slug": "about",
+    "navLabel": {
+     "en": "About Us",
+     "zh": "关于我们"
+    },
+    "body": {
+     "en": "Sterling Legal is a leading corporate law firm headquartered in Singapore, serving multinational corporations, financial institutions, and high-growth enterprises across Asia-Pacific. With a team of 60+ attorneys specializing in cross-border transactions, regulatory compliance, and dispute resolution, we provide strategic counsel that bridges legal complexity with commercial reality.\n\nOur founding partners bring combined experience from Magic Circle firms and Fortune 500 legal departments, ensuring our clients receive institutional-grade advice with partner-level attention. We are consistently ranked Band 1 by Chambers Asia-Pacific for Banking & Finance and Corporate/M&A.\n\n**Key differentiators:**\n- Deep cross-border expertise: 15+ jurisdictions covered\n- Industry focus: Financial services, tech, energy, and healthcare\n- Proactive compliance: Real-time regulatory monitoring\n- Dispute resolution: Track record of wins in major arbitrations",
+     "zh": "斯特林法律是总部位于新加坡的领先公司法律事务所，为跨国企业、金融机构及高速发展企业提供亚太区全境服务。我们拥有60余名专注跨境交易、合规监管和争议解决的律师，将法律复杂性转化为商业可行策略。\n\n创始合伙人团队兼具魔术圈事务所与财富500强法务部双重经验，确保客户既获机构级专业支持，又享合伙人级直接服务。连续多年被《钱伯斯亚太》评为银行金融与并购领域第一梯队。\n\n**核心优势：**\n- 跨境专精：覆盖15+司法管辖区\n- 行业聚焦：金融服务、科技、能源、医疗\n- 前瞻合规：实时监管动态追踪\n- 争议解决：多项重大仲裁胜诉记录"
+    }
+   },
+   {
+    "slug": "services",
+    "navLabel": {
+     "en": "Our Services",
+     "zh": "服务项目"
+    },
+    "body": {
+     "en": "We deliver comprehensive legal solutions tailored to the lifecycle of a business, from incorporation through exit or IPO.\n\n**Corporate & M&A** — Cross-border mergers, joint ventures, due diligence, and shareholder agreements. We have closed over $20 billion in transaction value in the last fiscal year.\n\n**Banking & Finance** — Syndicated lending, structured finance, fintech licensing, and regulatory advice. Our team works closely with MAS, HKMA, and other regulators.\n\n**Dispute Resolution & Litigation** — Commercial arbitration (SIAC, HKIAC, ICC), fraud investigations, and white-collar defense. \n\n**Key areas include:**\n- Compliance & Data Privacy (PDPA, GDPR)\n- Intellectual Property & Technology\n- Employment & Labor Law\n- Real Estate & Infrastructure",
+     "zh": "我们提供覆盖企业全生命周期的综合性法律解决方案，从公司设立到退出或上市全程护航。\n\n**公司与并购** — 跨境并购、合资企业、尽职调查及股东协议。上一财年经手交易总值超200亿美元。\n\n**银行与金融** — 银团贷款、结构融资、金融科技牌照申请及监管合规。团队紧密对接金管局、香港金管局及其他监管机构。\n\n**争议解决与诉讼** — 商业仲裁（SIAC、HKIAC、ICC）、欺诈调查及白领犯罪辩护。\n\n**重点领域：**\n- 合规与数据隐私（PDPA、GDPR）\n- 知识产权与技术\n- 雇佣与劳动法\n- 房地产与基础设施"
+    }
+   }
+  ]
+ },
+ "realestate": {
+  "brand": {
+   "en": "Cornerstone Realty",
+   "zh": "基石地产"
+  },
+  "audience": {
+   "en": "Homebuyers & investors in urban markets",
+   "zh": "城市购房者与投资者"
+  },
+  "home": {
+   "zh": [
+    {
+     "id": "b_re_hero",
+     "type": "hero",
+     "variant": "fullbleed",
+     "content": {
+      "badge": "正在挂牌",
+      "headline": "找到那个地址，",
+      "headlineAccent": "感觉像家一样。",
+      "subhead": "本地专长、诚实的建议，以及在买卖的每一步中保持冷静的指导。",
+      "image": "/demo/realestate-hero.jpg",
+      "imageFocal": "center",
+      "imagePrompt": "a beautiful modern home exterior at golden hour with warm lights on, inviting, professional real estate photography",
+      "cta": {
+       "label": "预约看房",
+       "href": "/contact"
+      },
+      "secondaryCta": {
+       "label": "浏览房源",
+       "href": "/services"
+      }
+     }
+    },
+    {
+     "id": "b_re_stats",
+     "type": "stats",
+     "content": {
+      "items": [
+       {
+        "value": "$2.1B",
+        "label": "至今已成交"
+       },
+       {
+        "value": "1,400+",
+        "label": "已成交房屋"
+       },
+       {
+        "value": "21天",
+        "label": "平均出价时间"
+       },
+       {
+        "value": "98%",
+        "label": "要价比例"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_re_feat",
+     "type": "features",
+     "variant": "cards",
+     "content": {
+      "heading": "我们的服务",
+      "subhead": "从第一次看房到拿到钥匙。",
+      "items": [
+       {
+        "icon": "shield",
+        "title": "高价卖出",
+        "body": "真实定价数据和出色的摄影，让房屋快速成交。"
+       },
+       {
+        "icon": "layers",
+        "title": "放心购买",
+        "body": "非公开市场的房源和每处房产的诚实建议。"
+       },
+       {
+        "icon": "gauge",
+        "title": "顺利过户",
+        "body": "我们管理文件和进度，您无需操心。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_re_gallery",
+     "type": "gallery",
+     "variant": "grid",
+     "content": {
+      "heading": "精选空间",
+      "subhead": "看看我们挂牌的房源。",
+      "items": [
+       {
+        "image": "",
+        "caption": "明亮的客厅",
+        "imagePrompt": "a bright airy living room with large windows and tasteful furniture, natural light"
+       },
+       {
+        "image": "",
+        "caption": "现代厨房",
+        "imagePrompt": "a sleek modern kitchen with an island, clean and luxurious, daylight"
+       },
+       {
+        "image": "",
+        "caption": "外观吸引力",
+        "imagePrompt": "an attractive house facade with a landscaped front yard, blue sky, curb appeal"
+       },
+       {
+        "image": "",
+        "caption": "宁静的卧室",
+        "imagePrompt": "a serene staged bedroom with soft linens and morning light"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_re_steps",
+     "type": "steps",
+     "content": {
+      "heading": "如何运作",
+      "subhead": "四个简单步骤。",
+      "items": [
+       {
+        "title": "见面",
+        "body": "在免费咨询中告诉我们您的目标和时间表。"
+       },
+       {
+        "title": "计划",
+        "body": "我们用真实数据定价并制定量身定制的策略。"
+       },
+       {
+        "title": "上线",
+        "body": "专业照片、房源信息和看房活动，促成交易。"
+       },
+       {
+        "title": "成交",
+        "body": "我们处理报价和文件，确保顺利成交。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_re_quotes",
+     "type": "testimonials",
+     "content": {
+      "heading": "来自客户",
+      "items": [
+       {
+        "quote": "三周内以高于要价的价格售出。整个过程中冷静、敏锐且诚实。",
+        "author": "The Halls",
+        "role": "卖家"
+       },
+       {
+        "quote": "他们为我们找到了完全合适的房子——而且让过程变得轻松。",
+        "author": "L. Moreau",
+        "role": "买家"
+       },
+       {
+        "quote": "首次购房者，他们让整个过程感觉毫不费力。",
+        "author": "Sam & Nia",
+        "role": "买家"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_re_pricing",
+     "type": "pricing",
+     "content": {
+      "heading": "我们的收费方式",
+      "subhead": "透明，预先达成一致。",
+      "items": [
+       {
+        "name": "买方代理",
+        "price": "Free",
+        "period": "",
+        "features": [
+         "我们通过销售获得报酬",
+         "非公开房源",
+         "为您谈判"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        }
+       },
+       {
+        "name": "卖家套餐",
+        "price": "2.5%",
+        "period": "/sale",
+        "features": [
+         "专业摄影",
+         "全面营销",
+         "开放日及看房"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        },
+        "featured": true
+       },
+       {
+        "name": "租赁与管理",
+        "price": "8%",
+        "period": "/mo",
+        "features": [
+         "租户筛选",
+         "租金收取",
+         "维护处理"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_re_faq",
+     "type": "faq",
+     "content": {
+      "heading": "常见问题",
+      "items": [
+       {
+        "q": "你们的费用是多少？",
+        "a": "简单透明的佣金，事先商定——成交时无意外。"
+       },
+       {
+        "q": "你们也处理租赁吗？",
+        "a": "是的——全市的销售、租赁和物业管理。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_re_cta",
+     "type": "cta",
+     "variant": "banner",
+     "content": {
+      "headline": "考虑搬家吗？",
+      "subhead": "免费、无压力的房屋估价。",
+      "image": "/demo/realestate-cta.jpg",
+      "imagePrompt": "a happy couple receiving keys in front of their new home, joyful, soft focus",
+      "cta": {
+       "label": "请求估价",
+       "href": "/contact"
+      }
+     }
+    }
+   ]
+  },
+  "pages": [
+   {
+    "slug": "about",
+    "navLabel": {
+     "en": "About Us",
+     "zh": "关于我们"
+    },
+    "body": {
+     "en": "At Cornerstone Realty, we believe that finding the perfect property is about more than just square footage—it's about finding your place in the world. With over two decades of experience in urban real estate markets, our team combines local insight with global perspective to guide you through every step of your journey.\n\nWe specialize in residential and commercial properties in dynamic city environments, from historic brownstones to modern high-rises. Our clients include first-time homebuyers, growing families, and seasoned investors seeking stable returns. What sets us apart is our commitment to transparency, personalized service, and deep knowledge of neighborhood trends.\n\n- 20+ years of experience in top-tier urban markets\n- Dedicated client advisors fluent in multiple languages\n- Data-driven market analysis and tailored property search",
+     "zh": "在基石地产，我们相信找到理想的房产不仅仅是面积大小的问题，而是找到你在世界中的位置。凭借二十多年在城市房地产市场的经验，我们的团队将本地洞察与全球视角相结合，引导你走过旅程的每一步。\n\n我们专注于动态城市环境中的住宅和商业地产，从历史悠久的褐石建筑到现代高层公寓。我们的客户包括首次购房者、成长中的家庭以及寻求稳定回报的资深投资者。我们的与众不同之处在于对透明度、个性化服务以及社区趋势的深入了解。\n\n- 20多年顶级城市市场经验\n- 精通多种语言的专属客户顾问\n- 数据驱动的市场分析和定制化房产搜索"
+    }
+   },
+   {
+    "slug": "services",
+    "navLabel": {
+     "en": "Our Services",
+     "zh": "服务项目"
+    },
+    "body": {
+     "en": "Cornerstone Realty offers a full suite of real estate services designed to meet the needs of today's buyers, sellers, and investors. Whether you're searching for your dream home or maximizing your portfolio, we're here to help.\n\n**For Buyers:** We provide personalized property tours, comparative market analysis, and negotiation support to secure the best deal. Our digital tools give you 24/7 access to listings and market reports.\n\n**For Sellers:** From staging and professional photography to strategic pricing and marketing, we position your property to attract qualified buyers quickly and at top value.\n\n**For Investors:** Our investment advisory team evaluates ROI, rental yields, and growth potential for residential and commercial assets. We also offer property management services for hassle-free ownership.\n\n- Buyer representation & acquisition\n- Seller marketing & strategic pricing\n- Investment analysis & asset management\n- Full-service property management",
+     "zh": "基石地产提供全套房地产服务，满足当今买家、卖家和投资者的需求。无论你是在寻找梦想家园还是最大化投资组合，我们都能提供帮助。\n\n**对于买家：** 我们提供个性化看房、比较市场分析和谈判支持，以确保最优惠的交易。我们的数字工具让你24/7访问房源和市场报告。\n\n**对于卖家：** 从家居布置和专业摄影到战略定价和营销，我们定位您的房产，以吸引合格买家快速达成最高价值。\n\n**对于投资者：** 我们的投资顾问团队评估住宅和商业资产的ROI、租金收益率和增长潜力。我们还提供物业管理服务，让您轻松拥有。\n\n- 买方代理与收购\n- 卖方营销与战略定价\n- 投资分析与资产管理\n- 全方位物业管理"
+    }
+   }
+  ]
+ },
+ "creative": {
+  "brand": {
+   "en": "Kinetic Studio",
+   "zh": "动能工作室"
+  },
+  "audience": {
+   "en": "Creative Brands & Agencies",
+   "zh": "创意品牌与机构"
+  },
+  "home": {
+   "zh": [
+    {
+     "id": "b_studio_hero",
+     "type": "hero",
+     "variant": "fullbleed",
+     "content": {
+      "badge": "工作室出租",
+      "headline": "值得",
+      "headlineAccent": "凝视的想法。",
+      "subhead": "一家拒绝平庸的小型工作室，打造品牌、网站和活动。",
+      "image": "/demo/creative-hero.jpg",
+      "imageFocal": "center",
+      "imagePrompt": "a bold creative studio workspace with mood boards and design prints on the wall, energetic, natural light",
+      "cta": {
+       "label": "发起项目",
+       "href": "/contact"
+      },
+      "secondaryCta": {
+       "label": "查看作品",
+       "href": "/services"
+      }
+     }
+    },
+    {
+     "id": "b_studio_stats",
+     "type": "stats",
+     "content": {
+      "items": [
+       {
+        "value": "120+",
+        "label": "交付项目"
+       },
+       {
+        "value": "4.9★",
+        "label": "客户评分"
+       },
+       {
+        "value": "12",
+        "label": "奖项"
+       },
+       {
+        "value": "高级",
+        "label": "仅限团队"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_studio_feat",
+     "type": "features",
+     "variant": "cards",
+     "content": {
+      "heading": "我们的作品",
+      "subhead": "策略、品牌识别以及实现它的工艺。",
+      "items": [
+       {
+        "icon": "sparkles",
+        "title": "品牌识别",
+        "body": "名称、标志和系统，具有真正的观点。"
+       },
+       {
+        "icon": "layers",
+        "title": "网站",
+        "body": "快速、独特的网站，旨在转化并持久。"
+       },
+       {
+        "icon": "zap",
+        "title": "活动",
+        "body": "赢得关注而非购买关注的发布和影片。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_studio_gallery",
+     "type": "gallery",
+     "variant": "grid",
+     "content": {
+      "heading": "精选作品",
+      "subhead": "一些我们引以为豪的作品。",
+      "items": [
+       {
+        "image": "",
+        "caption": "品牌识别",
+        "imagePrompt": "a striking brand identity flatlay with logo and color swatches on a clean desk"
+       },
+       {
+        "image": "",
+        "caption": "网站设计",
+        "imagePrompt": "a designer's screen showing a beautiful website mockup, modern studio, soft light"
+       },
+       {
+        "image": "",
+        "caption": "活动海报",
+        "imagePrompt": "a cinematic campaign film still, bold and artful, high contrast"
+       },
+       {
+        "image": "",
+        "caption": "包装设计",
+        "imagePrompt": "premium product packaging design on a minimal surface, studio lighting"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_studio_steps",
+     "type": "steps",
+     "content": {
+      "heading": "我们的工作方式",
+      "subhead": "紧凑的高级流程。",
+      "items": [
+       {
+        "title": "发现",
+        "body": "我们深入挖掘您的目标、受众和优势。"
+       },
+       {
+        "title": "概念",
+        "body": "几个大胆的方向，而不是一百个安全的选择。"
+       },
+       {
+        "title": "工艺",
+        "body": "我们设计、构建并打磨至完美。"
+       },
+       {
+        "title": "发布",
+        "body": "我们交付并帮助其产生影响力。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_studio_quotes",
+     "type": "testimonials",
+     "content": {
+      "heading": "客户评价",
+      "items": [
+       {
+        "quote": "他们给了我们一个人们真正谈论的品牌。销售随之而来。",
+        "author": "CEO",
+        "role": "DTC品牌"
+       },
+       {
+        "quote": "快速、无畏且才华横溢。雇佣他们就对了。",
+        "author": "CMO",
+        "role": "金融科技"
+       },
+       {
+        "quote": "网站使转化率翻倍并赢得了奖项。两者兼得。",
+        "author": "Founder",
+        "role": "工作室"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_studio_pricing",
+     "type": "pricing",
+     "content": {
+      "heading": "合作方式",
+      "subhead": "选择适合您的范围。",
+      "items": [
+       {
+        "name": "品牌冲刺",
+        "price": "$6k",
+        "period": "/project",
+        "features": [
+         "标志+识别",
+         "品牌指南",
+         "2周交付"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        }
+       },
+       {
+        "name": "网站",
+        "price": "$18k",
+        "period": "/project",
+        "features": [
+         "设计+构建",
+         "CMS+交接",
+         "旨在转化"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        },
+        "featured": true
+       },
+       {
+        "name": "顾问服务",
+        "price": "$5k",
+        "period": "/mo",
+        "features": [
+         "持续设计",
+         "优先访问",
+         "高级团队"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_studio_faq",
+     "type": "faq",
+     "content": {
+      "heading": "须知事项",
+      "items": [
+       {
+        "q": "谁实际完成工作？",
+        "a": "创始人和高级设计师——永远不会是初级或客户经理。"
+       },
+       {
+        "q": "多久可以开始？",
+        "a": "通常在一周内；冲刺可以更快。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_studio_cta",
+     "type": "cta",
+     "variant": "banner",
+     "content": {
+      "headline": "有项目要发布？",
+      "subhead": "告诉我们您正在构建什么——我们将带来工艺。",
+      "image": "/demo/creative-cta.jpg",
+      "imagePrompt": "a creative team collaborating energetically around a table of sketches, candid, soft focus",
+      "cta": {
+       "label": "发起项目",
+       "href": "/contact"
+      }
+     }
+    }
+   ]
+  },
+  "pages": [
+   {
+    "slug": "about",
+    "navLabel": {
+     "en": "About Us",
+     "zh": "关于我们"
+    },
+    "body": {
+     "en": "Kinetic Studio is a creative agency that fuses strategy, design, and technology to build bold brand experiences. We partner with forward-thinking companies to translate vision into impact.\n\nOur team of designers, strategists, and developers works in lockstep to craft cohesive narratives across every touchpoint. From identity systems to interactive installations, we bring ideas to life.\n\n- 10+ years shaping brands in art, fashion, and tech\n- Award-winning work in digital and physical spaces\n- Collaborative process rooted in deep research",
+     "zh": "动能工作室是一家融合策略、设计与技术的创意机构，致力于打造大胆的品牌体验。我们与具有前瞻思维的企业合作，将愿景转化为影响力。\n\n我们的设计师、策略师和开发人员协同工作，在每个触点构建一致的叙事。从品牌识别系统到互动装置，我们让想法生动呈现。\n\n- 超过10年深耕艺术、时尚与科技领域的品牌塑造经验\n- 屡获殊荣的数字与实体空间作品\n- 以深度研究为基础的合作流程"
+    }
+   },
+   {
+    "slug": "services",
+    "navLabel": {
+     "en": "Services",
+     "zh": "服务项目"
+    },
+    "body": {
+     "en": "We offer end-to-end creative services to elevate your brand. Our methodology blends rigorous strategy with fearless experimentation.\n\n- **Brand Strategy & Identity** – Positioning, visual systems, naming, and guidelines that stand out.\n- **Digital Design & Development** – Websites, apps, and interactive experiences that engage.\n- **Content & Production** – Photography, video, copy, and motion that tell your story.\n- **Environmental Design** – Exhibitions, pop-ups, and spatial installations.\n\nEvery project is tailored to your unique goals. We start with discovery, prototype with feedback, and deliver excellence.",
+     "zh": "我们提供端到端的创意服务，提升您的品牌。我们的方法融合严谨的策略与大胆的实验。\n\n- **品牌策略与识别** – 定位、视觉系统、命名和指南，助您脱颖而出。\n- **数字设计与开发** – 网站、应用和互动体验，吸引受众。\n- **内容与制作** – 摄影、视频、文案和动态，讲述您的故事。\n- **环境设计** – 展览、快闪店与空间装置。\n\n每个项目都根据您的独特目标量身定制。我们从探索开始，通过反馈迭代原型，最终交付卓越成果。"
+    }
+   }
+  ]
+ },
+ "tech": {
+  "brand": {
+   "en": "Nimbus",
+   "zh": "云枢"
+  },
+  "audience": {
+   "en": "Enterprise DevOps teams",
+   "zh": "企业级DevOps团队"
+  },
+  "home": {
+   "zh": [
+    {
+     "id": "b_saas_hero",
+     "type": "hero",
+     "variant": "fullbleed",
+     "content": {
+      "badge": "加速交付",
+      "headline": "这个平台你的",
+      "headlineAccent": "团队会爱上。",
+      "subhead": "从一个整洁的工作区启动、测量和迭代——无需胶水代码，无需繁琐操作。",
+      "image": "/demo/tech-hero.jpg",
+      "imageFocal": "center",
+      "imagePrompt": "a sleek modern SaaS dashboard on a laptop in a bright office, clean UI, professional, natural light",
+      "cta": {
+       "label": "免费开始",
+       "href": "/contact"
+      },
+      "secondaryCta": {
+       "label": "查看运作方式",
+       "href": "/services"
+      }
+     }
+    },
+    {
+     "id": "b_saas_stats",
+     "type": "stats",
+     "content": {
+      "items": [
+       {
+        "value": "10倍",
+        "label": "更快设置"
+       },
+       {
+        "value": "99.9%",
+        "label": "正常运行时间"
+       },
+       {
+        "value": "<200ms",
+        "label": "API延迟"
+       },
+       {
+        "value": "SOC 2",
+        "label": "就绪"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_saas_feat",
+     "type": "features",
+     "variant": "cards",
+     "content": {
+      "heading": "扩展所需的一切",
+      "subhead": "为快速行动且不破坏任何东西的团队打造。",
+      "items": [
+       {
+        "icon": "zap",
+        "title": "默认快速",
+        "body": "亚秒级加载和用户能感受到的灵敏API。"
+       },
+       {
+        "icon": "shield",
+        "title": "安全合规",
+        "body": "开箱即用的加密、审计日志和SSO。"
+       },
+       {
+        "icon": "gauge",
+        "title": "可观测",
+        "body": "仪表板和警报，确保万无一失。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_saas_gallery",
+     "type": "gallery",
+     "variant": "grid",
+     "content": {
+      "heading": "产品内部",
+      "subhead": "工作区一览。",
+      "items": [
+       {
+        "image": "",
+        "caption": "仪表板",
+        "imagePrompt": "a clean analytics dashboard on a large monitor, modern workspace"
+       },
+       {
+        "image": "",
+        "caption": "团队协作",
+        "imagePrompt": "a diverse product team collaborating at a desk with laptops, bright office"
+       },
+       {
+        "image": "",
+        "caption": "分析视图",
+        "imagePrompt": "colorful data visualizations and charts on a screen, crisp and modern"
+       },
+       {
+        "image": "",
+        "caption": "移动应用",
+        "imagePrompt": "a smartphone showing a clean mobile app interface, minimal, soft light"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_saas_steps",
+     "type": "steps",
+     "content": {
+      "heading": "开始使用",
+      "subhead": "当日上线。",
+      "items": [
+       {
+        "title": "注册",
+        "body": "在不到一分钟内创建你的工作区。"
+       },
+       {
+        "title": "连接",
+        "body": "通过原生集成接入你的技术栈。"
+       },
+       {
+        "title": "构建",
+        "body": "无需胶水代码交付你的第一个工作流。"
+       },
+       {
+        "title": "扩展",
+        "body": "使用可预测的基于使用量的定价进行扩展。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_saas_quotes",
+     "type": "testimonials",
+     "content": {
+      "heading": "深受团队喜爱",
+      "items": [
+       {
+        "quote": "我们用一款工具取代了五款。团队更快、更开心。",
+        "author": "S. Patel",
+        "role": "运营主管"
+       },
+       {
+        "quote": "设置只花了下午时间。支持人员真正了解产品。",
+        "author": "K. Brooks",
+        "role": "CTO"
+       },
+       {
+        "quote": "这是我们技术栈中速度最快、最整洁的工具。",
+        "author": "L. Romano",
+        "role": "工程主管"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_saas_pricing",
+     "type": "pricing",
+     "content": {
+      "heading": "可扩展的定价",
+      "subhead": "免费开始。当它为你带来价值时再升级。",
+      "items": [
+       {
+        "name": "免费",
+        "price": "$0",
+        "period": "/mo",
+        "features": [
+         "1个项目",
+         "社区支持",
+         "核心API"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        }
+       },
+       {
+        "name": "团队",
+        "price": "$49",
+        "period": "/mo",
+        "features": [
+         "无限项目",
+         "SSO + 审计日志",
+         "优先支持"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        },
+        "featured": true
+       },
+       {
+        "name": "企业版",
+        "price": "Custom",
+        "period": "",
+        "features": [
+         "SLA + SOC 2",
+         "专用基础设施",
+         "解决方案工程师"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_saas_faq",
+     "type": "faq",
+     "content": {
+      "heading": "常见问题",
+      "items": [
+       {
+        "q": "设置需要多长时间？",
+        "a": "大多数团队当日就能上线——连接你的技术栈即可开始。"
+       },
+       {
+        "q": "可以自托管吗？",
+        "a": "可以——它运行在你自己的服务器和域名上，完全归你所有。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_saas_cta",
+     "type": "cta",
+     "variant": "banner",
+     "content": {
+      "headline": "准备好加速交付了吗？",
+      "subhead": "在几分钟内创建一个工作区——免费开始。",
+      "image": "/demo/tech-cta.jpg",
+      "imagePrompt": "a happy developer team celebrating a launch in a modern office, candid, soft focus",
+      "cta": {
+       "label": "免费开始",
+       "href": "/contact"
+      }
+     }
+    }
+   ]
+  },
+  "pages": [
+   {
+    "slug": "about",
+    "navLabel": {
+     "en": "About Nimbus",
+     "zh": "关于云枢"
+    },
+    "body": {
+     "en": "Nimbus enables enterprise DevOps teams to ship software faster, with fewer errors. Our intelligent CI/CD platform automates the entire delivery pipeline—from code commit to production deployment—so your team can focus on building features, not fixing pipelines.\n\nWe handle the complexity of multi-cloud, microservices, and container orchestration, giving you a single pane of glass to manage releases across environments. Backed by a 99.99% uptime SLA and SOC 2 Type II compliance, Nimbus is trusted by Fortune 500 companies to deliver critical applications.\n- **Smart Rollbacks**: Automatic recovery if a deployment fails.\n- **Unified Dashboard**: View all pipelines, logs, and metrics in one place.\n- **Seamless Integrations**: Works with GitHub, GitLab, Slack, Jira, and more.",
+     "zh": "云枢助力企业级DevOps团队更快、更可靠地交付软件。我们的智能CI/CD平台自动化整个交付流程——从代码提交到生产部署——让您的团队专注于构建功能，而非修复流水线。\n\n我们处理多云、微服务和容器编排的复杂性，为您提供统一视图来管理跨环境的发布。凭借99.99%的SLA可用性和SOC 2 Type II合规认证，云枢深受财富500强企业信赖，用于交付关键应用。\n- **智能回滚**：部署失败时自动恢复。\n- **统一仪表盘**：在一个界面查看所有流水线、日志和指标。\n- **无缝集成**：支持GitHub、GitLab、Slack、Jira等。"
+    }
+   },
+   {
+    "slug": "services",
+    "navLabel": {
+     "en": "Our Services",
+     "zh": "服务项目"
+    },
+    "body": {
+     "en": "Nimbus offers a comprehensive suite of services to accelerate your software delivery lifecycle:\n\n**Continuous Integration & Delivery**\nAutomate build, test, and deployment for any stack. Our AI-powered pipeline optimization reduces build times by up to 60%.\n\n**Infrastructure as Code Management**\nVersion control your cloud infrastructure with Terraform and Kubernetes templates. Nimbus applies changes with drift detection and compliance scanning.\n\n**Release Orchestration**\nCoordinate multi-service releases with canary deployments, blue-green strategies, and feature flags. Ensure zero-downtime deployments every time.\n\n**Observability & Monitoring**\nReal-time dashboards for pipeline health, application performance, and error tracking. Get instant alerts and root cause analysis.\n\n- **Custom Workflows**: Tailor pipelines to your team's specific needs.\n- **Security Scanning**: Automated vulnerability checks in every build.\n- **24/7 Support**: Enterprise-grade support with 15-minute response time.",
+     "zh": "云枢提供一整套服务，加速您的软件交付生命周期：\n\n**持续集成与交付**\n为任何技术栈自动化构建、测试和部署。我们的人工智能优化流水线可将构建时间缩短多达60%。\n\n**基础设施即代码管理**\n使用Terraform和Kubernetes模板对云基础设施进行版本控制。云枢通过漂移检测和合规扫描应用变更。\n\n**发布编排**\n通过金丝雀部署、蓝绿策略和功能开关协调多服务发布。确保每次部署零停机。\n\n**可观测性与监控**\n实时仪表盘展示流水线健康、应用性能和错误追踪。即时获得告警和根因分析。\n- **自定义工作流**：根据团队需求定制流水线。\n- **安全扫描**：每次构建中自动进行漏洞检查。\n- **全天候支持**：企业级支持，15分钟响应。"
+    }
+   }
+  ]
+ },
+ "finance": {
+  "brand": {
+   "en": "Vault Finance",
+   "zh": "Vault金融"
+  },
+  "audience": {
+   "en": "High-net-worth individuals and family offices",
+   "zh": "高净值个人及家族办公室"
+  },
+  "home": {
+   "zh": [
+    {
+     "id": "b_fin_hero",
+     "type": "hero",
+     "variant": "fullbleed",
+     "content": {
+      "badge": "正在接受客户",
+      "headline": "增长它。保护它。",
+      "headlineAccent": "理解它。",
+      "subhead": "为您的资金提供清晰建议和稳健操作——没有术语，没有意外。",
+      "image": "/demo/finance-hero.jpg",
+      "imageFocal": "center",
+      "imagePrompt": "a professional financial advisor meeting warmly with a client at a desk, charts on screen, bright office, trustworthy",
+      "cta": {
+       "label": "预约咨询",
+       "href": "/contact"
+      },
+      "secondaryCta": {
+       "label": "我们的服务",
+       "href": "/services"
+      }
+     }
+    },
+    {
+     "id": "b_fin_stats",
+     "type": "stats",
+     "content": {
+      "items": [
+       {
+        "value": "20亿+美元",
+        "label": "接受咨询中"
+       },
+       {
+        "value": "20年",
+        "label": "业绩记录"
+       },
+       {
+        "value": "0",
+        "label": "隐藏费用"
+       },
+       {
+        "value": "24/7",
+        "label": "账户访问"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_fin_feat",
+     "type": "features",
+     "variant": "cards",
+     "content": {
+      "heading": "我们做什么",
+      "subhead": "基本事项，精心处理。",
+      "items": [
+       {
+        "icon": "shield",
+        "title": "规划",
+        "body": "为您的目标和时间线提供清晰的路线图。"
+       },
+       {
+        "icon": "gauge",
+        "title": "投资",
+        "body": "纪律严明、多元化且注重税务的投资组合。"
+       },
+       {
+        "icon": "layers",
+        "title": "保护",
+        "body": "真正可靠的保险和遗产规划。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_fin_gallery",
+     "type": "gallery",
+     "variant": "grid",
+     "content": {
+      "heading": "我们的实践",
+      "subhead": "冷静、专业且清晰。",
+      "items": [
+       {
+        "image": "",
+        "caption": "客户会议",
+        "imagePrompt": "two people in a calm financial consultation, documents on the table, trust"
+       },
+       {
+        "image": "",
+        "caption": "我们的办公室",
+        "imagePrompt": "a sleek professional office with a city view, calm and credible"
+       },
+       {
+        "image": "",
+        "caption": "共同规划",
+        "imagePrompt": "clear financial charts and planning documents on a desk, organized"
+       },
+       {
+        "image": "",
+        "caption": "清晰的报告",
+        "imagePrompt": "a clean printed financial report with glasses and a pen, professional detail"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_fin_steps",
+     "type": "steps",
+     "content": {
+      "heading": "我们如何工作",
+      "subhead": "从第一天起就清晰。",
+      "items": [
+       {
+        "title": "咨询",
+        "body": "关于您情况的免费初次交谈。"
+       },
+       {
+        "title": "规划",
+        "body": "一份书面规划，费用透明且经双方同意。"
+       },
+       {
+        "title": "投资",
+        "body": "我们将规划付诸实施，全程注重税务。"
+       },
+       {
+        "title": "复核",
+        "body": "定期检查，确保规划跟随您的人生变化。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_fin_quotes",
+     "type": "testimonials",
+     "content": {
+      "heading": "客户信心",
+      "items": [
+       {
+        "quote": "他们清楚地解释了所有事情，让我们迅速步入正轨。",
+        "author": "R. Halloran",
+        "role": "客户"
+       },
+       {
+        "quote": "透明的费用和真实的建议。一股清流。",
+        "author": "S. Okafor",
+        "role": "客户"
+       },
+       {
+        "quote": "我终于理解了我的钱——而且睡得更好。",
+        "author": "M. & J. Reyes",
+        "role": "客户"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_fin_pricing",
+     "type": "pricing",
+     "content": {
+      "heading": "透明费用",
+      "subhead": "从不意外。",
+      "items": [
+       {
+        "name": "起步",
+        "price": "0.5%",
+        "period": "/yr",
+        "features": [
+         "核心规划",
+         "年度复核",
+         "在线访问"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        }
+       },
+       {
+        "name": "财富",
+        "price": "0.8%",
+        "period": "/yr",
+        "features": [
+         "完整规划",
+         "季度复核",
+         "税务+遗产"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        },
+        "featured": true
+       },
+       {
+        "name": "家族办公室",
+        "price": "Custom",
+        "period": "",
+        "features": [
+         "专属团队",
+         "定制规划",
+         "礼宾服务"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_fin_faq",
+     "type": "faq",
+     "content": {
+      "heading": "问题",
+      "items": [
+       {
+        "q": "您是受托人吗？",
+        "a": "是的——我们法律上有义务以您的最大利益行事。"
+       },
+       {
+        "q": "最低要求是什么？",
+        "a": "我们与各种客户合作——让我们谈谈您的情况。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_fin_cta",
+     "type": "cta",
+     "variant": "banner",
+     "content": {
+      "headline": "迈出第一步。",
+      "subhead": "立即预约免费、无压力的咨询。",
+      "image": "/demo/finance-cta.jpg",
+      "imagePrompt": "a confident handshake between advisor and happy client in a bright office, soft focus",
+      "cta": {
+       "label": "预约咨询",
+       "href": "/contact"
+      }
+     }
+    }
+   ]
+  },
+  "pages": [
+   {
+    "slug": "about",
+    "navLabel": {
+     "en": "About Vault Finance",
+     "zh": "关于我们"
+    },
+    "body": {
+     "en": "Vault Finance is a premier wealth management firm dedicated to serving high-net-worth individuals and family offices. Founded on principles of discretion and personalized service, we combine deep market expertise with a holistic approach to financial planning.\n\nOur team of seasoned advisors brings decades of experience from top-tier banks and investment houses. We focus on understanding each client's unique goals, risk tolerance, and legacy aspirations.\n\n- Over $5 billion in assets under management\n- Offices in New York, London, and Singapore\n- Specialized in multi-generational wealth strategy\n- Proven track record through multiple market cycles",
+     "zh": "Vault金融是一家顶级财富管理公司，专为高净值个人及家族办公室服务。我们秉持审慎和个性化服务的原则，将深厚的市场专业知识与全面的财务规划方法相结合。\n\n我们的资深顾问团队拥有来自顶级银行和投资机构的数十年经验。我们专注了解每位客户的独特目标、风险承受能力和传承愿景。\n\n- 管理资产超过50亿美元\n- 在纽约、伦敦和新加坡设有办公室\n- 专注于多代财富战略\n- 历经多个市场周期的卓越业绩"
+    }
+   },
+   {
+    "slug": "services",
+    "navLabel": {
+     "en": "Our Services",
+     "zh": "服务项目"
+    },
+    "body": {
+     "en": "Vault Finance offers a comprehensive suite of services tailored to the sophisticated needs of our clients.\n\n**Investment Management**\nWe construct bespoke portfolios using a mix of public equities, fixed income, private equity, and alternative assets. Our research-driven approach seeks to optimize risk-adjusted returns while preserving capital.\n\n**Wealth Planning**\n- Tax optimization and estate planning\n- Philanthropic strategy and foundations\n- Succession and legacy structuring\n\n**Family Office Services**\n- Consolidated reporting and bill pay\n- Concierge banking and credit solutions\n- Art, aviation, and real estate advisory\n\nEach engagement begins with a thorough discovery process, ensuring strategies align with your values and long-term vision.",
+     "zh": "Vault金融提供全方位的定制化服务，以满足客户的复杂需求。\n\n**投资管理**\n我们通过公开股票、固定收益、私募股权和另类资产的组合构建定制化投资组合。我们的研究驱动型方法旨在优化风险调整后收益，同时保本增值。\n\n**财富规划**\n- 税务优化与遗产规划\n- 慈善策略与基金会\n- 继任与传承架构\n\n**家族办公室服务**\n- 综合报告与账单支付\n- 礼宾银行与信贷解决方案\n- 艺术品、航空及房地产咨询\n\n每次合作都始于深入的了解流程，确保策略与您的价值观和长期愿景相一致。"
+    }
+   }
+  ]
+ },
+ "nonprofit": {
+  "brand": {
+   "en": "GreenRoots Outreach",
+   "zh": "绿根公益"
+  },
+  "audience": {
+   "en": "rural and underserved communities",
+   "zh": "乡村及弱势群体"
+  },
+  "home": {
+   "zh": [
+    {
+     "id": "b_ngo_hero",
+     "type": "hero",
+     "variant": "fullbleed",
+     "content": {
+      "badge": "加入我们的事业",
+      "headline": "携手同行，",
+      "headlineAccent": "我们能做得更多。",
+      "subhead": "真正的改变，由每一位挺身而出的普通人创造。你的支持远超想象。",
+      "image": "/demo/nonprofit-hero.jpg",
+      "imageFocal": "center",
+      "imagePrompt": "volunteers and community members smiling together outdoors at a charity event, warm and hopeful, natural light",
+      "cta": {
+       "label": "捐助",
+       "href": "/contact"
+      },
+      "secondaryCta": {
+       "label": "志愿参与",
+       "href": "/services"
+      }
+     }
+    },
+    {
+     "id": "b_ngo_stats",
+     "type": "stats",
+     "content": {
+      "items": [
+       {
+        "value": "50k+",
+        "label": "受助人数"
+       },
+       {
+        "value": "120",
+        "label": "志愿者人数"
+       },
+       {
+        "value": "92%",
+        "label": "用于项目比例"
+       },
+       {
+        "value": "15年",
+        "label": "实地服务年限"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_ngo_feat",
+     "type": "features",
+     "variant": "cards",
+     "content": {
+      "heading": "我们的援助方式",
+      "subhead": "直接、持久、可问责。",
+      "items": [
+       {
+        "icon": "sparkles",
+        "title": "直接援助",
+        "body": "有尊严、有温度地满足即时需求。"
+       },
+       {
+        "icon": "book",
+        "title": "长期项目",
+        "body": "培养应对危机后持续发展的技能与稳定性。"
+       },
+       {
+        "icon": "mail",
+        "title": "社区",
+        "body": "连接有心人与有需者。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_ngo_gallery",
+     "type": "gallery",
+     "variant": "grid",
+     "content": {
+      "heading": "我们的工作",
+      "subhead": "现场瞬间。",
+      "items": [
+       {
+        "image": "",
+        "caption": "援手",
+        "imagePrompt": "many hands joined together in a circle of support, warm and hopeful, soft light"
+       },
+       {
+        "image": "",
+        "caption": "社区活动",
+        "imagePrompt": "a lively community volunteer event outdoors, people helping, bright day"
+       },
+       {
+        "image": "",
+        "caption": "工作中的志愿者",
+        "imagePrompt": "volunteers sorting donations and supplies, busy and purposeful"
+       },
+       {
+        "image": "",
+        "caption": "我们服务的一个家庭",
+        "imagePrompt": "a grateful family smiling warmly, candid portrait, hopeful"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_ngo_steps",
+     "type": "steps",
+     "content": {
+      "heading": "如何参与",
+      "subhead": "几种方式，一份改变。",
+      "items": [
+       {
+        "title": "捐助",
+        "body": "单次或月捐——每一分钱都可追溯。"
+       },
+       {
+        "title": "志愿参与",
+        "body": "付出几小时，我们为你匹配需求。"
+       },
+       {
+        "title": "传播分享",
+        "body": "分享我们的工作，扩大支持圈。"
+       },
+       {
+        "title": "查看影响",
+        "body": "我们如实报告你的帮助去向。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_ngo_quotes",
+     "type": "testimonials",
+     "content": {
+      "heading": "受助者心声",
+      "items": [
+       {
+        "quote": "他们不只是帮助——他们待我们如家人。",
+        "author": "A. R.",
+        "role": "项目参与者"
+       },
+       {
+        "quote": "我志愿，因为我能亲眼看到每一份付出去了哪里。",
+        "author": "J. M.",
+        "role": "志愿者"
+       },
+       {
+        "quote": "这就是希望的样貌，近在咫尺。",
+        "author": "Local partner",
+        "role": "社区成员"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_ngo_pricing",
+     "type": "pricing",
+     "content": {
+      "heading": "捐助方式",
+      "subhead": "无论多少，都能带来改变。",
+      "items": [
+       {
+        "name": "单次捐助",
+        "price": "Any",
+        "period": "",
+        "features": [
+         "直接投入项目",
+         "可抵税",
+         "即时收据"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        }
+       },
+       {
+        "name": "月捐",
+        "price": "$25",
+        "period": "/mo",
+        "features": [
+         "持续影响力",
+         "随时取消",
+         "成员动态"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        },
+        "featured": true
+       },
+       {
+        "name": "合作伙伴",
+        "price": "Custom",
+        "period": "",
+        "features": [
+         "企业配捐",
+         "活动赞助",
+         "冠名项目"
+        ],
+        "cta": {
+         "label": "Enquire",
+         "href": "/contact"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_ngo_faq",
+     "type": "faq",
+     "content": {
+      "heading": "须知",
+      "items": [
+       {
+        "q": "我的捐款去向？",
+        "a": "92%直接用于项目——我们发布完整年度报告。"
+       },
+       {
+        "q": "我的捐赠可以抵税吗？",
+        "a": "可以——你将即时收到邮件收据。"
+       }
+      ]
+     }
+    },
+    {
+     "id": "b_ngo_cta",
+     "type": "cta",
+     "variant": "banner",
+     "content": {
+      "headline": "加入其中。",
+      "subhead": "捐助、志愿、或仅仅是传播——每一种都有帮助。",
+      "image": "/demo/nonprofit-cta.jpg",
+      "imagePrompt": "a diverse group of volunteers in matching shirts smiling together, genuine, soft focus",
+      "cta": {
+       "label": "立即参与",
+       "href": "/contact"
+      }
+     }
+    }
+   ]
+  },
+  "pages": [
+   {
+    "slug": "about",
+    "navLabel": {
+     "en": "Who We Are",
+     "zh": "关于我们"
+    },
+    "body": {
+     "en": "GreenRoots Outreach is a 501(c)(3) nonprofit dedicated to bridging the opportunity gap for rural and underserved communities. Founded in 2012 by a team of educators and social workers, we focus on sustainable development through education, health, and livelihood programs.\n\nOur core belief is that lasting change starts at the grassroots. We partner with local leaders to design culturally relevant initiatives that empower individuals and strengthen community resilience. Since our inception, we've reached over 50,000 individuals across 30 counties.\n\n- **Education**: After-school tutoring, scholarships, and digital literacy workshops\n- **Health**: Mobile clinics, nutrition education, and mental health support\n- **Livelihood**: Vocational training and micro-grant programs for small businesses",
+     "zh": "绿根公益是一家注册在美501(c)(3)的非营利组织，致力于缩小乡村及弱势群体的机会差距。2012年由教育工作者和社会工作者团队创立，我们通过教育、健康和生计项目推动可持续发展。\n\n我们的核心理念是可持续的改变根植于基层。我们与当地领袖合作，设计符合文化背景的倡议，增强个人能力并提升社区韧性。自成立以来，我们的项目已覆盖30个县，惠及超过5万人。\n\n- **教育**：课后辅导、奖学金和数字素养培训\n- **健康**：流动诊所、营养教育和心理健康支持\n- **生计**：职业培训和小微企业小额赠款计划"
+    }
+   },
+   {
+    "slug": "services",
+    "navLabel": {
+     "en": "Our Programs",
+     "zh": "服务项目"
+    },
+    "body": {
+     "en": "GreenRoots runs three integrated program pillars that address the interconnected needs of rural communities. Each program is co-designed with community members to ensure relevance and long-term impact.\n\n**Education Initiative**: Our flagship program provides after-school tutoring in math, science, and English, along with a scholarship fund for high-achieving students from low-income families. We also run digital literacy camps that teach basic coding and online safety.\n\n**Health Access Program**: We deploy mobile clinics to areas with limited healthcare infrastructure, offering free check-ups, vaccinations, and health education. Our mental health component trains local counselors to provide culturally sensitive support.\n\n**Livelihood & Empowerment**: Through vocational training in agriculture, crafts, and small business management, we help individuals generate sustainable income. Micro-grants of up to $500 are awarded to launch community enterprises.\n\n- All programs are free for participants\n- 92% of our budget goes directly to program delivery\n- We measure success through community-defined metrics",
+     "zh": "绿根公益运营三大整合项目支柱，应对乡村社区的互联需求。每个项目均与社区成员共同设计，确保相关性和长期影响。\n\n**教育计划**：旗舰项目提供数学、科学和英语的课后辅导，并为低收入家庭的优秀学生设立奖学金。我们还开展数字素养营，教授基础编程和网络安全知识。\n\n**健康服务项目**：我们在医疗基础设施薄弱的地区部署流动诊所，提供免费体检、疫苗接种和健康教育。心理健康部分培训当地咨询师，提供文化敏感的支持服务。\n\n**生计赋能计划**：通过农业、手工艺和小企业管理方面的职业培训，帮助个人产生可持续收入。最高500美元的小额赠款用于启动社区企业。\n\n- 所有项目对参与者免费\n- 92%的预算直接用于项目执行\n- 我们通过社区定义的指标衡量成功"
+    }
+   }
+  ]
+ }
+}

@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { NewsletterForm } from "@/components/newsletter-form";
 import { SectionRenderer } from "@/components/sections";
 import { cookies } from "next/headers";
-import { getDesign, getPosts, getSite, getDesignPreview, PREVIEW_COOKIE } from "@/lib/api";
+import { getDesign, getPosts, getSite, getPreview, PREVIEW_COOKIE } from "@/lib/api";
 import { alternatesFor, loadMessages, normalizeLocale, t } from "@/lib/i18n";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -17,11 +17,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const locale = normalizeLocale(raw);
   const site = await getSite();
   const previewIndustry = site.demoPreview ? ((await cookies()).get(PREVIEW_COOKIE)?.value || "") : "";
-  const [design, posts, messages] = await Promise.all([
-    previewIndustry ? getDesignPreview(previewIndustry, locale) : getDesign(locale),
-    getPosts(locale),
-    loadMessages(locale)
-  ]);
+  const design = previewIndustry ? (await getPreview(previewIndustry, locale)).design : await getDesign(locale);
+  const [posts, messages] = await Promise.all([getPosts(locale), loadMessages(locale)]);
   const featured = posts.slice(0, 3);
 
   return (

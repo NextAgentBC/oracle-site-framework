@@ -12,13 +12,15 @@ export function SiteNav({
   pages = [],
   locale,
   locales,
-  messages
+  messages,
+  previewing
 }: {
   siteName: string;
   pages?: NavPage[];
   locale: string;
   locales: string[];
   messages: Messages;
+  previewing?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
@@ -27,10 +29,13 @@ export function SiteNav({
   // can rebuild the same page under another locale.
   const rest = pathname.replace(new RegExp(`^/${locale}(?=/|$)`), "");
 
-  const staticLinks = [
-    { href: `/${locale}/blog`, label: t(messages, "nav.blog") },
-    { href: `/${locale}/contact`, label: t(messages, "nav.contact") }
-  ];
+  // During an industry preview, drop Blog (the real posts would leak); keep Contact.
+  const staticLinks = previewing
+    ? [{ href: `/${locale}/contact`, label: t(messages, "nav.contact") }]
+    : [
+        { href: `/${locale}/blog`, label: t(messages, "nav.blog") },
+        { href: `/${locale}/contact`, label: t(messages, "nav.contact") }
+      ];
 
   return (
     <header className="topbar">

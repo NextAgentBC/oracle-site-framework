@@ -262,17 +262,41 @@ export async function getIndustries(): Promise<Industry[]> {
   }
 }
 
-// Non-destructive preview of the site as a given industry template (never persisted).
-export async function getDesignPreview(industry: string, locale?: string): Promise<DesignProfile> {
+export type PreviewSite = { name: string; industry: string; audience: string };
+
+function previewQuery(industry: string, locale?: string): string {
+  return `${localeQuery(locale)}${localeQuery(locale) ? "&" : "?"}industry=${encodeURIComponent(industry)}`;
+}
+
+// Non-destructive whole-site preview (never persisted): the home design + a site
+// identity override (brand/industry/audience), localized from the demo pack.
+export async function getPreview(industry: string, locale?: string): Promise<{ design: DesignProfile; site: PreviewSite }> {
   try {
-    const sep = localeQuery(locale) ? "&" : "?";
-    const data = await fetchJson<{ item: DesignProfile }>(
-      `/design/preview${localeQuery(locale)}${sep}industry=${encodeURIComponent(industry)}`,
-      { cache: "no-store" }
-    );
+    const data = await fetchJson<{ item: DesignProfile; site: PreviewSite }>(
+      `/design/preview${previewQuery(industry, locale)}`, { cache: "no-store" });
+    return { design: data.item, site: data.site };
+  } catch {
+    return { design: fallbackDesign, site: { name: "Homestead", industry, audience: "" } };
+  }
+}
+
+// Nav pages for a preview (the industry's pages, not the real site's).
+export async function getPreviewPages(industry: string, locale?: string): Promise<SitePage[]> {
+  try {
+    const data = await fetchJson<{ items: SitePage[] }>(`/pages/preview${previewQuery(industry, locale)}`, { cache: "no-store" });
+    return data.items || [];
+  } catch {
+    return [];
+  }
+}
+
+// One preview page's localized content.
+export async function getPreviewPage(slug: string, industry: string, locale?: string): Promise<SitePage | null> {
+  try {
+    const data = await fetchJson<{ item: SitePage }>(`/pages/preview/${encodeURIComponent(slug)}${previewQuery(industry, locale)}`, { cache: "no-store" });
     return data.item;
   } catch {
-    return fallbackDesign;
+    return null;
   }
 }
 

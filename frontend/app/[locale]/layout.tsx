@@ -4,7 +4,7 @@ import { Inter, Space_Grotesk, Spectral, Fraunces, Oswald } from "next/font/goog
 import "../globals.css";
 import { AuthProvider } from "../providers";
 import { cookies } from "next/headers";
-import { getDesign, getSite, getPages, getDesignPreview, getIndustries, PREVIEW_COOKIE } from "@/lib/api";
+import { getDesign, getSite, getPages, getPreview, getPreviewPages, getIndustries, PREVIEW_COOKIE } from "@/lib/api";
 import { designCssVariables } from "@/lib/design";
 import { SiteNav } from "@/components/nav";
 import { ChatWidget } from "@/components/chat-widget";
@@ -64,16 +64,27 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   const { locale: raw } = await params;
   const locale = normalizeLocale(raw);
   const site = await getSite();
-  // Per-visitor industry preview (cookie-scoped, never persisted). When set and the
-  // demo is enabled, render that industry's template instead of the real design.
+  // Per-visitor industry preview (cookie-scoped, never persisted). When set, the WHOLE
+  // site renders as that industry from the demo pack — home, nav pages, brand, footer —
+  // in the visitor's language. The real site and its data are never touched.
   const previewIndustry = site.demoPreview ? ((await cookies()).get(PREVIEW_COOKIE)?.value || "") : "";
-  const [design, pages, messages, industries] = await Promise.all([
-    previewIndustry ? getDesignPreview(previewIndustry, locale) : getDesign(locale),
-    getPages(locale),
-    loadMessages(locale),
-    site.demoPreview ? getIndustries() : Promise.resolve([])
-  ]);
-  const navPages = pages.filter((page) => page.showInNav).map((page) => ({ slug: page.slug, navLabel: page.navLabel }));
+  const messages = await loadMessages(locale);
+  const industries = site.demoPreview ? await getIndustries() : [];
+  let design: DesignProfile;
+  let navPages: { slug: string; navLabel: string }[];
+  let brand = site.name;
+  let industryWord = site.industry;
+  if (previewIndustry) {
+    const [pv, pvPages] = await Promise.all([getPreview(previewIndustry, locale), getPreviewPages(previewIndustry, locale)]);
+    design = pv.design;
+    brand = pv.site.name || site.name;
+    industryWord = pv.site.industry || site.industry;
+    navPages = pvPages.filter((p) => p.showInNav).map((p) => ({ slug: p.slug, navLabel: p.navLabel }));
+  } else {
+    const [d, pages] = await Promise.all([getDesign(locale), getPages(locale)]);
+    design = d;
+    navPages = pages.filter((page) => page.showInNav).map((page) => ({ slug: page.slug, navLabel: page.navLabel }));
+  }
   const localeList = site.locales?.length ? site.locales : LOCALES;
   return (
     <html
@@ -91,16 +102,16 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         <AuthProvider>
           <div className="shell">
             {previewIndustry && <PreviewBanner label={design.name} messages={messages} />}
-            <SiteNav siteName={site.name} pages={navPages} locale={locale} locales={localeList} messages={messages} />
+            <SiteNav siteName={brand} pages={navPages} locale={locale} locales={localeList} messages={messages} previewing={!!previewIndustry} />
             {children}
             <footer className="footer">
               <div className="footer-grid">
                 <div className="footer-brand">
                   <span className="footer-brand-row">
                     <span className="mark" />
-                    <strong>{site.name}</strong>
+                    <strong>{brand}</strong>
                   </span>
-                  <p className="muted">{t(messages, "footer.tagline", { industry: site.industry })}</p>
+                  <p className="muted">{t(messages, "footer.tagline", { industry: industryWord })}</p>
                 </div>
                 <nav className="footer-col" aria-label={t(messages, "footer.pages")}>
                   <h4>{t(messages, "footer.pages")}</h4>
@@ -112,11 +123,11 @@ export default async function LocaleLayout({ children, params }: { children: Rea
                 </nav>
                 <nav className="footer-col" aria-label={t(messages, "footer.more")}>
                   <h4>{t(messages, "footer.more")}</h4>
-                  <Link href={`/${locale}/blog`}>{t(messages, "footer.blog")}</Link>
+                  {!previewIndustry && <Link href={`/${locale}/blog`}>{t(messages, "footer.blog")}</Link>}
                   <Link href={`/${locale}/contact`}>{t(messages, "footer.contact")}</Link>
                 </nav>
               </div>
-              <div className="footer-bottom">© {new Date().getFullYear()} {site.name}</div>
+              <div className="footer-bottom">© {new Date().getFullYear()} {brand}</div>
             </footer>
             <ChatWidget
               locale={locale}

@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { getPage, getSite } from "@/lib/api";
+import { cookies } from "next/headers";
+import { getPage, getSite, getPreviewPage, PREVIEW_COOKIE } from "@/lib/api";
 import { SectionRenderer } from "@/components/sections";
 import { alternatesFor, normalizeLocale } from "@/lib/i18n";
 
@@ -25,12 +26,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function ContentPage({ params }: PageProps) {
   const { slug, locale: raw } = await params;
   const locale = normalizeLocale(raw);
-  const page = await getPage(slug, locale);
+  const site = await getSite();
+  const previewIndustry = site.demoPreview ? ((await cookies()).get(PREVIEW_COOKIE)?.value || "") : "";
+  const page = previewIndustry ? await getPreviewPage(slug, previewIndustry, locale) : await getPage(slug, locale);
   if (!page) notFound();
 
   // Module-composed page (like the home), or a simple markdown page.
   if (page.sections && page.sections.length > 0) {
-    const site = await getSite();
     return (
       <main className="main">
         <SectionRenderer sections={page.sections} site={site} />

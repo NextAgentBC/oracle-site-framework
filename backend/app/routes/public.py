@@ -24,7 +24,7 @@ from ..models import (
     UiMessages,
 )
 from ..services.design_service import DEFAULT_DESIGN_PROFILE, normalized_profile, profile_for_industry, demo_industries
-from ..services import block_service, chat_service, site_service
+from ..services import block_service, chat_service, site_service, demo_service
 from ..services.email_service import send_email
 
 bp = Blueprint("public", __name__)
@@ -97,12 +97,32 @@ def industries():
 
 @bp.get("/design/preview")
 def design_preview():
-    """Non-destructive preview: return the full design profile for a given industry
-    template WITHOUT persisting anything — the real active design is untouched. Powers
-    the visitor 'try an industry' demo (cookie-scoped on the frontend)."""
+    """Non-destructive whole-site preview — the home design for an industry, with
+    localized copy + brand from the demo pack, plus a `site` identity override
+    (brand/industry/audience) so the whole frontend renders as that industry in the
+    visitor's language. Never writes anything; the real active design is untouched."""
     industry = (request.args.get("industry") or "").strip().lower()
-    prof = profile_for_industry(industry)
-    return {"item": normalized_profile(prof, prof.get("industry") or industry)}
+    locale = request.args.get("locale")
+    return {"item": demo_service.preview_design(industry, locale),
+            "site": demo_service.preview_site(industry, locale)}
+
+
+@bp.get("/pages/preview")
+def pages_preview():
+    """Nav pages for an industry preview (replaces the real pages so none leak in)."""
+    industry = (request.args.get("industry") or "").strip().lower()
+    items = demo_service.preview_pages(industry, request.args.get("locale"))
+    return {"items": items, "meta": {"count": len(items)}}
+
+
+@bp.get("/pages/preview/<slug>")
+def page_preview(slug: str):
+    """One preview page's localized content (Markdown body)."""
+    industry = (request.args.get("industry") or "").strip().lower()
+    item = demo_service.preview_page(industry, slug, request.args.get("locale"))
+    if not item:
+        return jsonify({"error": {"code": "not_found", "message": f"No preview page '{slug}'."}}), 404
+    return {"item": item}
 
 
 @bp.get("/i18n/<locale>")
