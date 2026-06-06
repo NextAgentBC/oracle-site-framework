@@ -4,6 +4,11 @@ Stands up a fully **independent** Homestead — its own database, content, desig
 from this repo. The app's `docker-compose.yml` is self-contained (postgres + backend + frontend);
 the only external pieces are an `edge` Docker network and public ingress (a Cloudflare tunnel) + DNS.
 
+Important: this repo deploys the **base framework**. The multi-theme engine is included, but an
+instructor's already-customized Homestead site is not copied into a fresh database automatically.
+If you want the richer demo/multi-theme starting point, apply a built-in style preset or import an
+instructor-provided site pack after first boot.
+
 ## 0. Prereqs (on the target server)
 
 - **Docker + Docker Compose v2 + git.** Any CPU arch — all base images are multi-arch.
@@ -109,12 +114,43 @@ docker compose exec -T backend flask --app app.main token issue --email you@exam
 Use it as `Authorization: Bearer <jwt>` for `/api/admin/*` and for the OpenClaw skills. The email
 must be in `ADMIN_EMAILS`.
 
-## 7. (Optional) Point OpenClaw skills at this instance
+## 7. (Optional) Choose a starting site/design
+
+Fresh clones use the framework default design and starter content. That is expected. To make the
+site look like a richer Homestead demo, apply a style preset:
+
+```bash
+ADMIN_TOKEN="<jwt from step 6>"
+curl -fsS -X POST "http://127.0.0.1:8000/api/admin/design/generate" \
+  -H "Authorization: Bearer $ADMIN_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"preset":"education"}'
+```
+
+Available built-in presets:
+
+```text
+minimal, bold-dark, editorial, corporate, tech, healthcare, restaurant, realestate,
+fitness, beauty, legal, creative, luxe, education, nonprofit, finance, playful, neon
+```
+
+A preset changes the active design profile and homepage composition. It does **not** import a
+specific instructor's custom pages, uploaded media, translations, or exact edited sections. To
+reproduce an instructor's actual site, import the site pack they provide, for example:
+
+```bash
+# Example only; use the command supplied with the site pack.
+# bash ops/agent/apply-site-pack.sh seed-sites/homestead-multitheme
+```
+
+If no preset or site pack is applied, the deployment remains a blank/default Homestead instance.
+
+## 8. (Optional) Point OpenClaw skills at this instance
 
 In `homestead-site-shared`, set `HOMESTEAD_SITE_API=https://mysite-api.example.com/api` and mint a token
 as above. Then design/compose/blog/media/i18n skills all drive this instance.
 
-## 8. (Optional) Live chat answered by the assistant
+## 9. (Optional) Live chat answered by the assistant
 
 A floating chat widget answered by a **sandboxed, tool-less** model turn via OpenClaw, mirrored to
 the operator's Telegram, with human take-over. Needs the `openclaw` CLI + a running gateway on the
