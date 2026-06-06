@@ -91,6 +91,13 @@ export default async function LocaleLayout({ children, params }: { children: Rea
     design = d;
     navPages = pages.filter((page) => page.showInNav).map((page) => ({ slug: page.slug, navLabel: page.navLabel }));
   }
+  // During preview, the footer tagline is a generic demo line (the real site's custom
+  // tagline wouldn't fit the previewed industry).
+  if (previewIndustry) {
+    messages["footer.tagline"] = locale === "zh"
+      ? "Homestead 多行业模板 · 实时预览演示"
+      : "Homestead multi-industry template · live preview";
+  }
   const localeList = site.locales?.length ? site.locales : LOCALES;
   return (
     <html
